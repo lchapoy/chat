@@ -1,4 +1,4 @@
-<div class="navbar navbar-default navbar-static-top" ng-controller="NavbarController">
+<!--<div class="navbar navbar-default navbar-static-top" ng-controller="NavbarController">
   <div class="container">
     <div class="navbar-header">
       <button class="navbar-toggle" type="button" ng-click="nav.isCollapsed = !nav.isCollapsed">
@@ -7,6 +7,30 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
+      <md-fab-toolbar md-open="true" count="0"
+                      md-direction="left">
+        <md-fab-trigger class="align-with-text">
+          <md-button aria-label="menu" class="md-fab md-primary">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </md-button>
+        </md-fab-trigger>
+        <md-toolbar>
+          <md-fab-actions class="md-toolbar-tools">
+            <md-button aria-label="comment" class="md-icon-button">
+
+            </md-button>
+            <md-button aria-label="label" class="md-icon-button">
+
+            </md-button>
+            <md-button aria-label="photo" class="md-icon-button">
+
+            </md-button>
+          </md-fab-actions>
+        </md-toolbar>
+      </md-fab-toolbar>
+
       <a href="/" class="navbar-brand">chat-yeo</a>
     </div>
     <div collapse="nav.isCollapsed" class="navbar-collapse collapse" id="navbar-main">
@@ -26,4 +50,37 @@
       </ul>
     </div>
   </div>
+</div>
+-->
+
+<div ng-controller="NavbarController">
+  <!--<md-toolbar>
+    <div layout="row" flex="" layout-align="left" layout-wrap>
+      The Chat
+    </div>
+    <div layout="row" flex="" layout-align="center center" layout-wrap>
+      <md-button aria-label="settings" class="md-icon-button" ng-show="nav.isLoggedIn()" ui-sref-active="active" ui-sref="settings"><ng-md-icon icon="settings"></ng-md-icon>
+      </md-button>
+      <md-button aria-label="logout" class="md-icon-button" ng-show="nav.isLoggedIn()" ui-sref-active="active" ui-sref="logout"><ng-md-icon icon="logout"></ng-md-icon>
+      </md-button>
+    </div>
+  </md-toolbar>
+</div>-->
+  <md-toolbar class="navbar">
+    <div layout="row">
+      <div flex="15">
+          <h2><md-button>The Cha-Chat</md-button></h2>
+      </div>
+      <div flex="100" class="f-left">
+        <md-button aria-label="settings" class="md-icon-button" ng-show="nav.isLoggedIn()" ui-sref-active="active" ui-sref="settings"><ng-md-icon icon="settings"></ng-md-icon>
+        </md-button>
+        <md-button aria-label="logout" class="md-icon-button" ng-show="nav.isLoggedIn()" ui-sref-active="active" ui-sref="logout"><ng-md-icon icon="logout"></ng-md-icon>
+        </md-button>
+        <!--<md-button>Test</md-button>-->
+        <!--<md-button hide-sm>Test</md-button>-->
+      </div>
+    </div>
+
+
+  </md-toolbar>
 </div>

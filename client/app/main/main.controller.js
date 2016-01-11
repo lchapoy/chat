@@ -18,19 +18,19 @@ class MainController {
     });
   }
 
-  addThing() {
-    if (this.newThing) {
-      this.$http.post('/api/things', { name: this.newThing });
-      this.newThing = '';
-    }
-  }
-
-  deleteThing(thing) {
-    this.$http.delete('/api/things/' + thing._id);
+addThing() {
+  if (this.newThing) {
+    this.$http.post('/api/things', { name: this.newThing });
+    this.newThing = '';
   }
 }
 
+deleteThing(thing) {
+  this.$http.delete('/api/things/' + thing._id);
+}
+}
+
 angular.module('chatYeoApp')
-  .controller('MainController', MainController);
+    .controller('MainController', MainController);
 
 })();

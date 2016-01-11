@@ -1,0 +1,30 @@
+h4 .md-button, h4 {
+  padding:0px;
+}
+
+div .md-button{
+  float:right;
+  background-color: darkslategray;
+
+}
+
+.navbar {
+  font-family: 'Croissant One', sans-serif;
+  color: darkslategray;
+}
+
+
+.md-icon-button{
+  margin:10px !important;
+}
+
+#ch-title{
+  padding:0px;
+  margin:10px;
+  float:left
+}
+
+h2{
+  padding:0px;
+  margin:5px;
+}

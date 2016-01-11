@@ -14,11 +14,14 @@ angular.module('chatYeoApp')
         referrer: 'main',
         template: '',
         controller: function($state, Auth) {
+
           var referrer = $state.params.referrer ||
                           $state.current.referrer ||
                           'main';
+          console.log(referrer,' luis1')
           Auth.logout();
-          $state.go(referrer);
+          //$state.go(referrer);
+          $state.go('main');
         }
       })
       .state('signup', {

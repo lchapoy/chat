@@ -121,9 +121,11 @@ function AuthService($location, $http, $cookies, $q, appConfig, Util, User) {
      */
     isLoggedIn(callback) {
       if (arguments.length === 0) {
+        console.log(currentUser)
         return currentUser.hasOwnProperty('role');
-      }
 
+      }
+      console.log(currentUser)
       return Auth.getCurrentUser(null)
         .then(user => {
           var is = user.hasOwnProperty('role');
