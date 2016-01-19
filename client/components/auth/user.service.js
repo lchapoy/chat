@@ -17,6 +17,19 @@ function UserResource($resource) {
       params: {
         id:'me'
       }
+    },
+    getFriends: {
+      method: 'GET',
+      params: {
+        controller:'getAllFriends'
+      },
+      isArray:true
+    },
+    addFriend: {
+      method: 'PUT',
+      params: {
+        controller:'addMail'
+      }
     }
   });
 }

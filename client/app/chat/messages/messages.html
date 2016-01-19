@@ -1,11 +1,23 @@
 <div  class="messages" >
-  <h4 class="title-bar">Messages</h4>
+  <h4 class="title-bar">
+    <ng-md-icon class="floater-left" icon="person" hide-gt-xs ng-click="toggleContacts()">
+    </ng-md-icon>
+    Messages
+    <ng-md-icon  icon="info" class="floater-right" hide-gt-sm ng-click="toggleInfo()">
+    </ng-md-icon>
+  </h4>
+  <div class="title-user">
+    <image  ng-src="{{selection.img }}"  class="user-photo-message"></image>
+      <div class="right-title-bar">
+        <h4 >{{selection.name}} </h4>
+      </div>
+  </div>
+  <repeat-messages messages="messages"></repeat-messages>
+
 </div>
 <div  class="input md-whiteframe-z2" >
-  <form>
-    <input type="text">
-    <button class="btn btn-inverse btn-lg btn-register" type="submit">
-      SEND
-    </button>
+  <form ng-submit="addMessage()">
+    <input type="text" ng-model="sendText">
+    <md-button aria-label="send" type="submit" >SEND</md-button>
   </form>
 </div>

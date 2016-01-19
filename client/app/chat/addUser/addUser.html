@@ -1,0 +1,19 @@
+<h4 class="title-bar" >Add new Friend</h4>
+<h4 class="title-bar" ng-show="selection.name">{{selection.name}}</h4>
+<form ng-submit="ac.newContact(addEmail)">
+  <div id="search-box">
+    <input type="search" class="search-input" ng-model="addEmail">
+    <button type="submit" class="search-icon"><ng-md-icon class="search-icon" icon="search"  ></ng-md-icon></button>
+  </div>
+  <p class="help-block">{{ ac.errors.other }}</p>
+  <p class="answer-block">{{ ac.answer.other }}</p>
+</form>
+  <div class="outer-info">
+    <md-list>
+      <md-list-item ng-repeat="person in ac.people" ng-click="goToPerson(person.name, $event)">
+        <img alt="{{ person.name }}" ng-src="{{ person.img }}" class="md-avatar" />
+        <p>{{person.name}}</p>
+      </md-list-item>
+    </md-list>
+  </div>
+

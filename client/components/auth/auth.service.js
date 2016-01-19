@@ -9,6 +9,10 @@ function AuthService($location, $http, $cookies, $q, appConfig, Util, User) {
 
   if ($cookies.get('token') && $location.path() !== '/logout') {
     currentUser = User.get();
+    currentUser.$promise.then(() => {
+      // Account created, redirect to home
+      console.log(currentUser.name)
+    });
   }
 
   var Auth = {
@@ -121,7 +125,7 @@ function AuthService($location, $http, $cookies, $q, appConfig, Util, User) {
      */
     isLoggedIn(callback) {
       if (arguments.length === 0) {
-        console.log(currentUser)
+        //console.log(currentUser)
         return currentUser.hasOwnProperty('role');
 
       }

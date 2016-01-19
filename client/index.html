@@ -22,6 +22,8 @@
       <!-- injector:css -->
       <link rel="stylesheet" href="app/admin/admin.css">
       <link rel="stylesheet" href="app/app.css">
+      <link rel="stylesheet" href="app/chat/addGroup/addGroup.css">
+      <link rel="stylesheet" href="app/chat/addUser/addUser.css">
       <link rel="stylesheet" href="app/chat/chat.css">
       <link rel="stylesheet" href="app/chat/contacts/contacts.css">
       <link rel="stylesheet" href="app/chat/information/information.css">
@@ -30,6 +32,7 @@
       <link rel="stylesheet" href="components/footer/footer.css">
       <link rel="stylesheet" href="components/navbar/navbar.css">
       <link rel="stylesheet" href="components/oauth-buttons/oauth-buttons.css">
+      <link rel="stylesheet" href="components/repeatMessages/repeatMessages.css">
       <!-- endinjector -->
     <!-- endbuild -->
   </head>
@@ -80,11 +83,15 @@
       <script src="app/admin/admin.module.js"></script>
       <script src="components/auth/auth.module.js"></script>
       <script src="components/util/util.module.js"></script>
-      <script src="app/main/main.controller.js"></script>
+      <script src="app/chat/messages/messages.js"></script>
       <script src="app/admin/admin.controller.js"></script>
       <script src="app/account/account.js"></script>
       <script src="app/admin/admin.router.js"></script>
       <script src="app/app.constant.js"></script>
+      <script src="app/chat/addGroup/addGroup.controller.js"></script>
+      <script src="app/chat/addGroup/addGroup.js"></script>
+      <script src="app/chat/addUser/addUser.controller.js"></script>
+      <script src="app/chat/addUser/addUser.js"></script>
       <script src="app/chat/chat.controller.js"></script>
       <script src="app/chat/chat.js"></script>
       <script src="app/chat/contacts/contacts.controller.js"></script>
@@ -92,8 +99,8 @@
       <script src="app/chat/information/information.controller.js"></script>
       <script src="app/chat/information/information.js"></script>
       <script src="app/chat/messages/messages.controller.js"></script>
-      <script src="app/chat/messages/messages.js"></script>
       <script src="app/account/login/login.controller.js"></script>
+      <script src="app/main/main.controller.js"></script>
       <script src="app/main/main.js"></script>
       <script src="app/account/settings/settings.controller.js"></script>
       <script src="components/auth/auth.service.js"></script>
@@ -101,11 +108,13 @@
       <script src="components/auth/router.decorator.js"></script>
       <script src="components/auth/user.service.js"></script>
       <script src="components/footer/footer.directive.js"></script>
+      <script src="components/messages/messages.service.js"></script>
       <script src="components/mongoose-error/mongoose-error.directive.js"></script>
       <script src="components/navbar/navbar.controller.js"></script>
       <script src="components/navbar/navbar.directive.js"></script>
       <script src="components/oauth-buttons/oauth-buttons.controller.js"></script>
       <script src="components/oauth-buttons/oauth-buttons.directive.js"></script>
+      <script src="components/repeatMessages/repeatMessages.directive.js"></script>
       <script src="components/socket/socket.service.js"></script>
       <script src="app/account/signup/signup.controller.js"></script>
       <script src="components/util/util.service.js"></script>

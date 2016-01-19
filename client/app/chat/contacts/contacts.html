@@ -1,6 +1,18 @@
-<h4 class="title-bar">Friend List</h4>
-<ul>
-  <li>First</li>
-  <li>Second</li>
-</ul>
-<h4 class="title-bar">Group List</h4>
+
+<h4 class="title-bar">Friend List  <ng-md-icon icon="person_add" aria-label="Add User"  class="floater-right" ng-click="toggleAddContact()"></ng-md-icon></h4>
+<md-list>
+  <md-list-item ng-repeat="person in people" ng-click="goToPerson(person.name, $event)">
+    <img alt="{{ person.name }}" ng-src="{{ person.img }}" class="md-avatar" />
+    <p>{{person.name}}</p>
+    <ng-md-icon icon="messenger" ng-click="selectUser(person)" aria-label="Open Chat"  ng-class="{'md-primary': person.newMessage}"></ng-md-icon>
+  </md-list-item>
+</md-list>
+<h4 class="title-bar">Group List  <ng-md-icon icon="group_add" aria-label="Add User"  class="floater-right" ng-click="toggleAddGroup()"></ng-md-icon></h4>
+<md-list>
+  <md-list-item ng-repeat="group in groups" ng-click="goToPerson(group.name, $event)">
+    <img alt="{{group.name }}" ng-src="{{ group.img }}" class="md-avatar" />
+    <p>{{group.name}}</p>
+    <ng-md-icon icon="messenger" ng-click="doSecondaryAction($event)" aria-label="Open Chat"  ng-class="{'md-primary':group.newMessage}"></ng-md-icon>
+  </md-list-item>
+</md-list>
+<md-divider></md-divider>

@@ -1,0 +1,37 @@
+.user-photo {
+  border:5px solid darkorange;
+  border-radius:100%;
+  overflow:hidden;
+  width:150px;
+  height:150px;
+  margin:10px auto;
+}
+
+.outer-info{
+  background: lightslategray;
+  width: 80%;
+  border-top: 5px solid darkorange;
+  border-radius: 1px;
+  box-shadow: 10px 10px 3px rgba(0, 0, 0, 0.1);
+  margin: 0 auto;
+  padding: 15px;
+}
+
+.outer-info >p {
+  color:darkorange;
+  text-shadow: 1px 1px #222222;
+  font-family: 'Croissant One', sans-serif;
+}
+.outer-info >p >span{
+  color:darkslategrey;
+  text-shadow: 0 1px #222222;
+}
+
+.inner-info{
+  margin-top:5%;
+  margin-left:5%;
+  width:100%;
+  min-height:310px;
+  background-color: darkslategrey;
+}
+

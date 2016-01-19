@@ -165,3 +165,12 @@ to prevent collapsing during animation*/
   background: orangered;
 }
 
+.help-block{
+  text-align: center;
+  color:orangered;
+}
+.answer-block{
+  text-align: center;
+  color:green;
+}
+

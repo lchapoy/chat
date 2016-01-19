@@ -20,7 +20,16 @@ angular.module('chatYeoApp')
           },
           'information@chat': {
             templateUrl: 'app/chat/information/information.html',
-            controller:'infoCtrl'
+            controller:'InformationCtrl'
+          },
+          'addContact@chat': {
+            templateUrl: 'app/chat/addUser/addUser.html',
+            controller:'AddUserCtrl',
+            controllerAs:'ac'
+          },
+          'addGroup@chat': {
+            templateUrl: 'app/chat/addGroup/addGroup.html',
+            controller:'AddGroupCtrl'
           }
         }
 

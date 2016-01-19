@@ -1,0 +1,36 @@
+.search-icon{
+  padding:.1em;
+  margin:0px;
+  color:dimgray;
+  float:left;
+  clear:none;
+  background-color:white;
+  border:0
+}
+.search-icon:hover{
+ color:orangered;
+}
+
+
+.search-input{
+  padding:.2em;
+  margin:.2px;
+  color:dimgray;
+  float:left;
+  clear:none;
+  width:80%;
+  border-radius: 5px;
+}
+
+#search-box{
+  margin-top:1em;
+  margin-bottom:2em;
+  padding-left:.6em;
+}
+.outer-info p {
+  color:darkorange;
+  font-size:.8em;
+  text-shadow: 1px 1px #222222;
+  font-family: 'Croissant One', sans-serif;
+}
+

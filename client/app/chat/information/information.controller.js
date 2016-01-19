@@ -2,5 +2,9 @@
 
 angular.module('chatYeoApp')
   .controller('InformationCtrl', function ($scope) {
-    $scope.message = 'Hello';
+    $scope.selection={};
+    $scope.$on('selectionChange', function( event, user ){
+      console.log(user);
+      $scope.selection=user;
+    });
   });

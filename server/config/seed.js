@@ -52,6 +52,24 @@ User.find({}).removeAsync()
       name: 'Admin',
       email: 'admin@example.com',
       password: 'admin'
+    }, {
+      provider: 'local',
+      name: 'Janet Perkins',
+      email: 'jperkins@example.com',
+      img: '/assets/images/janetPerkings.jpg',
+      password: 'test'
+    }, {
+      provider: 'local',
+      name: 'Mary Johnson',
+      email: 'mjohnson@example.com',
+      img: '/assets/images/maryJohnson.jpg',
+      password: 'test'
+    }, {
+      provider: 'local',
+      name: 'Peter Carlsson',
+      email: 'pcarlsson@example.com',
+      img: '/assets/images/peterCarlsson.jpg',
+      password: 'test'
     })
     .then(() => {
       console.log('finished populating users');

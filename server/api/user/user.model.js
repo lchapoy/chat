@@ -6,6 +6,26 @@ import {Schema} from 'mongoose';
 
 const authTypes = ['github', 'twitter', 'facebook', 'google'];
 
+var messageSchema =new Schema({
+    text:String,
+    origin:String,
+    date:{
+      type: Date,
+      default: Date.now
+    },
+    read:{
+      type: Boolean,
+      default: false
+    }
+  }
+)
+
+var friendSchema =new Schema({
+
+  }
+);
+
+
 var UserSchema = new Schema({
   name: String,
   email: {
@@ -16,9 +36,11 @@ var UserSchema = new Schema({
     type: String,
     default: 'user'
   },
+  img:String,
   password: String,
   provider: String,
   salt: String,
+  contacts:[],
   facebook: {},
   twitter: {},
   github: {}

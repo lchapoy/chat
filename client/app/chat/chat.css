@@ -1,33 +1,17 @@
-.l-sidebar{
-   //border: 2px solid red;
-   min-height:300px;
-   max-width:100%
- }
-.r-sidebar{
-    //border: 2px solid red;
-    min-height:200px;
-    max-width:100%;
-    max-height:250px;
-  }
-.messages{
-  //border: 2px solid red;
-  min-height:500px;
-  max-width:100%;
 
-  max-height:250px;
-}
+
 .input input{
  //border: 2px solid red;
    min-height:50px;
-   width:80%;
+   width:70%;
     margin:0px;
   padding:0px;
  }
-.input button{
+.input .md-button{
 //border: 2px solid red;
   min-height:50px;
-  width:18%;
-  margin:0px;
+  width:16%;
+  margin-right:2%;
   padding:0px;
 }
 
@@ -39,3 +23,42 @@
   font-family: 'Croissant One', sans-serif;
   text-align:center;
 }
+
+.add-person{
+  postion:absolute;
+  top:-40%;
+  left:40%;
+  width:300px;
+  height:250px;
+
+}
+.md-sidenav-left{
+  width:16em;
+}
+.md-sidenav-right{
+  width:15em;
+}
+
+.floater-right{
+  float:right;
+  padding-right:5px;
+}
+
+
+.floater-right:hover{
+  color:lavenderblush;
+  cursor:pointer;
+}
+
+
+.floater-left{
+  float:left;
+  padding-right:5px;
+}
+
+
+.floater-left:hover{
+  color:lavenderblush;
+  cursor:pointer;
+}
+
