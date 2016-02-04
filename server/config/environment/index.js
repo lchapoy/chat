@@ -2,6 +2,10 @@
 
 var path = require('path');
 var _ = require('lodash');
+import session from 'express-session';
+import mongoose from 'mongoose';
+import connectMongo from 'connect-mongo';
+var mongoStore = connectMongo(session);
 
 function requiredProcessEnv(name) {
   if (!process.env[name]) {
@@ -51,7 +55,16 @@ var all = {
     clientID:     process.env.TWITTER_ID || 'id',
     clientSecret: process.env.TWITTER_SECRET || 'secret',
     callbackURL:  (process.env.DOMAIN || '') + '/auth/twitter/callback'
-  }
+  },
+  session:session({
+    secret: 'chat-yeo-secret',
+    saveUninitialized: true,
+    resave: true,
+    store: new mongoStore({
+      mongooseConnection: mongoose.connection,
+      db: 'chat-yeo'
+    })
+  })
 };
 
 // Export the config object based on the NODE_ENV

@@ -30,7 +30,20 @@ function UserResource($resource) {
       params: {
         controller:'addMail'
       }
+    },
+    addContactRoom: {
+      method: 'PUT',
+      params: {
+        controller: 'addContRoom'
+      }
+    },
+    addGroup: {
+      method: 'PUT',
+      params: {
+        controller: 'addGroup'
+      }
     }
+
   });
 }
 

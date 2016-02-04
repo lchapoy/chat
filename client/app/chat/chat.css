@@ -1,4 +1,7 @@
-
+#chatViewPort{
+  min-height:90vh;
+  max-height:90vh;
+}
 
 .input input{
  //border: 2px solid red;

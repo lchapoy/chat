@@ -1,37 +1,47 @@
 'use strict';
 
 angular.module('chatYeoApp')
-  .controller('ContactsCtrl', function ($scope,User) {
+  .controller('ContactsCtrl', function ($scope,User,Comm) {
     $scope.message = 'Hello';
-    console.log('running')
-    $scope.people=[];
-    User.getFriends().$promise.then(contacts=>{
 
-      $scope.people=contacts[0].contacts;
-      console.log('running2',contacts);
-    });
-   /* $scope.people= [
-      { name: 'Janet Perkins', img: '/assets/images/janetPerkings.jpg', newMessage: true },
-      { name: 'Mary Johnson', img: '/assets/images/maryJohnson.jpg', newMessage: false },
-      { name: 'Peter Carlsson', img: '/assets/images/peterCarlsson.jpg', newMessage: false }
-    ];*/
-    $scope.groups= [
+    console.log('running')
+    //$scope.rooms=[];
+    //$scope.groups=[];
+    Comm.getRooms({id:$scope.currentUser._id,kind:'par'})
+      .then(contacts=>{
+       // $scope.rooms=contacts[0].rooms;
+       // $scope.$emit('pushChanges', sendAllUsers($scope.rooms));
+        console.log('running2',contacts[0].rooms);
+        $scope.$on('allFriends',{data:contacts[0].rooms});
+      });
+    Comm.getRooms({id:$scope.currentUser._id,kind:'group'})
+      .then(contacts=>{
+        //$scope.groups=contacts[0].rooms;
+       // $scope.$emit('pushChanges', sendAllUsers($scope.rooms));
+        console.log('running2',contacts[0].rooms);
+      });
+  /*  $scope.groups= [
       { name: 'Group1', img: '/assets/images/janetPerkings.jpg', newMessage: true },
       { name: 'Group2', img: '/assets/images/maryJohnson.jpg', newMessage: false },
       { name: 'Group3', img: '/assets/images/peterCarlsson.jpg', newMessage: false }
-    ];
+    ];*/
 
     $scope.selectUser=function(user){
       $scope.$emit('pushChanges', sendNewChanges(user));
-    }
+    };
 
-    $scope.$on('newFriend', function(event, user ){
+   /* $scope.$on('newFriend', function(event, user ){
       console.log(user);
-      $scope.people.push(user);
+      $scope.rooms.push(user);
     });
+    $scope.$on('newGroup', function(event, group){
+      $scope.groups.push(group);
+    });
+*/
 
-
-
+   // function sendAllUsers(users){ // for some event.
+    //  return { name: 'allFriends', data: users };
+   // }
     function sendNewChanges(user){ // for some event.
       return { name: 'selectionChange', data: user };
     }

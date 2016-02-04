@@ -5,6 +5,7 @@ angular.module('chatYeoApp')
     $stateProvider
       .state('chat', {
         url: '/chat',
+        authenticate: true,
         views: {
           '': {
             templateUrl: 'app/chat/chat.html',
@@ -29,7 +30,8 @@ angular.module('chatYeoApp')
           },
           'addGroup@chat': {
             templateUrl: 'app/chat/addGroup/addGroup.html',
-            controller:'AddGroupCtrl'
+            controller:'AddGroupCtrl',
+            controllerAs:'group'
           }
         }
 

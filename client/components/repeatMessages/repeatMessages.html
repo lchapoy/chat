@@ -1,5 +1,8 @@
 <div class="chat-message">
-    <p ng-repeat="item in messages" ng-class="item.origin">
+    <div ng-repeat="item in messages" ng-class="fromOrTo(item.origin)">
+      <p ng-if="group=='group'">{{item.name}}:</p>
       {{item.text}}
-    </p>
+
+    </div>
+
 </div>

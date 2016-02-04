@@ -25,6 +25,8 @@ for (var e in events) {
 
 function emitEvent(event) {
   return function(doc) {
+    //console.log(event + ':' + doc._id);
+    //console.log(doc)
     UserEvents.emit(event + ':' + doc._id, doc);
     UserEvents.emit(event, doc);
   }

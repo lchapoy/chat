@@ -13,8 +13,8 @@
   border-top: 5px solid darkorange;
   border-radius: 1px;
   box-shadow: 10px 10px 3px rgba(0, 0, 0, 0.1);
-  margin: 0 auto;
-  padding: 15px;
+  margin: 20px auto;
+  padding: 10px;
 }
 
 .outer-info >p {
@@ -35,3 +35,16 @@
   background-color: darkslategrey;
 }
 
+.outer-info button {
+  cursor: pointer;
+  background: darkorange;
+  width: 100%;
+  border: 0;
+  padding: 10px 15px;
+  color: #ffffff;
+  -webkit-transition: 0.3s ease;
+  transition: 0.3s ease;
+}
+.outer-info button:hover {
+  background: orangered;
+}

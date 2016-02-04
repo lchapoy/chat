@@ -39,8 +39,9 @@ var UserSchema = new Schema({
   img:String,
   password: String,
   provider: String,
+  status: {type:String,default:"Online"},
   salt: String,
-  contacts:[],
+  rooms:[{type:Schema.Types.ObjectId,ref:'Room'}],
   facebook: {},
   twitter: {},
   github: {}

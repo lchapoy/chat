@@ -15,8 +15,9 @@ function onConnect(socket) {
   socket.on('info', data => {
     socket.log(JSON.stringify(data, null, 2));
   });
-
+  var id=socket.decoded_token;
   // Insert sockets below
+  require('../api/room/room.socket').register(socket,id);
   require('../api/thing/thing.socket').register(socket);
 
 }
@@ -32,10 +33,14 @@ export default function(socketio) {
   // 1. You will need to send the token in `client/components/socket/socket.service.js`
   //
   // 2. Require authentication here:
-  // socketio.use(require('socketio-jwt').authorize({
-  //   secret: config.secrets.session,
-  //   handshake: true
-  // }));
+   socketio.use(require('socketio-jwt').authorize({
+     secret: config.secrets.session,
+     handshake: true
+  }));
+
+  socketio.use(function(socket, next) {
+    config.session(socket.request, socket.request.res, next);
+  });
 
   socketio.on('connection', function(socket) {
     socket.address = socket.request.connection.remoteAddress +
@@ -46,6 +51,7 @@ export default function(socketio) {
     socket.log = function(...data) {
       console.log(`SocketIO ${socket.nsp.name} [${socket.address}]`, ...data);
     };
+
 
     // Call onDisconnect.
     socket.on('disconnect', () => {

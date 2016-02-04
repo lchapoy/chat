@@ -6,7 +6,8 @@
 'use strict';
 import Thing from '../api/thing/thing.model';
 import User from '../api/user/user.model';
-
+import Room from '../api/room/room.model';
+Room.find({}).removeAsync();
 Thing.find({}).removeAsync()
   .then(() => {
     Thing.create({
@@ -75,3 +76,4 @@ User.find({}).removeAsync()
       console.log('finished populating users');
     });
   });
+

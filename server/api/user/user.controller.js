@@ -93,9 +93,9 @@ export function destroy(req, res) {
 /**
  * Change a users password
  */
-function isRegistered(email,cb,catchFn){
+/*function isRegistered(email,cb,catchFn){
   return User.findOneAsync({email:email}, '-salt -password').then(cb).catch(catchFn);
-}
+}*/
 
 export function changePassword(req, res, next) {
   var userId = req.user._id;
@@ -119,7 +119,7 @@ export function changePassword(req, res, next) {
 /**
   * Add Friend
 */
-export function addFriend(req, res, next) {
+/*export function addFriend(req, res, next) {
   var userId = req.user._id;
   var email = String(req.body.email);
   isRegistered(email,
@@ -144,19 +144,31 @@ export function addFriend(req, res, next) {
                     }).catch(showErrorMessage(res,email+" is already your friend"));
                 },
                 showErrorMessage(res,"User doesn't exist"));
-}
+}*/
 /**
  * Get All Friend Info
- */
+ *//*
 export function getAllFriends(req, res, next) {
   var userId = req.user._id;
-  console.log('here we are ',userId);
   User.find({_id:userId}, "-salt -password").populate({path:"contacts",select:"name img"}).
     exec(function (err, res1) {
       console.log(res1);
      res.json(res1);
   })
-}
+}*/
+/**
+ * Add Room
+ */
+/*export function addContRoom(roomId,membersId) {
+  var roomId=req.params.id;
+  var membersId = req.body.membersId;
+  console.log(membersId)
+  return User.update({_id:{$in:membersId}},{$push:{rooms:roomId}},{multi: true}).$promise
+    .then((user)=>{
+      console.log(user);
+      res.status(201).end();
+    });
+}*/
 /**
  * Get my info
  */

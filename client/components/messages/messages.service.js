@@ -1,17 +1,23 @@
 'use strict';
 
 
-function MessageService() {
+function MessageService(Comm) {
   var storage={};
   var Messages = {
-    newMessage(fromUserId,messageInfo) {
-      storage[fromUserId].push(messageInfo);
+    newMessage(fromRoomId,messageInfo) {
+      console.log(messageInfo);
+      storage[fromRoomId].push(messageInfo);
     },
-    getMessages(fromUserId) {
-      if(!storage[fromUserId]){
-        storage[fromUserId]=[]
+    getMessages(fromRoomId) {
+      if(!storage[fromRoomId]){
+        storage[fromRoomId]=[];
+        Comm.getMessage({id:fromRoomId})
+          .then( messages =>{
+            storage[fromRoomId].push(...messages);
+            console.log(messages);
+          });
       }
-      return storage[fromUserId]
+      return storage[fromRoomId]
     }
   };
 

@@ -51,6 +51,7 @@ function AuthService($location, $http, $cookies, $q, appConfig, Util, User) {
     logout() {
       $cookies.remove('token');
       currentUser = {};
+
     },
 
     /**

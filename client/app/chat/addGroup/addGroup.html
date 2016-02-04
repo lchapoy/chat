@@ -1,1 +1,32 @@
-<div>This is the addGroup view.</div>
+<h4 class="title-bar" >Create New Group</h4>
+<form ng-submit="group.newGroup(groupName)">
+    <label for="groupName">Group Name</label>
+    <input  id="groupName" type="text" class="search-input" ng-model="groupName">
+    <md-button type="submit">Create</md-button>
+</form>
+<div class="outer-info">
+  <h4 class="title-bar" >Going to add</h4>
+  <md-list>
+    <md-list-item ng-repeat="person in rooms" ng-if="person.members[0].add">
+      <img alt="{{ person.members[0].name }}" ng-src="{{ person.members[0].img }}" class="md-avatar" />
+      <p>{{person.members[0].name}}</p>
+      <input type="checkbox" ng-model="person.members[0].add" ng-change="group.removeMemberId(person.members[0]._id)">
+    </md-list-item>
+  </md-list>
+</div>
+<div class="outer-info">
+  <h4 class="title-bar" >Not being added</h4>
+  <md-list>
+    <md-list-item ng-repeat="person in rooms| filter:searchText" ng-if="!person.members[0].add">
+      <img alt="{{ person.members[0].name }}" ng-src="{{ person.members[0].img }}" class="md-avatar" />
+      <p>{{person.members[0].name}}</p>
+      <input type="checkbox" ng-model="person.members[0].add" ng-change="group.addMemberId(person.members[0]._id)">
+      <br>
+    </md-list-item>
+  </md-list>
+</div>
+<div id="search-box">
+  <input type="search" class="search-input" ng-model="searchText">
+  <button type="submit" class="search-icon"><ng-md-icon class="search-icon" icon="search"  ></ng-md-icon></button>
+</div>
+

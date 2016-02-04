@@ -34,7 +34,14 @@ export function isAuthenticated() {
           if (!user) {
             return res.status(401).end();
           }
+
+          console.log("Auth")
+
+          req.session._id=user._id;
+          req.session.name=user.name;
+          req.session.user=user;
           req.user = user;
+          //console.log(req.user,req.session);
           next();
         })
         .catch(err => next(err));

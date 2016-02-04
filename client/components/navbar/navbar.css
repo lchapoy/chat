@@ -4,27 +4,32 @@ h4 .md-button, h4 {
 
 div .md-button{
   float:right;
-  //background-color: darkslategray;
-
+  margin:0px;
 }
 
 .navbar {
   font-family: 'Croissant One', sans-serif;
   color: darkslategray;
+  min-height:8vh;
+  max-height:8vh;
 }
 
 
 .md-icon-button{
-  margin:10px !important;
+  margin:0px !important;
 }
 
 #ch-title{
   padding:0px;
-  margin:10px;
+  margin:0px;
   float:left
 }
 
 h2{
   padding:0px;
-  margin:5px;
+  margin:0px;
+}
+.navbar h2{
+  padding:10px;
+  font-size: .7em;
 }
