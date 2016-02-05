@@ -3,20 +3,23 @@
 
 function MessageService(Comm) {
   var storage={};
+  var initMessages=(fromRoomId)=>{
+    if(!storage[fromRoomId]) {
+      storage[fromRoomId] = [];
+      Comm.getMessage({id: fromRoomId})
+        .then(messages => {
+          storage[fromRoomId].push(...messages);
+        });
+    }
+  };
+
   var Messages = {
     newMessage(fromRoomId,messageInfo) {
-      console.log(messageInfo);
+      initMessages(fromRoomId);
       storage[fromRoomId].push(messageInfo);
     },
     getMessages(fromRoomId) {
-      if(!storage[fromRoomId]){
-        storage[fromRoomId]=[];
-        Comm.getMessage({id:fromRoomId})
-          .then( messages =>{
-            storage[fromRoomId].push(...messages);
-            console.log(messages);
-          });
-      }
+      initMessages(fromRoomId)
       return storage[fromRoomId]
     }
   };

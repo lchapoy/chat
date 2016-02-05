@@ -39,7 +39,7 @@ var UserSchema = new Schema({
   img:String,
   password: String,
   provider: String,
-  status: {type:String,default:"Online"},
+  status: {type:String,default:"Offline"},
   salt: String,
   rooms:[{type:Schema.Types.ObjectId,ref:'Room'}],
   facebook: {},

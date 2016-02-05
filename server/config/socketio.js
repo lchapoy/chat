@@ -4,6 +4,14 @@
 'use strict';
 
 import config from './environment';
+import RoomEvents from '../api/room/room.events';
+
+//Model Events
+var modelEvents = {
+  'newFriend':newFriend,
+  'newGroup':newGroup,
+  'deleteFriend':deleteFriend
+};
 
 // When the user disconnects.. perform this
 function onDisconnect(socket) {
@@ -21,6 +29,39 @@ function onConnect(socket) {
   require('../api/thing/thing.socket').register(socket);
 
 }
+
+function newFriend(socket,event) {
+  return function (doc) {
+
+    var message=doc.from.members[0].name+" is your new friend";
+    socket.to(doc.toId).emit(event, doc.from,message);
+    //socket.join(doc.from._id);
+  }
+}
+
+function newGroup(socket,event) {
+  return function (group,info) {
+    var message=info+" added you to "+group.name+" group";
+    var members=group.members;
+    for(var i=0;i<members.length;i++) {
+      console.log(group.admin!=members[i]._id);
+      console.log(group.admin,members[i]._id);
+      if(!group.admin.equals(members[i]._id))
+      socket.to(members[i]._id).emit(event, group, message);
+  }
+    //socket.join(doc.from._id);
+  }
+}
+
+function deleteFriend(socket,event) {
+  return function (doc) {
+    var friendId=doc.friendId;
+    var message=doc.name+" is no longer your friend";
+    socket.to(friendId).emit(event,doc.roomId,message);
+
+  }
+}
+
 
 export default function(socketio) {
   // socket.io (v1.x.x) is powered by debug.
@@ -41,6 +82,12 @@ export default function(socketio) {
   socketio.use(function(socket, next) {
     config.session(socket.request, socket.request.res, next);
   });
+
+  //Subscribe socket.io events
+  for (let e in modelEvents) {
+    let callback = modelEvents[e];
+    RoomEvents.on(e, callback(socketio,'room:'+e));
+  }
 
   socketio.on('connection', function(socket) {
     socket.address = socket.request.connection.remoteAddress +

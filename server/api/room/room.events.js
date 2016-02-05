@@ -15,6 +15,7 @@ RoomEvents.setMaxListeners(0);
 var events = {
   //'save': 'save',
   //'remove': 'remove'
+  'tellGroup':'newGroup',
   'tellFriend': 'newFriend',
   'friendDeleted':'deleteFriend'
 };
@@ -30,10 +31,10 @@ for (var e in events) {
 }
 
 function emitEvent(event) {
-  return function(doc) {
+  return function(doc,info) {
     //console.log(event + ':' + doc._id);
-    //console.log(event + ':' + doc._id);
-    RoomEvents.emit(event+':'+doc._id, doc);
+    console.log(event,doc);
+    RoomEvents.emit(event, doc,info);
    // RoomEvents.emit(event, doc);
   }
 }

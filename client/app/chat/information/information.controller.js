@@ -14,7 +14,7 @@ angular.module('chatYeoApp')
       }
     });
     $scope.deleteFriend=()=>{
-      $scope.$emit('deleteFriend',{id:$scope.roomId,userId:$scope.selection._id})
+      $scope.$emit('deleteFriend',{id:$scope.roomId,friendId:$scope.selection._id})
       $scope.selection=$scope.currentUser;
     }
   });

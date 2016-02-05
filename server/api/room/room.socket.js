@@ -8,12 +8,10 @@ var RoomEvents = require('./room.events');
 var User = require('../user/user.model');
 var Room = require('./room.model');
 // Model events to emit
-var modelEvents = {
-  //'save',
-  // 'remove',
+/*var modelEvents = {
   'newFriend':newFriend,
   'deleteFriend':deleteFriend
-};
+};*/
 var socketEvents = {
   'joinRooms':joinRooms,
   'addRoom':joinOneRoom,
@@ -23,12 +21,12 @@ var socketEvents = {
 
 export function register(socket,id) {
   // Bind model events to socket events
-  for (let e in modelEvents) {
+  /*for (let e in modelEvents) {
     let callback = modelEvents[e];
     let listener = createListener('room:' + e, socket,callback);
     RoomEvents.on(e+':'+id._id, listener);
     socket.on('disconnect', removeListener(e+':'+id._id, listener));
-  }
+  }*/
   //Listen to user socketEvent
   for (let e in socketEvents) {
     let callback = socketEvents[e];
@@ -39,7 +37,7 @@ export function register(socket,id) {
   //***************************************
   //Added by me
   socket.on('forceDisconnect',forceDisconnect(socket,id));
-  //**************************************
+  //***************************************
 
 }
 function forceDisconnect(socket,id){
@@ -55,7 +53,7 @@ function forceDisconnect(socket,id){
           socket.to(data[i].members[0])
           .emit(
             "userDisconnect",
-            null,
+            data[i]._id,
             " "+socket.request.session.name+" is offline"
           );
         }
@@ -66,10 +64,18 @@ function forceDisconnect(socket,id){
 
 function joinRooms(socket,event,id){
   return function(){
-    User.findOneAsync({_id:id},{'rooms':1,'_id':0})
-     .then((data)=>{
+    User.findOne({_id:id._id},{'rooms':1,'_id':0})
+      .populate({path:'rooms',model:Room})
+      .exec((err,data)=>{
+        console.log(data);
         for(var i=0;i<data.rooms.length;i++){
-          socket.join(data.rooms[i]);
+          socket.join(data.rooms[i]._id);
+          if(data.rooms[i].kind=="par")
+          socket.to(data.rooms[i]._id)
+            .emit("room:changeStatus",
+              data.rooms[i]._id,
+              socket.request.session.name+" is Online"
+            );
         }
         socket.join(id._id);
       });
@@ -87,7 +93,7 @@ function eventToRoom(socket,event){
   };
 }
 
-function newFriend(socket,event) {
+/*function newFriend(socket,event) {
   return function (doc) {
     var message=doc.from.members[0].name+" is your new friend";
     socket.broadcast.to(doc.toId).emit(event, doc.from,message);
@@ -105,7 +111,7 @@ function deleteFriend(socket,event) {
     socket.emit(event,roomId,message);
 
   }
-}
+}*/
 
 function createListener(event, socket,cb,id) {
   return cb(socket,event,id);

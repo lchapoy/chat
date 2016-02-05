@@ -138,12 +138,12 @@ function respondWith(res, statusCode) {
  */
 export function destroy(req, res) {
  var roomId= req.params.id;
-  var userId= req.query.userId;
+  var friendId= req.query.friendId;
   Room.findByIdAndRemoveAsync(roomId)
     .then((data)=> {
       removeContRoom(data.members)
         .then(()=>{
-          Room.schema.emit('friendDeleted',{_id:userId,roomId:roomId});
+          Room.schema.emit('friendDeleted',{friendId:friendId,roomId:roomId,name:req.session.name});
           res.status(204).end();
       })
     })
@@ -233,10 +233,8 @@ export function createRoom(req, res, next) {
               addContRoom(contactRoom._id,[friend._id,userId])
                 .then((response)=>{
                   if(response.nModified==2){
-                    console.log(req.user);
                     Room.schema.emit("tellFriend",
-                      {_id:userId,
-                        toId:friend._id,
+                      { toId:friend._id,
                         from:{_id:contactRoom._id,
                           members:[req.session.user],
                           messages:[],
@@ -282,9 +280,10 @@ export function createGroup(req, res, next) {
             if(response.nModified==membersId.length){
               group.populate(
                 'members',
-                (err,user)=>{
-                  if(err) res.status(401).json(user);
-                  res.status(201).json(user);
+                (err,group)=>{
+                  if(err) res.status(401).json(group);
+                  Room.schema.emit("tellGroup",group,req.session.name);
+                  res.status(201).json(group);
                 });
             }else{
               showErrorMessage(res,email+" could not be added to the room")();

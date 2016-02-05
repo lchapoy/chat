@@ -34,9 +34,11 @@ export function isAuthenticated() {
           if (!user) {
             return res.status(401).end();
           }
-
-          console.log("Auth")
-
+          user.status='Online';
+          console.log('hi');
+          user.saveAsync()
+            .then((user) => {
+            });
           req.session._id=user._id;
           req.session.name=user.name;
           req.session.user=user;

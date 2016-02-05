@@ -18,3 +18,16 @@ md-divider {
   max-width:40%;
 }
 
+.md-alert{
+  color:darkorange;
+}
+
+.md-primary{
+  color:lightslategray;
+}
+.user-online{
+  opacity:1;
+}
+.user-offline{
+  opacity:.5;
+}

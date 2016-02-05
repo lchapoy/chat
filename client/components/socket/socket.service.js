@@ -106,8 +106,8 @@ angular.module('chatYeoApp')
        addRoom(roomId){
           socket.emit('room:addRoom',roomId)
         },
-        messageToRoom(roomId,message){
-          socket.emit('room:newMessage',{roomId:roomId,message:message})
+        messageToRoom(roomId,message,kind){
+          socket.emit('room:newMessage',{roomId:roomId,message:message,kind:kind})
         },
         disconnect(){
           socket.emit('forceDisconnect');

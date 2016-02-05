@@ -26,8 +26,8 @@ angular.module('chatYeoApp')
       { name: 'Group3', img: '/assets/images/peterCarlsson.jpg', newMessage: false }
     ];*/
 
-    $scope.selectUser=function(user){
-      $scope.$emit('pushChanges', sendNewChanges(user));
+    $scope.selectUser=function(user,index){
+      $scope.$emit('pushChanges', sendNewChanges(user,index));
     };
 
    /* $scope.$on('newFriend', function(event, user ){
@@ -42,8 +42,8 @@ angular.module('chatYeoApp')
    // function sendAllUsers(users){ // for some event.
     //  return { name: 'allFriends', data: users };
    // }
-    function sendNewChanges(user){ // for some event.
-      return { name: 'selectionChange', data: user };
+    function sendNewChanges(user,index){ // for some event.
+      return { name: 'selectionChange', data: user, index:index};
     }
 
   });
