@@ -1,4 +1,4 @@
-<div  class="messages" >
+<md-subheader class="user-subheader">
   <h4 class="title-bar">
     <ng-md-icon class="floater-left" icon="person" hide-gt-xs ng-click="toggleContacts()">
     </ng-md-icon>
@@ -6,18 +6,31 @@
     <ng-md-icon  icon="info" class="floater-right" hide-gt-sm ng-click="toggleInfo()">
     </ng-md-icon>
   </h4>
-  <div class="title-user">
-    <image  ng-src="{{selection.img }}"  class="user-photo-message"></image>
+  <div ng-if="MessCtrl.selection!=null">
+    <div class="title-user">
+      <image  ng-src="{{MessCtrl.selection.img }}"  class="user-photo-message"></image>
       <div class="right-title-bar">
-        <h4 >{{selection.name}} </h4>
+        <h4 >{{MessCtrl.selection.name}} </h4>
       </div>
+      <div class="right-title-bar">
+        <h6><span > {{MessCtrl.membersNames}} </span>
+        </h6>
+      </div>
+    </div>
   </div>
-  <repeat-messages messages="messages" user-id="currentUser._id" group="selection.kind"></repeat-messages>
+</md-subheader>
+<md-content flex class="messages" ng-if="MessCtrl.selection!=null">
+    <repeat-messages messages="MessCtrl.messages" user-id="MessCtrl.currentUser._id" group="MessCtrl.selection.kind"></repeat-messages>
 
-</div>
-<div  class="input md-whiteframe-z2" >
-  <form ng-submit="addMessage()">
-    <input type="text" ng-model="sendText">
-    <md-button aria-label="send" type="submit" >SEND</md-button>
-  </form>
+</md-content>
+<md-content class="welcome-message" ng-if="MessCtrl.selection==null">
+  <p>The Cha-Chat</p>
+</md-content>
+<div ng-if="MessCtrl.selection!=null">
+  <div  class="input md-whiteframe-z2" >
+    <form ng-submit="MessCtrl.addMessage()">
+      <input type="text" ng-model="MessCtrl.sendText">
+      <md-button aria-label="send" type="submit" >SEND</md-button>
+    </form>
+  </div>
 </div>

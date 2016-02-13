@@ -13,13 +13,7 @@
 
 
 .search-input{
-  padding:.2em;
-  margin:.2px;
-  color:dimgray;
-  float:left;
-  clear:none;
-  width:80%;
-  border-radius: 5px;
+  height:20vh;
 }
 
 #search-box{

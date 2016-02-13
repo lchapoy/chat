@@ -16,6 +16,7 @@ var socketEvents = {
   'joinRooms':joinRooms,
   'addRoom':joinOneRoom,
   'delete':eventToRoom,
+  'removeRoom':removeRoomListener,
   'newMessage':eventToRoom
 };
 
@@ -42,12 +43,14 @@ export function register(socket,id) {
 }
 function forceDisconnect(socket,id){
   return function(){
-    User.findOne({_id:id._id},{rooms:1,_id:0})
+    User.findOne({_id:id._id},{rooms:1,status:1})
       .populate({
         path:'rooms',
         model:Room,
         select:{'members':{$elemMatch:{$ne:id._id}},kind:"par"}
       }).exec((err,data)=>{
+        data.status='Offline';
+        data.saveAsync();
         data=data.rooms;
         for(var i=0;i<data.length;i++){
           socket.to(data[i].members[0])
@@ -67,7 +70,8 @@ function joinRooms(socket,event,id){
     User.findOne({_id:id._id},{'rooms':1,'_id':0})
       .populate({path:'rooms',model:Room})
       .exec((err,data)=>{
-        console.log(data);
+        //sometimes error data equals to null
+       // console.log(data);
         for(var i=0;i<data.rooms.length;i++){
           socket.join(data.rooms[i]._id);
           if(data.rooms[i].kind=="par")
@@ -86,9 +90,15 @@ function joinOneRoom(socket){
     socket.join(roomId)
   };
 }
+function removeRoomListener(socket){
+  return function(roomId){
+    socket.leave(roomId)
+  };
+}
+
 function eventToRoom(socket,event){
   return function(doc,message){
-    console.log(event);
+    //console.log(event);
     socket.to(doc.roomId).emit(event,doc,message);
   };
 }

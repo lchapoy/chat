@@ -48,21 +48,9 @@
 .chat-message div.from p{
  color: darkorange;
 }
-@media (max-height: 630px) {
-  .chat-message{
-    margin-top:10px;
-    width:100%;
-    overflow-y: auto;
-    min-height:60vh;
-    max-height:60vh;
-  }
-}
-@media (min-height: 630px) {
-  .chat-message {
-    margin-top: 10px;
-    width: 100%;
-    overflow-y: auto;
-    min-height: 65vh;
-    max-height: 65vh;
-  }
+
+.chat-message{
+  margin-top:10px;
+  width:100%;
+  overflow-y: auto;
 }

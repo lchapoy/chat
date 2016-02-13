@@ -6,25 +6,6 @@ import {Schema} from 'mongoose';
 
 const authTypes = ['github', 'twitter', 'facebook', 'google'];
 
-var messageSchema =new Schema({
-    text:String,
-    origin:String,
-    date:{
-      type: Date,
-      default: Date.now
-    },
-    read:{
-      type: Boolean,
-      default: false
-    }
-  }
-)
-
-var friendSchema =new Schema({
-
-  }
-);
-
 
 var UserSchema = new Schema({
   name: String,
@@ -42,6 +23,9 @@ var UserSchema = new Schema({
   status: {type:String,default:"Offline"},
   salt: String,
   rooms:[{type:Schema.Types.ObjectId,ref:'Room'}],
+  request:[{type:Schema.Types.ObjectId,ref:'User'}],
+  pending:[{type:Schema.Types.ObjectId,ref:'User'}],
+  spam:[{type:Schema.Types.ObjectId,ref:'User'}],
   facebook: {},
   twitter: {},
   github: {}

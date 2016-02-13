@@ -17,7 +17,8 @@ var RoomSchema = new mongoose.Schema({
   name:String,
   admin:mongoose.Schema.Types.ObjectId,
   members: [{type:mongoose.Schema.Types.ObjectId, ref:'User'}],
-  kind:String
+  kind:String,
+  img:String
 });
 
 export default mongoose.model('Room', RoomSchema);

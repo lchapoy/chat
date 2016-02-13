@@ -23,7 +23,7 @@ export function isAuthenticated() {
       if (req.query && req.query.hasOwnProperty('access_token')) {
 
         req.headers.authorization = 'Bearer ' + req.query.access_token;
-         console.log(req.headers.authorization)
+         //console.log(req.headers.authorization)
       }
       validateJwt(req, res, next);
     })
@@ -35,7 +35,7 @@ export function isAuthenticated() {
             return res.status(401).end();
           }
           user.status='Online';
-          console.log('hi');
+         // console.log('hi');
           user.saveAsync()
             .then((user) => {
             });
@@ -87,7 +87,7 @@ export function setTokenCookie(req, res) {
     return res.status(404).send('It looks like you aren\'t logged in, please try again.');
   }
   var token = signToken(req.user._id, req.user.role);
-  console.log("token1 "+token)
+  //console.log("token1 "+token)
   res.cookie('token', token);
   res.redirect('/');
 }

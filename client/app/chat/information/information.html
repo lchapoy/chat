@@ -4,16 +4,39 @@
 <div class="outer-info" ng-if="!selection.members">
   <p>Name: <span>{{selection.name}}</span> </p>
   <p>e-mail: <span>{{selection.email}}</span> </p>
-<p>status: <span>{{selection.status}}</span> </p>
-
+  <p>status: <span>{{selection.status}}</span> </p>
     <button class="btn btn-inverse btn-lg btn-register" ng-click="deleteFriend()">
       Erase Friend
     </button>
 
 </div>
-<div class="outer-info" ng-if="selection.members" ng-repeat="member in selection.members">
-  <p>Name: <span>{{member.name}}</span> </p>
-  <p>e-mail: <span>{{member.email}}</span> </p>
-  <p>status: <span>{{member.status}}</span> </p>
+<div id="accordion" ng-if="selection.kind=='group'">
+  <div  ng-repeat="member in selection.members">
+    <label for="{{member.name}}" >{{member.name}}
+      <ng-md-icon ng-if="!var" class="float-right" icon="expand_more" ></ng-md-icon>
+      <ng-md-icon ng-if="var" class="float-right" icon="expand_less" ></ng-md-icon>
+      <ng-md-icon ng-if="selection.admin==member._id" class="float-right" icon="person" ></ng-md-icon>
+    </label>
+    <input type="checkbox" ng-model="var" id="{{member.name}}"/>
+    <article>
+        <p>e-mail:<br> <span>{{member.email}}</span> </p>
+        <p>status:<br> <span>{{member.status}}</span> </p>
+        <button  ng-click="deleteFriendFromGroup(member._id,selection.name)" ng-if="selection.admin==user._id">
+          Remove
+        </button>
+    </article>
+
+  </div>
 </div>
 
+<div ng-if="selection.admin==user._id&&selection.kind=='group'">
+  <button  class="btn-green" ng-click="showDialog()">
+    Add Friend
+  </button>
+  <button  ng-click="deleteGroup()">
+    Delete Group
+  </button>
+</div>
+<button class="btn-red" ng-click="exitGroup(selection.name)" ng-if="selection.kind=='group'">
+  Exit
+</button>

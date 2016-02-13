@@ -16,8 +16,14 @@ var events = {
   //'save': 'save',
   //'remove': 'remove'
   'tellGroup':'newGroup',
-  'tellFriend': 'newFriend',
-  'friendDeleted':'deleteFriend'
+  'tellFriend': 'newRequest',
+  'groupRemovedContact':'tellFriendRemoved',
+  'groupExitContact':'tellFriendExit',
+  'friendDeleted':'deleteFriend',
+  'acceptFriend':'tellFriendAccepted',
+ // 'rejectFriend':'tellFriendRejected',
+  'groupDeleted':'tellGroupDeleted',
+  'groupAddedContact':'tellGroupAddedFriend'
 };
 /*Room.schema.on("tellFriend",function(doc){
   console.log('here we are inside tell friend');
@@ -32,10 +38,8 @@ for (var e in events) {
 
 function emitEvent(event) {
   return function(doc,info) {
-    //console.log(event + ':' + doc._id);
     console.log(event,doc);
     RoomEvents.emit(event, doc,info);
-   // RoomEvents.emit(event, doc);
   }
 }
 

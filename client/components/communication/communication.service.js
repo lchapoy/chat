@@ -44,6 +44,42 @@ angular.module('chatYeoApp')
             return err;
           }).$promise;
       },
+      deleteFriendFromGroup(room) {
+        return Room.deleteFriendFromGroup(room,
+          function(data) {
+            return data;
+          },
+          function(err) {
+            return err;
+          }).$promise;
+      },
+      addFriendToGroup(room) {
+        return Room.addFriendToGroup(room,
+          function(data) {
+            return data;
+          },
+          function(err) {
+            return err;
+          }).$promise;
+      },
+      deleteGroup(room) {
+        return Room.deleteGroup(room,
+          function(data) {
+            return data;
+          },
+          function(err) {
+            return err;
+          }).$promise;
+      },
+      exitGroup(room) {
+        return Room.exitGroup(room,
+          function(data) {
+            return data;
+          },
+          function(err) {
+            return err;
+          }).$promise;
+      },
       getRooms(user) {
         return Room.getRooms(user,
           function(data) {
@@ -64,6 +100,33 @@ angular.module('chatYeoApp')
       },
       getMessage(room) {
         return Room.getMessage(room,
+          function(data) {
+            return data;
+          },
+          function(err) {
+            return err;
+          }).$promise;
+      },
+      acceptFriend(friendId) {
+        return Room.acceptFriend(friendId,
+          function(data) {
+            return data;
+          },
+          function(err) {
+            return err;
+          }).$promise;
+      },
+      rejectFriend(friendId) {
+        return Room.rejectFriend(friendId,
+          function(data) {
+            return data;
+          },
+          function(err) {
+            return err;
+          }).$promise;
+      },
+      getRequestPendings(userId) {
+        return Room.getRequestPendings(userId,
           function(data) {
             return data;
           },

@@ -10,26 +10,25 @@ class AddGroupCtrl {
   arrId=[];
   //end-non-standard
 
-  constructor($scope,Comm) {
+  constructor($scope,Comm,Chat) {
     this.Comm=Comm;
     this.scope = $scope;
-    /*$scope.$on('allFriends', function(event, friends ){
-     $scope.friends=friends;
-      console.log(friends);
-    });*/
+    this.Chat=Chat;
+    this.rooms=Chat.getRooms();
   }
   message = 'Hello';
   newGroup = function (groupName) {
     if(this.arrId.length==0){
       //Show user add some friends in order to create a group
-    }else if(groupName==''||groupName=='undefined'){
+    }else if(groupName==''||groupName==undefined){
       //Show user that a name is needed
     }else{
-      console.log(this.arrId)
-      this.Comm.createGroup({groupName:groupName,membersId:this.arrId})
-        .then((res)=> {
-          this.scope.$emit('newGroup', {data:res});
-          console.log(res);
+      //console.log(this.arrId)
+      this.Comm.createGroup({groupName:groupName,membersId:this.arrId,img:"/assets/images/group_no_image.png"})
+        .then((group)=> {
+          //this.scope.$emit('newGroup', {data:res});
+          this.Chat.newGroup(group);
+          console.log(group);
         })
     }
     console.log(this.arrId)
@@ -39,7 +38,7 @@ class AddGroupCtrl {
     this.arrId.push(id);
   };
   removeMemberId =function(id){
-    var index=this.arrId.indexOf(id)
+    var index=this.arrId.indexOf(id);
     this.arrId.splice(index,1);
   };
   myFilter = function (item) {

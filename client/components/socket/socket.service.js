@@ -4,6 +4,7 @@
 angular.module('chatYeoApp')
   .factory('socket', function(socketFactory,Auth,$mdToast) {
     // socket.io now auto-configures its connection when we ommit a connection url
+    var user=Auth.getCurrentUser();
     var socketInstance=true;
     var ioSocket;
     var socket;
@@ -91,11 +92,9 @@ angular.module('chatYeoApp')
         },
         listener(event,cb){
           cb = cb || angular.noop;
-          console.log(socket);
           socket.on(event,(doc,message)=>{
-            console.log("Hi")
             console.log(message);
-            if(message)
+         //   if(message&&user._id!=doc.friendId)
             showSimpleToast(message);
             cb(doc);
           })
@@ -105,6 +104,9 @@ angular.module('chatYeoApp')
         },
        addRoom(roomId){
           socket.emit('room:addRoom',roomId)
+        },
+        removeRoom(roomId){
+          socket.emit('room:removeRoom',roomId)
         },
         messageToRoom(roomId,message,kind){
           socket.emit('room:newMessage',{roomId:roomId,message:message,kind:kind})

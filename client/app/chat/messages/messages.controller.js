@@ -1,5 +1,74 @@
 'use strict';
 
+
+class MessagesCtrl {
+
+  constructor(Comm,Chat,Messages,socket,audios,EventNotify,$scope) {
+    this.Comm=Comm;
+    this.Chat = Chat;
+    this.Messages = Messages;
+    this.socket = socket;
+
+    this.selection=null;
+    this.messages=[];
+    this.sendText="";
+    this.currentUser=Chat.getUser();
+    this.membersNames='';
+    //console.log($scope.currentUser._id);
+    this.roomId;
+    this.kind=null;
+    /*this.beep= ()=>{
+      var snd = new  Audio(audios.audio);
+      snd.play();
+    }*/
+    EventNotify.subscribe($scope,this.selectionChange);
+    socket.socket().on('newMessage',function(doc){
+      Messages.newMessage(doc.roomId,doc.message);
+      if(this.roomId!=doc.roomId) {
+        Chat.newMessage(doc.roomId,doc.kind);
+        //this.beep();
+      }
+    });
+
+  }
+
+  selectionChange=()=>{
+    var userSelection=this.Chat.getSelection();
+    this.roomId=userSelection._id;
+    if(userSelection.kind=="par") {
+      this.kind='par';
+      this.selection = userSelection.members[0];
+    }else{
+      this.kind='group';
+      this.selection =userSelection;
+      angular.forEach(this.selection.members,(user,index)=>{
+        if(index==0)
+          this.membersNames=user.name;
+        else
+          this.membersNames+=', '+user.name;
+      })
+
+
+    }
+    if(this.roomId)
+      this.messages=this.Messages.getMessages(this.roomId);
+  };
+
+
+
+
+  addMessage = ()=>{
+    console.log(this.sendText);
+    this.socket.messageToRoom(this.roomId,{name:this.currentUser.name,text:this.sendText,origin:this.currentUser._id},this.kind);
+    this.Messages.newMessage(this.roomId,{name:this.currentUser.name,text:this.sendText,origin:this.currentUser._id});
+    this.Comm.storeMessage({id:this.currentUser._id},{name:this.currentUser.name,text:this.sendText,roomId:this.roomId});
+   this.sendText='';
+  };
+
+
+}
+
+
 angular.module('chatYeoApp')
   .constant("audios",{audio:"data:audio/wav;base64,//uQRAAAAWMSLwUIYAAsYkXgoQwAEaYLWfkWgAI0wWs/ItAAAGDgYtAgAyN+QWaAAihwMWm4G8QQRDi" +
   "McCBcH3Cc+CDv/7xA4Tvh9Rz/y8QADBwMWgQAZG/ILNAARQ4GLTcDeIIIhxGOBAuD7hOfBB3/94gcJ3w+o5/5eIAIAAAVwWgQAVQ2ORaIQwEMAJiDg95G4n" +
@@ -35,39 +104,84 @@ angular.module('chatYeoApp')
   "///////////////////////////////////////////////////////////////////////////////////////////////////////////VEFHAAAAAAAAAAAAA" +
   "AAAAAAAAAAAAAAAAAAAAAAAAAAAU291bmRib3kuZGUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMjAwNGh0dHA6Ly93" +
   "d3cuc291bmRib3kuZGUAAAAAAAAAACU="})
-  .controller('MessagesCtrl', function ($scope,Messages,Comm,socket,audios) {
-    $scope.selection = {name:"Choose Friend To start Chatting"};
-    $scope.room="";
+  .controller('MessagesCtrl', MessagesCtrl);
+
+/*******************************************
+  function Messages($scope,Messages,Comm,socket,audios,Chat,EventNotify) {
+    $scope.selection=null;
     $scope.messages=[];
-    $scope.sendText="";
+    this.sendText="";
+    $scope.currentUser=Chat.getUser();
+    $scope.membersNames='';
+    //console.log($scope.currentUser._id);
+    var roomId;
+
     var kind=null;
-    $scope.$on('selectionChange', function( event, user ){
-      console.log(user);
-      $scope.room=user._id;
-      if(user.kind=="par") {
+
+    function selectionChange(){
+      var userSelection=Chat.getSelection();
+      roomId=userSelection._id;
+      if(userSelection.kind=="par") {
         kind='par';
-        $scope.selection = user.members[0];
+        $scope.selection = userSelection.members[0];
       }else{
         kind='group';
-        $scope.selection=user;
+        $scope.selection =userSelection;
+        angular.forEach($scope.selection.members,(user,index)=>{
+          if(index==0)
+            $scope.membersNames=user.name;
+          else
+            $scope.membersNames+=', '+user.name;
+        })
+
+
       }
-      $scope.messages=Messages.getMessages($scope.room);
+      if(roomId)
+        $scope.messages=Messages.getMessages(roomId);
+    }
+
+    EventNotify.subscribe($scope,selectionChange);
+
+    //Function that will trigger all this information
+    //watcher
+  // $interval(()=>{console.log($scope.user)},300);
+
+  /*  $scope.$watch('user._id', function(newVal, oldVal){
+      roomId=$scope.user._id;
+      if($scope.user.kind=="par") {
+        kind='par';
+        $scope.selection = $scope.user.members[0];
+      }else{
+        kind='group';
+        $scope.selection=$scope.user;
+      }
+      if(roomId)
+        $scope.messages=Messages.getMessages(roomId);
     });
+    */
+
+/************************************************************************
     socket.socket().on('newMessage',function(doc){
       Messages.newMessage(doc.roomId,doc.message);
-      if($scope.room!=doc.roomId) {
-        $scope.$emit('newMessage', {id: doc.roomId, kind: doc.kind});
+      console.log($scope.sendText);
+      //console.log($scope.room,doc.roomId);
+      if(roomId!=doc.roomId) {
+        Chat.newMessage(doc.roomId,doc.kind);
+        //$scope.$emit('newMessage', {id: doc.roomId, kind: doc.kind});
         beep();
       }
     });
     $scope.addMessage = ()=>{
-      socket.messageToRoom($scope.room,{name:$scope.currentUser.name,text:$scope.sendText,origin:$scope.currentUser._id},kind);
-      Messages.newMessage($scope.room,{name:$scope.currentUser.name,text:$scope.sendText,origin:$scope.currentUser._id});
-      Comm.storeMessage({id:$scope.currentUser._id},{name:$scope.currentUser.name,text:$scope.sendText,roomId:$scope.room});
-      $scope.sendText='';
+      console.log($scope.sendText);
+      socket.messageToRoom(roomId,{name:$scope.currentUser.name,text:$scope.sendText,origin:$scope.currentUser._id},kind);
+      Messages.newMessage(roomId,{name:$scope.currentUser.name,text:$scope.sendText,origin:$scope.currentUser._id});
+      Comm.storeMessage({id:$scope.currentUser._id},{name:$scope.currentUser.name,text:$scope.sendText,roomId});
+      //$scope.sendText='';
     };
     function beep() {
       var snd = new  Audio(audios.audio);
       snd.play();
     }
-  });
+  }
+ ********************************************************
+*/

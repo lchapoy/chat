@@ -1,8 +1,8 @@
-<div class="chat-message">
+<md-content flex class="chat-message">
     <div ng-repeat="item in messages" ng-class="fromOrTo(item.origin)">
       <p ng-if="group=='group'">{{item.name}}:</p>
       {{item.text}}
 
     </div>
 
-</div>
+</md-content>

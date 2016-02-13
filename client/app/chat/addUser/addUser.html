@@ -1,19 +1,28 @@
 <h4 class="title-bar" >Add new Friend</h4>
-<h4 class="title-bar" ng-show="selection.name">{{selection.name}}</h4>
-<form ng-submit="ac.newContact(addEmail)">
-  <div id="search-box">
-    <input type="search" class="search-input" ng-model="addEmail">
-    <button type="submit" class="search-icon"><ng-md-icon class="search-icon" icon="search"  ></ng-md-icon></button>
-  </div>
-  <p class="help-block">{{ ac.errors.other }}</p>
-  <p class="answer-block" ng-if="!ac.errors.other">{{ ac.answer.other }}</p>
-</form>
-  <div class="outer-info">
-    <md-list>
-      <md-list-item ng-repeat="person in ac.people" ng-click="goToPerson(person.name, $event)">
-        <img alt="{{ person.name }}" ng-src="{{ person.img }}" class="md-avatar" />
-        <p>{{person.name}}</p>
-      </md-list-item>
-    </md-list>
-  </div>
-
+<md-content class="md-padding search-input">
+  <form ng-submit="ac.newContact(addEmail)">
+      <md-input-container  >
+        <label>Email:</label>
+        <input type="search"  ng-model="addEmail">
+        <p class="help-block">{{ ac.errors.other }}</p>
+        <p class="answer-block" ng-if="!ac.errors.other">{{ ac.answer.other }}</p>
+      </md-input-container>
+    <md-button type="submit" ng-show="false"></md-button>
+  </form>
+</md-content>
+<md-content>
+  <h4 class="title-bar">Pending Requests</h4>
+  <md-list>
+    <md-list-item ng-repeat="person in ac.requests">
+      <img alt="{{person.name }}" ng-src="{{ person.img }}" class="md-avatar" />
+      <p>{{person.name}}</p>
+        <ng-md-icon class="answer-block" icon="done" ng-click="ac.acceptFriend(person._id)" aria-label="Accept Friend"  ng-class=""></ng-md-icon>
+        <ng-md-icon class="help-block" icon="close" ng-click="ac.rejectFriend(person._id)" aria-label="Reject Friend"  ng-class=""></ng-md-icon>
+    </md-list-item>
+    <md-list-item ng-repeat="person in ac.pendings">
+      <img alt="{{person.name }}" ng-src="{{ person.img }}" class="md-avatar" />
+      <p>{{person.name}}</p>
+      <ng-md-icon icon="query_builder" aria-label="Accept Friend"  ng-class=""></ng-md-icon>
+    </md-list-item>
+  </md-list>
+</md-content>

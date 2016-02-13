@@ -7,7 +7,7 @@
 <div class="outer-info">
   <h4 class="title-bar" >Going to add</h4>
   <md-list>
-    <md-list-item ng-repeat="person in rooms" ng-if="person.members[0].add">
+    <md-list-item ng-repeat="person in group.rooms" ng-if="person.members[0].add">
       <img alt="{{ person.members[0].name }}" ng-src="{{ person.members[0].img }}" class="md-avatar" />
       <p>{{person.members[0].name}}</p>
       <input type="checkbox" ng-model="person.members[0].add" ng-change="group.removeMemberId(person.members[0]._id)">
@@ -17,7 +17,7 @@
 <div class="outer-info">
   <h4 class="title-bar" >Not being added</h4>
   <md-list>
-    <md-list-item ng-repeat="person in rooms| filter:searchText" ng-if="!person.members[0].add">
+    <md-list-item ng-repeat="person in group.rooms| filter:searchText" ng-if="!person.members[0].add">
       <img alt="{{ person.members[0].name }}" ng-src="{{ person.members[0].img }}" class="md-avatar" />
       <p>{{person.members[0].name}}</p>
       <input type="checkbox" ng-model="person.members[0].add" ng-change="group.addMemberId(person.members[0]._id)">

@@ -46,12 +46,14 @@ User.find({}).removeAsync()
       provider: 'local',
       name: 'Test User',
       email: 'test@example.com',
+      img: '/assets/images/no_user_image.jpg',
       password: 'test'
     }, {
       provider: 'local',
       role: 'admin',
       name: 'Admin',
       email: 'admin@example.com',
+      img: '/assets/images/no_user_image.jpg',
       password: 'admin'
     }, {
       provider: 'local',

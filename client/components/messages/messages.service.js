@@ -15,11 +15,11 @@ function MessageService(Comm) {
 
   var Messages = {
     newMessage(fromRoomId,messageInfo) {
-      initMessages(fromRoomId);
+      if(storage[fromRoomId])
       storage[fromRoomId].push(messageInfo);
     },
     getMessages(fromRoomId) {
-      initMessages(fromRoomId)
+      initMessages(fromRoomId);
       return storage[fromRoomId]
     }
   };

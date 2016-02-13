@@ -35,16 +35,110 @@
   background-color: darkslategrey;
 }
 
-.outer-info button {
+.information button ,.information input {
   cursor: pointer;
   background: darkorange;
-  width: 100%;
+  width: 90%;
   border: 0;
   padding: 10px 15px;
-  color: #ffffff;
+  margin:.6em;
+  color: white; !important
   -webkit-transition: 0.3s ease;
   transition: 0.3s ease;
+  text-align: center;
 }
-.outer-info button:hover {
+.information button:hover{
   background: orangered;
 }
+
+.btn-green{
+  background-color: mediumseagreen !important;
+}
+.btn-green:hover{
+  background-color: forestgreen !important;
+}
+.btn-red{
+  background-color: indianred !important;
+}
+.btn-red:hover{
+  background-color: darkred !important;
+}
+#accordion  {
+  height:40vh;
+  overflow: auto;
+}
+#accordion input {
+  display: none;
+}
+#accordion label {
+  background: darkslategray;
+  font-family: 'Croissant One', sans-serif;
+  color:darkorange;
+  border-radius: .25em;
+  cursor: pointer;
+  display: block;
+  margin-bottom: .125em;
+  margin-left:.5em;
+  margin-right:.5em;
+  padding: .25em 1em;
+  z-index: 20;
+}
+#accordion label:hover {
+  background: #ccc;
+}
+
+#accordion input:checked + label {
+  background: #ccc;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+  color: white;
+  margin-bottom: 0;
+}
+#accordion article {
+  margin-left:.5em;
+  margin-right:.5em;
+  background: grey;
+  height:0px;
+  overflow:hidden;
+  z-index:10;
+}
+#accordion article span {
+
+  color:darkslategray;
+  text-shadow: 1px 1px #222222;
+  font-family: 'Croissant One', sans-serif;
+  padding-left: .1em;
+}
+#accordion article p {
+
+   color:darkorange;
+   text-shadow: 1px 1px #222222;
+   font-family: 'Croissant One', sans-serif;
+   padding-left: .1em;
+  margin:0;
+ }
+#accordion input:checked article {
+}
+#accordion input:checked ~ article {
+  border-bottom-left-radius: .25em;
+  border-bottom-right-radius: .25em;
+  height: auto;
+  margin-bottom: .125em;
+}
+
+.float-right{
+  float:right;
+}
+
+
+md-dialog-content {
+  width: 360px;
+}
+md-dialog-content.autocomplete input {
+  width: 300px;
+}
+
+.md-chips {
+  padding: 5px 0 8px;
+}
+

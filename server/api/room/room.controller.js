@@ -143,7 +143,7 @@ export function destroy(req, res) {
     .then((data)=> {
       removeContRoom(data.members)
         .then(()=>{
-          Room.schema.emit('friendDeleted',{friendId:friendId,roomId:roomId,name:req.session.name});
+          Room.schema.emit('friendDeleted',{friendId,roomId,name:req.session.name,userId:req.session._id});
           res.status(204).end();
       })
     })
@@ -180,19 +180,38 @@ export function changePassword(req, res, next) {
  * @param catchFn
  * @returns {*}
  */
-function isRegistered(email,cb,catchFn){
-  return User.findOneAsync({email:email}, {"name":1,"img":1,"status":1,"email":1})
+function isRegistered(email,userId,cb,catchFn){
+  return User.findOneAsync({email:email,request:{$ne:userId},pending:{$ne:userId},spam:{$ne:userId}}, {"name":1,"img":1,"status":1,"email":1})
     .then(cb)
     .catch(catchFn);
 }
 /**
  * Add Room
  */
-export function addContRoom(roomId,membersId) {
+function addContRoom(roomId,membersId) {
   return User.update({_id:{$in:membersId}},{$push:{rooms:roomId}},{multi: true});
 }
 /**
- * Add Room
+ * Friend Request
+ */
+function requestFriend(pendingId,requestId) {
+  var promises=[];
+  promises.push(User.update({_id:{$in:requestId}},{$push:{request:pendingId}},{multi: true}));
+  promises.push(User.update({_id:{$in:pendingId}},{$push:{pending:requestId}},{multi: true}));
+  return Promise.all(promises);
+}
+/**
+ * add par room and erase pending and request pending
+ */
+function addParRoom(pendingId,requestId,roomId) {
+  var promises=[];
+  promises.push(User.update({_id:{$in:requestId}},{$pull:{request:pendingId}},{multi: true}));
+  promises.push(User.update({_id:{$in:pendingId}},{$pull:{pending:requestId}},{multi: true}));
+  promises.push(User.update({_id:{$in:[pendingId,requestId]}},{$push:{rooms:roomId}},{multi: true}));
+  return Promise.all(promises);
+}
+/**
+ * Remove Room
  */
 function removeContRoom(roomId,membersId) {
   return User.update({_id:{$in:membersId}},{$pull:{rooms:roomId}},{multi: true});
@@ -205,7 +224,7 @@ export function createRoom(req, res, next) {
 
   var userId = req.session._id;
   var email = String(req.body.email);
-  isRegistered(email,
+  isRegistered(email,userId,
       user=>{
         var friend=user;
         if(friend._id.equals(userId)){
@@ -223,14 +242,27 @@ export function createRoom(req, res, next) {
         })
         .then( room =>{
           if(!room){
-            return Room.createAsync({
+            requestFriend(userId,friend._id)
+              .then((response)=>{
+                console.log(response);
+                if(response.length==2){
+                  Room.schema.emit("tellFriend",
+                    { toId:friend._id,
+                      from:req.session.user
+                    });
+                  res.status(201).json(friend);
+                }else{
+                  showErrorMessage(res,"Request could not be sent to "+email)();
+                }
+              }).catch(handleError(res));
+            /*return Room.createAsync({
               members:[
                 userId,
                 friend._id
               ],
               kind:'par'
             }).then(contactRoom=>{
-              addContRoom(contactRoom._id,[friend._id,userId])
+              requestFriend(contactRoom._id,friend._id,userId)
                 .then((response)=>{
                   if(response.nModified==2){
                     Room.schema.emit("tellFriend",
@@ -243,16 +275,29 @@ export function createRoom(req, res, next) {
                       });
                     res.status(201).json({_id:contactRoom._id,members:[friend],messages:[],kind:'par'});
                   }else{
-                    showErrorMessage(res,email+" could not be added to the room")();
+                    showErrorMessage(res,"Request could not be sent to "+email)();
                   }
               }).catch(handleError(res));
-            }).catch(handleError(res));
+            }).catch(handleError(res));*/
           }
           else{
             showErrorMessage(res,email+" is already your friend")();
           }
         });
-      },showErrorMessage(res,"User doesn't exist"));
+      },()=>{
+      User.findOneAsync({email:email})
+      .then((data)=>{
+          if(data.pending.indexOf(userId)!=-1)
+            showErrorMessage(res,"You have a pending request from that user")();
+          else if (data.request.indexOf(userId)!=-1)
+            showErrorMessage(res,"User already have a pending request")();
+          else
+            showErrorMessage(res,data.email+" don't want to be your friend")();
+        }).catch(()=>{
+          showErrorMessage(res,"User doesn't exist")();
+        })
+
+    });
 }
 function getMembersId(admin,members){
   var arrId=[];
@@ -269,21 +314,26 @@ export function createGroup(req, res, next) {
   var group = new Room;
   group.admin = req.session._id;
   group.name = String(req.body.groupName);
+  group.img=String(req.body.img);
   var membersId = req.body.membersId;
   membersId.push(group.admin);
   group.members=membersId;
-  group.kind = 'group'
+  group.kind = 'group';
     group.saveAsync()
       .spread((contactRoom)=>{
         addContRoom(contactRoom._id,membersId)
           .then((response)=>{
             if(response.nModified==membersId.length){
-              group.populate(
-                'members',
-                (err,group)=>{
-                  if(err) res.status(401).json(group);
-                  Room.schema.emit("tellGroup",group,req.session.name);
-                  res.status(201).json(group);
+              group.populate({
+                path:'members',
+                model:User,
+                select:"name img status email",
+                match:{_id:{$ne:req.session._id}}
+              },(err,data)=>{
+                 // console.log("hi form inside");
+                  if(err) res.status(401).json(data);
+                  Room.schema.emit("tellGroup",data,req.session.name);
+                  res.status(201).json(data);
                 });
             }else{
               showErrorMessage(res,email+" could not be added to the room")();
@@ -300,7 +350,7 @@ export function getRooms(req, res, next) {
   User.find({_id:userId}, {"rooms":1,"_id":0})
     .populate({
       path:"rooms",
-      select:"messages members name kind",
+      select:"messages members name kind img admin",
       match:{kind:kind},
       populate:{
         path:"members",
@@ -325,7 +375,7 @@ export function storeMessage(req, res, next) {
     text:req.body.text,
     origin:userId
   };
-  console.log("storeMessage "+message, userId)
+  //console.log("storeMessage "+message, userId)
   Room.findOneAsync({_id:roomId})
     .then( room =>{
       room.messages.push(message);
@@ -336,7 +386,7 @@ export function storeMessage(req, res, next) {
         .catch(validationError(res));
     })
     .catch(showErrorMessage(res,"Room does not exist"))
-  console.log(userId,req.body)
+  //console.log(userId,req.body)
 }
 /**
  * StoreMessage
@@ -345,11 +395,167 @@ export function getMessage(req, res, next) {
   var roomId = req.params.id;
   Room.findOneAsync({_id:roomId})
     .then( room =>{
-      console.log(room.messages);
+      //console.log(room.messages);
       return res.json(room.messages);
     })
     .catch(showErrorMessage(res,"Room does not exist"))
 
 
+}
+/**
+ *  delete Friend From Group
+ */
+export function deleteFriendFromGroup(req, res, next) {
+  //var user = new Room;
+  var roomId= String(req.body.roomId);
+  var friendId= String(req.body.friendId);
+  var groupName= String(req.body.groupName);
+
+  Room.updateAsync({_id:roomId},{$pull:{members:friendId}})
+  .then((data)=>{
+      User.findByIdAsync(friendId,{name:1})
+      .then((doc)=>{
+         // Room.schema.emit("leaveRoom",{id:friendId,roomId});
+          Room.schema.emit("groupRemovedContact",{
+            roomId,
+            friendId,
+            groupName,
+            friendName:doc.name
+          },req.session.name);
+
+        })
+      .catch(handleError(res));
+      res.status(204).end();
+    });
+  User.updateAsync({_id:friendId},{$pull:{rooms:roomId}});
+
+}
+/**
+ *  exit Group
+ */
+export function exitGroup(req, res, next) {
+  //var user = new Room;
+  var userId = req.session._id;
+  var roomId= String(req.body.roomId);
+  var groupName= String(req.body.groupName);
+  //console.log(roomId,userId,user);
+  Room.updateAsync({_id:roomId},{$pull:{members:userId}})
+    .then((data)=>{
+      Room.schema.emit("groupExitContact",{name:req.session.name,groupName:groupName,userId,roomId});
+      res.status(204).end();
+    }) .catch(handleError(res));
+  User.updateAsync({_id:userId},{$pull:{rooms:roomId}});
+
+}
+/**
+ *  delete Group
+ */
+export function deleteGroup(req, res, next) {
+
+  var roomId= String(req.body.roomId);
+  Room.findByIdAndRemoveAsync(roomId,{'members':1,'name':1,'_id':0})
+  .then((data)=>{
+     // console.log(data);
+      removeContRoom(roomId,data.members)
+      .then(()=>{
+          Room.schema.emit("groupDeleted",{name:req.session.name,groupName:data.name,roomId});
+          res.status(204).end();
+      }).catch(handleError(res));
+    }).catch(handleError(res));
+
+}
+/**
+ *  add Friend To Group
+ */
+export function addFriendToGroup(req, res, next) {
+  var roomId= req.body.roomId;
+  //var friendName= String(req.body.friendName);
+  //var friendId= String(req.body.friendId);
+  var membersId= req.body.membersId;
+  var groupName= String(req.body.groupName);
+  var userId=req.session._id;
+
+  Room.updateAsync({_id:roomId},{$addToSet:{members:{$each:membersId}}})
+    .then((data)=>{
+      addContRoom(roomId,membersId)
+        .then((doc)=>{
+          Room.schema.emit("groupAddedContact",{
+            roomId,
+            membersId,
+            groupName
+          },req.session.name);
+
+        })
+        .catch(handleError(res));
+      res.status(204).end();
+    });
+
+}
+
+/**
+ *  delete Group
+ */
+export function acceptFriend(req, res, next) {
+  var friendId= String(req.body.friendId);
+  var userId =req.session._id;
+  User.findByIdAsync(friendId,{"name":1,"img":1,"status":1,"email":1})
+  .then((friend)=>{
+      Room.createAsync({
+        members:[friendId,userId],
+        kind:'par'
+      }).then(contactRoom=>{
+        addParRoom(friendId,userId,contactRoom._id)
+          .then((response)=>{
+              Room.schema.emit("acceptFriend",
+                { toId:friendId,
+                  fromId:userId,
+                  from:{_id:contactRoom._id,
+                    members:[req.session.user],
+                    messages:[],
+                    kind:'par'
+                  }
+                });
+              res.status(201).json({_id:contactRoom._id,members:[friend],messages:[],kind:'par'});
+
+          }).catch(handleError(res));
+      }).catch(handleError(res));
+    }).catch(handleError(res));
+
+
+}
+
+export function rejectFriend(req, res, next) {
+  var friendId= String(req.body.friendId);
+  var userId =req.session._id;
+  var promises=[]
+  promises.push(User.findByIdAndUpdate(friendId,{$pull:{pending:userId}}));
+  promises.push( User.findByIdAndUpdate(userId,{$pull:{request:friendId},$push:{spam:friendId}}));
+  Promise.all(promises)
+    .then((response)=>{
+      res.status(201).json({});
+    }).catch(handleError(res));
+}
+
+export function getRequestPendings(req, res, next) {
+  var userId =  req.params.id;
+  var promises=[];
+  console.log("doce")
+  promises.push(User.findOne({_id:userId}, {"request":1,"_id":0})
+    .populate({
+      path:"request",
+      select:"email name  img",
+      model:User
+    }));
+  promises.push(User.findOne({_id:userId}, {"pending":1,"_id":0})
+    .populate({
+      path:"pending",
+      select:"email name  img",
+      model:User
+    }));
+    Promise.all(promises)
+      .then((data)=> {
+        console.log(data[0],data[1].pending);
+        res.json({pendings:data[1].pending,requests:data[0].request});
+      })
 }
 

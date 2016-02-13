@@ -8,45 +8,42 @@ class AddUserCtrl {
   answer = {};
   //end-non-standard
 
-  constructor($scope,Comm) {
+  constructor($scope,Comm,Chat) {
     this.Comm=Comm;
     this.scope = $scope;
+    this.Chat = Chat;
+    this.requests=Chat.getRequests();
+    this.pendings=Chat.getPendings();
+
   }
 
   message = 'Hello';
-  /*people = [
-    {name: 'Janet Perkins', img: '/assets/images/janetPerkings.jpg', newMessage: true},
-    {name: 'Marty Johnson', img: '/assets/images/maryJohnson.jpg', newMessage: false},
-    {name: 'Peter Carlsson', img: '/assets/images/peterCarlsson.jpg', newMessage: false}
-  ];*/
 
-  /*newContact = function (email) {
-    this.User.addFriend({id: this.currentUser._id}, {email: email}).$promise.then((res)=> {
-      this.errors.other = '';
-      this.answer.other = 'request was send to ' + email;
-      console.log(res);
-      this.scope.$emit('pushChanges', sendNewChanges(res));
-    }).catch((err)=> {
-      this.errors.other = err.data.message;
-      console.log(err)
-    });
-    function sendNewChanges(user) { // for some event.
-      return {name: 'newFriend', data: user};
-    }
-  }*/
   newContact = function (email) {
-    this.Comm.createRoom({email:email}).then((res)=> {
+    this.Comm.createRoom({email:email}).then((user)=> {
       this.errors.other = '';
-      this.answer.other = 'request was send to ' + email;
-      console.log(res);
-      this.scope.$emit('newFriend',res);
+      this.answer.other = 'request was sent to ' + email;
+      this.Chat.newRequest(user);
     }).catch((err)=> {
       this.errors.other = err.data.message;
-      console.log(err)
+      //console.log(err)
     });
-    /*function sendNewChanges(user) { // for some event.
-      return {name: 'newFriend', data: user};
-    }*/
+  };
+  acceptFriend = function (friendId) {
+    this.Comm.acceptFriend({friendId}).then((room)=> {
+      this.Chat.newFriend(room);
+    }).catch((err)=> {
+      //this.errors.other = err.data.message;
+      //console.log(err)
+    });
+  };
+  rejectFriend = function (friendId) {
+    this.Comm.rejectFriend({friendId}).then((room)=> {
+      this.Chat.rejectRequest(friendId);
+    }).catch((err)=> {
+      //this.errors.other = err.data.message;
+      //console.log(err)
+    });
   }
 
 
@@ -54,21 +51,4 @@ class AddUserCtrl {
 
 
 angular.module('chatYeoApp')
-  .controller('AddUserCtrl' ,AddUserCtrl)/*, function ($scope,User) {
-    var errors={};
-
-    var currentUser=User.get();
-    $scope.newContact=function(email){
-      User.addFriend({id: currentUser._id}, {email: email}).$promise.then((res)=>{
-
-      }).catch((err)=>{
-        this.errors.other = err.message;
-        console.log(err)
-      })
-    };*/
-   /* currentUser.$promise.then(() => {
-      console.log(currentUser._id);
-      //User.addFriend({id: currentUser._id}, {email: 'test@example.com'});
-      $scope.newContact=
-    });*/
-  //});
+  .controller('AddUserCtrl' ,AddUserCtrl);

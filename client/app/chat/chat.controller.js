@@ -1,27 +1,30 @@
 'use strict';
 
 angular.module('chatYeoApp')
-  .controller('ChatCtrl', function ($scope,$mdSidenav,User,Auth,socket,Comm) {
-    $scope.$on('pushChanges', function( event, message ){
+  .controller('ChatCtrl', function ($scope,$mdSidenav,User,Auth,Chat) {
+   /* $scope.$on('pushChanges', function( event, message ){
       if(message.data.kind=="par")
         $scope.rooms[message.index].newMessage=false;
       else
         $scope.groups[message.index].newMessage=false;
       console.log('changed');
       $scope.$broadcast( message.name, message.data );
-    });
+    });*/
 
     //Very important will get a new socket
-    socket.socket();
-    $scope.rooms=[];
-    $scope.groups=[];
-    $scope.currentUser=Auth.getCurrentUser();
+    //socket.socket();
+    //$scope.rooms=[];
+    //$scope.groups=[];
+   // $scope.currentUser=Auth.getCurrentUser();
+    Chat.reset();
     $scope.toggleAddContact=buildToggler('addContact');
     $scope.toggleAddGroup=buildToggler('addGroup');
     $scope.toggleContacts=buildToggler('contacts');
     $scope.toggleInfo=buildToggler('information');
 
-    Comm.getRooms({id:$scope.currentUser._id,kind:'par'})
+
+
+    /*Comm.getRooms({id:$scope.currentUser._id,kind:'par'})
       .then(contacts=>{
          $scope.rooms=contacts[0].rooms;
       });
@@ -29,7 +32,8 @@ angular.module('chatYeoApp')
       .then(contacts=>{
         $scope.groups=contacts[0].rooms;
       });
-
+      */
+    /*
     $scope.$on('newFriend', function(event, user ){
       $scope.rooms.push(user);
       socket.addRoom(user._id);
@@ -43,7 +47,8 @@ angular.module('chatYeoApp')
         $scope.toggleInfo();
       });
     });
-    $scope.$on('newMessage',function(event,room){
+    */
+    /*$scope.$on('newMessage',function(event,room){
       var index=null;
       var lookArr;
       console.log(room.kind)
@@ -60,7 +65,7 @@ angular.module('chatYeoApp')
       });
       console.log(index,lookArr[index]);
       lookArr[index].newMessage=true;
-    });
+    });*/
     /*socket.socket().on('userDisconnect',function(doc){
       showSimpleToast(doc.message);
     });*/
@@ -69,7 +74,7 @@ angular.module('chatYeoApp')
       socket.addRoom(doc._id);
       $scope.rooms.push(doc)
     });*/
-    socket.listener('room:newFriend',(doc)=>{
+    /*socket.listener('room:newFriend',(doc)=>{
       socket.addRoom(doc._id);
       $scope.rooms.push(doc);
     });
@@ -103,11 +108,11 @@ angular.module('chatYeoApp')
       });
       $scope.rooms[index].members[0].status='Offline';
     });
-
-    $scope.$on('newGroup', function(event, group){
-      console.log(group)
+*/
+   /* $scope.$on('newGroup', function(event, group){
+      console.log(group);
       $scope.groups.push(group.data);
-    });
+    });*/
 
     function buildToggler(navID) {
       return function() {
@@ -120,9 +125,9 @@ angular.module('chatYeoApp')
     }
 
     //Get actual socket or create one if there is no socket//
-    console.log(socket.socket());
+    //console.log(socket.socket());
     //Subscribe socket to all user rooms
-    socket.joinRooms();
+
     //$scope.
       /*function isShow(sidebar){
         return function(){

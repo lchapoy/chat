@@ -17,7 +17,8 @@ angular.module('chatYeoApp')
           },
           'messages@chat': {
             templateUrl: 'app/chat/messages/messages.html',
-            controller:'MessagesCtrl'
+            controller:'MessagesCtrl',
+            controllerAs:'MessCtrl'
           },
           'information@chat': {
             templateUrl: 'app/chat/information/information.html',
