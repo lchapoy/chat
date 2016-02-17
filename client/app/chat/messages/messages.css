@@ -60,3 +60,14 @@
   top:23vh;
 
 }
+
+.icon-bar{
+  margin:0;
+ margin:.2em;
+  text-align:center;
+
+}
+
+md-divider{
+  margin-bottom: 0;
+}

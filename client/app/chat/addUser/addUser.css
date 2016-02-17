@@ -13,12 +13,12 @@
 
 
 .search-input{
-  height:20vh;
+  height:7.8em;
 }
 
 #search-box{
   margin-top:1em;
-  margin-bottom:2em;
+  margin-bottom:1em;
   padding-left:.6em;
 }
 .outer-info p {

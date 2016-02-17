@@ -1,0 +1,11 @@
+<div class="color-picker">
+  <md-button class="md-icon-button" ng-click="showPalette()">
+    <ng-md-icon icon="color_lens" ></ng-md-icon>
+  </md-button>
+  <div class="color-palette" ng-if="clickVar">
+    <div  ng-repeat="option in options"
+         ng-style="{'background-color': option}"
+         ng-class="{'palette-selected-color': option == color, 'transparent-color': option == 'transparent'}"
+         ng-click="changeColor(option)"></div>
+  </div>
+</div>

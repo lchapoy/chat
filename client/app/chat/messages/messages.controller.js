@@ -55,15 +55,22 @@ class MessagesCtrl {
   };
 
 
-
+  sendCanvas =(canvasUrl)=>{
+    this.socket.messageToRoom(this.roomId,{name:this.currentUser.name,text:canvasUrl,origin:this.currentUser._id,scribble:true},this.kind);
+    this.Messages.newMessage(this.roomId,{name:this.currentUser.name,text:canvasUrl,origin:this.currentUser._id,scribble:true});
+    this.Comm.storeMessage({id:this.currentUser._id},{name:this.currentUser.name,text:canvasUrl,roomId:this.roomId,scribble:true});
+  };
 
   addMessage = ()=>{
-    console.log(this.sendText);
     this.socket.messageToRoom(this.roomId,{name:this.currentUser.name,text:this.sendText,origin:this.currentUser._id},this.kind);
     this.Messages.newMessage(this.roomId,{name:this.currentUser.name,text:this.sendText,origin:this.currentUser._id});
     this.Comm.storeMessage({id:this.currentUser._id},{name:this.currentUser.name,text:this.sendText,roomId:this.roomId});
    this.sendText='';
   };
+
+  imageClick =(dataUrl)=>{
+
+  }
 
 
 }

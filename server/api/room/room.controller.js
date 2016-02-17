@@ -375,6 +375,8 @@ export function storeMessage(req, res, next) {
     text:req.body.text,
     origin:userId
   };
+  if(req.body.scribble)
+    message.scribble=req.body.scribble;
   //console.log("storeMessage "+message, userId)
   Room.findOneAsync({_id:roomId})
     .then( room =>{
@@ -395,7 +397,6 @@ export function getMessage(req, res, next) {
   var roomId = req.params.id;
   Room.findOneAsync({_id:roomId})
     .then( room =>{
-      //console.log(room.messages);
       return res.json(room.messages);
     })
     .catch(showErrorMessage(res,"Room does not exist"))

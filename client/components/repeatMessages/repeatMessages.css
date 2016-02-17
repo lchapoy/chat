@@ -6,10 +6,13 @@
   max-width: 75%;
   clear: both;
   position: relative;
+  word-wrap: break-word;
 }
 .chat-message div.from {
   float: left;
   margin-left:1em;
+  background-color: slategray;
+  color: white;
 }
 .chat-message div.from::after {
   content: "";
@@ -18,7 +21,7 @@
   bottom: 0;
   width: 0.5em;
   height: 1em;
-  border-right: 0.5em solid #e5e5ea;
+  border-right: 0.5em solid slategray;
   border-bottom-right-radius: 1em 0.5em;
 }
 .chat-message div.me {

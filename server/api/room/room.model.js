@@ -9,6 +9,7 @@ var MessageSchema = new mongoose.Schema({
   },
   name:String,
   text:String,
+  scribble:{type:Boolean,default:false},
   origin:mongoose.Schema.Types.ObjectId
 });
 

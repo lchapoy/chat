@@ -1,8 +1,12 @@
 <md-content flex class="chat-message">
     <div ng-repeat="item in messages" ng-class="fromOrTo(item.origin)">
-      <p ng-if="group=='group'">{{item.name}}:</p>
-      {{item.text}}
+        <p ng-if="group=='group'">{{item.name}}:</p>
+        <span ng-if="!item.scribble">{{item.text}}</span>
+        <span ng-if="item.scribble">
 
+            <img  style="background:black" src="{{item.text}}" load-drawing="" width="200" >
+
+        </span>
     </div>
 
 </md-content>

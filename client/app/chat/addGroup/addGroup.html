@@ -1,32 +1,57 @@
 <h4 class="title-bar" >Create New Group</h4>
 <form ng-submit="group.newGroup(groupName)">
+  <md-input-container  >
     <label for="groupName">Group Name</label>
     <input  id="groupName" type="text" class="search-input" ng-model="groupName">
     <md-button type="submit">Create</md-button>
+    <p class="help-block">{{ ac.errors.other }}</p>
+    <p class="answer-block" ng-if="!ac.errors.other">{{ ac.answer.other }}</p>
+  </md-input-container>
 </form>
-<div class="outer-info">
+
   <h4 class="title-bar" >Going to add</h4>
+<md-content flex>
   <md-list>
     <md-list-item ng-repeat="person in group.rooms" ng-if="person.members[0].add">
       <img alt="{{ person.members[0].name }}" ng-src="{{ person.members[0].img }}" class="md-avatar" />
       <p>{{person.members[0].name}}</p>
-      <input type="checkbox" ng-model="person.members[0].add" ng-change="group.removeMemberId(person.members[0]._id)">
+      <ng-md-icon icon="info_outline" aria-label="info"  ng-class="">
+        <md-tooltip>
+          {{person.members[0].email}}
+        </md-tooltip>
+      </ng-md-icon>
+      <label>
+        <ng-md-icon icon="close" class="help-block" aria-label="Going to Add"  ng-class=""></ng-md-icon>
+        <input type="checkbox" ng-model="person.members[0].add" ng-show="false" ng-change="group.removeMemberId(person.members[0]._id)">
+      </label>
     </md-list-item>
   </md-list>
-</div>
-<div class="outer-info">
+</md-content>
+
   <h4 class="title-bar" >Not being added</h4>
+<md-content flex>
   <md-list>
     <md-list-item ng-repeat="person in group.rooms| filter:searchText" ng-if="!person.members[0].add">
+
       <img alt="{{ person.members[0].name }}" ng-src="{{ person.members[0].img }}" class="md-avatar" />
       <p>{{person.members[0].name}}</p>
-      <input type="checkbox" ng-model="person.members[0].add" ng-change="group.addMemberId(person.members[0]._id)">
+      <ng-md-icon icon="info_outline" aria-label="info"  ng-class="">
+        <md-tooltip>
+          {{person.members[0].email}}
+        </md-tooltip>
+      </ng-md-icon>
+      <label>
+        <ng-md-icon icon="done"class="answer-block" aria-label="Going to Skip"  ng-class=""></ng-md-icon>
+        <input type="checkbox" ng-model="person.members[0].add" ng-show="false" ng-change="group.addMemberId(person.members[0]._id)">
+      </label>
       <br>
     </md-list-item>
   </md-list>
-</div>
-<div id="search-box">
-  <input type="search" class="search-input" ng-model="searchText">
-  <button type="submit" class="search-icon"><ng-md-icon class="search-icon" icon="search"  ></ng-md-icon></button>
-</div>
+</md-content>
+<md-divider></md-divider>
+<md-input-container  >
+  <label for="searchInput">Search</label>
+  <input  id="searchInput" type="search"  ng-model="searchText">
+</md-input-container  >
+
 
