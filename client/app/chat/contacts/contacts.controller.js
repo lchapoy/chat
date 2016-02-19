@@ -1,14 +1,32 @@
 'use strict';
 
-angular.module('chatYeoApp')
-  .controller('ContactsCtrl', function ($scope,Chat) {
-    $scope.message = 'Hello';
+class ContactsCtrl {
 
-    $scope.rooms=Chat.getRooms();
-    $scope.groups=Chat.getGroups();
+  constructor(Chat,sideNavToggler){
+    this.rooms=Chat.getRooms();
+    this.groups=Chat.getGroups();
+    this.requests=Chat.getRequests();
+    this.toggleContacts=sideNavToggler.triggerToggle('contacts');
+    this.toggleAddContact=sideNavToggler.triggerToggle('addContact');
+    this.toggleAddGroup=sideNavToggler.triggerToggle('addGroup');
 
-    $scope.selectUser=function(room,index){
-      Chat.changeSelection(room,index);
+    this.selectUser=function(kind,index){
+      Chat.changeSelection(kind,index);
+      this.toggleContacts();
     };
 
-  });
+    this.openAddFriends=function(){
+      this.toggleAddContact();
+      this.toggleContacts();
+    };
+
+    this.openAddGroups=function(){
+      this.toggleAddGroup();
+      this.toggleContacts()
+    };
+  }
+}
+
+angular.module('chatYeoApp')
+  .controller('ContactsCtrl', ContactsCtrl);
+

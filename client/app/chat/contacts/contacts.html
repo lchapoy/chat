@@ -1,21 +1,37 @@
 
-<h4 class="title-bar">Friend List  <ng-md-icon icon="person_add" aria-label="Add User"  class="floater-right" ng-click="toggleAddContact()"></ng-md-icon></h4>
-<md-content flex>
+<h4 class="title-bar">Friend List
+  <ng-md-icon icon="person_add" aria-label="Add User"  class="floater-right" ng-click="CCtrl.openAddFriends()"></ng-md-icon>
+
+  <ng-md-icon icon="flag" aria-label="Add User"  class="floater-right" ng-class="{'md-primary':CCtrl.requests.length==0,'md-alert':CCtrl.requests.length>0}">
+    <md-tooltip>
+      {{CCtrl.requests.length}} New Requests
+    </md-tooltip>
+  </ng-md-icon>
+</h4>
+
+<md-content flex style="height:1px">
 <md-list>
-  <md-list-item ng-repeat="room in rooms" ng-click="goToPerson(room.name, $event)" ng-class="{'user-offline':room.members[0].status=='Offline','user-online':room.members[0].status=='Online'}">
-    <img alt="{{ room.members[0].name }}" ng-src="{{ room.members[0].img }}" class="md-avatar" />
+  <md-list-item ng-repeat="room in CCtrl.rooms | orderBy:'lastMessageDate_ms':true"
+                ng-click="CCtrl.selectUser('par',room)"
+                ng-class="{'user-offline':room.members[0].status=='Offline','user-online':room.members[0].status=='Online'}">
+    <img alt="{{room.members[0].name }}" ng-src="{{room.members[0].img }}" class="md-avatar" />
     <p>{{room.members[0].name}}</p>
-    <ng-md-icon icon="messenger" ng-click="selectUser('par',$index)" aria-label="Open Chat"  ng-class="{'md-primary':!room.newMessage,'md-alert':room.newMessage}"></ng-md-icon>
+    <ng-md-icon icon="messenger"  aria-label="Open Chat"  ng-class="{'md-primary':!room.newMessage,'md-alert':room.newMessage}"></ng-md-icon>
   </md-list-item>
 </md-list>
 </md-content>
-<h4 class="title-bar">Group List  <ng-md-icon icon="group_add" aria-label="Add User"  class="floater-right" ng-click="toggleAddGroup()"></ng-md-icon></h4>
-<md-content flex>
-  <md-list>
-    <md-list-item ng-repeat="group in groups" ng-click="goToPerson(group.name, $event)">
+
+<h4 class="title-bar">Group List
+  <ng-md-icon icon="group_add" aria-label="Add User"  class="floater-right" ng-click="CCtrl.openAddGroups()">
+  </ng-md-icon>
+</h4>
+
+<md-content flex style="height:1px">
+  <md-list >
+    <md-list-item ng-repeat="group in CCtrl.groups | orderBy:'lastMessageDate_ms':true" ng-click="CCtrl.selectUser('group',group)">
       <img alt="{{group.name }}" ng-src="{{ group.img }}" class="md-avatar" />
       <p>{{group.name}}</p>
-      <ng-md-icon icon="messenger" ng-click="selectUser('group',$index)" aria-label="Open Chat"  ng-class="{'md-primary':!group.newMessage,'md-alert':group.newMessage}"></ng-md-icon>
+      <ng-md-icon icon="messenger"  aria-label="Open Chat"  ng-class="{'md-primary':!group.newMessage,'md-alert':group.newMessage}"></ng-md-icon>
     </md-list-item>
   </md-list>
 </md-content>

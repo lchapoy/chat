@@ -19,7 +19,19 @@ var RoomSchema = new mongoose.Schema({
   admin:mongoose.Schema.Types.ObjectId,
   members: [{type:mongoose.Schema.Types.ObjectId, ref:'User'}],
   kind:String,
+  lastMessageDate:{type:Date,default:Date.now()},
   img:String
+}, {
+  toObject: {
+    virtuals: true
+  },
+  toJSON: {
+    virtuals: true
+  }
+});
+
+RoomSchema.virtual('lastMessageDate_ms').get(function() {
+  return this.lastMessageDate.getTime();
 });
 
 export default mongoose.model('Room', RoomSchema);

@@ -116,59 +116,7 @@ export function changePassword(req, res, next) {
       }
     });
 }
-/**
-  * Add Friend
-*/
-/*export function addFriend(req, res, next) {
-  var userId = req.user._id;
-  var email = String(req.body.email);
-  isRegistered(email,
-                user=>{
-                  var friend=user;
-                  if(userId.equals(friend._id)){
-                    return showErrorMessage(res,"You are not suppose to be your own friend")();
-                  }
-                  User.findOneAsync({$and:
-                      [ {_id:userId},{"contacts": {$ne:friend._id}}]
-                  }).then(user => {
-                      user.contacts.push(friend._id);
-                      if (!user) {
-                        return res.status(401).end();
-                      }
-                      return user.saveAsync()
-                        .then(() => {
-                          res.json(friend);
-                          //res.status(204).end();
-                        })
-                        .catch(validationError(res));
-                    }).catch(showErrorMessage(res,email+" is already your friend"));
-                },
-                showErrorMessage(res,"User doesn't exist"));
-}*/
-/**
- * Get All Friend Info
- *//*
-export function getAllFriends(req, res, next) {
-  var userId = req.user._id;
-  User.find({_id:userId}, "-salt -password").populate({path:"contacts",select:"name img"}).
-    exec(function (err, res1) {
-      console.log(res1);
-     res.json(res1);
-  })
-}*/
-/**
- * Add Room
- */
-/*export function addContRoom(roomId,membersId) {
-  var roomId=req.params.id;
-  var membersId = req.body.membersId;
-  console.log(membersId)
-  return User.update({_id:{$in:membersId}},{$push:{rooms:roomId}},{multi: true}).$promise
-    .then((user)=>{
-      console.log(user);
-      res.status(201).end();
-    });
-}*/
+
 /**
  * Get my info
  */

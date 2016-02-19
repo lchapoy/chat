@@ -7,22 +7,22 @@
     </md-toolbar>
     <md-dialog-content  class="md-padding autocomplete">
        <md-contact-chips
-         ng-model="contacts"
-         md-contacts="querySearch($query)"
+         ng-model="u2gCtrl.contacts"
+         md-contacts="u2gCtrl.querySearch($query)"
          md-contact-name="name"
          md-contact-image="img"
          md-contact-email="email"
          md-require-match="true"
          md-highlight-flags="i"
-         filter-selected="filterSelected"
+         filter-selected="u2gCtrl.filterSelected"
        placeholder="To">
     </md-contact-chips>
       </md-dialog-content>
     <md-dialog-actions>
-        <md-button ng-click="addFriendToGroup()" class="md-secondary">
+        <md-button ng-click="u2gCtrl.addFriendToGroup()" class="md-secondary">
             Add Friend
           </md-button>
-        <md-button ng-click="closeDialog()" class="md-primary">
+        <md-button ng-click="u2gCtrl.closeDialog()" class="md-primary">
             Close Dialog
           </md-button>
       </md-dialog-actions>

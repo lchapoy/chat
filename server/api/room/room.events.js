@@ -21,6 +21,7 @@ var events = {
   'groupExitContact':'tellFriendExit',
   'friendDeleted':'deleteFriend',
   'acceptFriend':'tellFriendAccepted',
+  'joinRooms':'joinRooms',
  // 'rejectFriend':'tellFriendRejected',
   'groupDeleted':'tellGroupDeleted',
   'groupAddedContact':'tellGroupAddedFriend'

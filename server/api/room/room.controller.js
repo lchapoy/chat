@@ -28,81 +28,6 @@ function responseWithResult(res, statusCode) {
     }
   };
 }
-/*
-function handleEntityNotFound(res) {
-  return function(entity) {
-    if (!entity) {
-      res.status(404).end();
-      return null;
-    }
-    return entity;
-  };
-}
-
-function saveUpdates(updates) {
-  return function(entity) {
-    var updated = _.merge(entity, updates);
-    return updated.saveAsync()
-      .spread(updated => {
-        return updated;
-      });
-  };
-}
-
-function removeEntity(res) {
-  return function(entity) {
-    if (entity) {
-      return entity.removeAsync()
-        .then(() => {
-          res.status(204).end();
-        });
-    }
-  };
-}
-*/
-// Gets a list of Rooms
-export function index(req, res) {
-  Room.findAsync()
-    .then(responseWithResult(res))
-    .catch(handleError(res));
-}
-/*
-// Gets a single Room from the DB
-export function show(req, res) {
-  Room.findByIdAsync(req.params.id)
-    .then(handleEntityNotFound(res))
-    .then(responseWithResult(res))
-    .catch(handleError(res));
-}
-
-// Creates a new Room in the DB
-export function create(req, res) {
-  Room.createAsync(req.body)
-    .then(responseWithResult(res, 201))
-    .catch(handleError(res));
-}
-
-// Updates an existing Room in the DB
-export function update(req, res) {
-  if (req.body._id) {
-    delete req.body._id;
-  }
-  Room.findByIdAsync(req.params.id)
-    .then(handleEntityNotFound(res))
-    .then(saveUpdates(req.body))
-    .then(responseWithResult(res))
-    .catch(handleError(res));
-}
-
-// Deletes a Room from the DB
-export function destroy(req, res) {
-  Room.findByIdAsync(req.params.id)
-    .then(handleEntityNotFound(res))
-    .then(removeEntity(res))
-    .catch(handleError(res));
-}
-*/
-'use strict';
 
 function validationError(res, statusCode) {
   statusCode = statusCode || 422;
@@ -130,6 +55,14 @@ function respondWith(res, statusCode) {
   return function() {
     res.status(statusCode).end();
   };
+}
+
+
+// Gets a list of Rooms
+export function index(req, res) {
+  Room.findAsync()
+    .then(responseWithResult(res))
+    .catch(handleError(res));
 }
 
 /**
@@ -238,7 +171,8 @@ export function createRoom(req, res, next) {
               friend._id,
               userId
             ]}
-          ]
+          ],
+          kind:'par'
         })
         .then( room =>{
           if(!room){
@@ -255,30 +189,6 @@ export function createRoom(req, res, next) {
                   showErrorMessage(res,"Request could not be sent to "+email)();
                 }
               }).catch(handleError(res));
-            /*return Room.createAsync({
-              members:[
-                userId,
-                friend._id
-              ],
-              kind:'par'
-            }).then(contactRoom=>{
-              requestFriend(contactRoom._id,friend._id,userId)
-                .then((response)=>{
-                  if(response.nModified==2){
-                    Room.schema.emit("tellFriend",
-                      { toId:friend._id,
-                        from:{_id:contactRoom._id,
-                          members:[req.session.user],
-                          messages:[],
-                          kind:'par'
-                        }
-                      });
-                    res.status(201).json({_id:contactRoom._id,members:[friend],messages:[],kind:'par'});
-                  }else{
-                    showErrorMessage(res,"Request could not be sent to "+email)();
-                  }
-              }).catch(handleError(res));
-            }).catch(handleError(res));*/
           }
           else{
             showErrorMessage(res,email+" is already your friend")();
@@ -330,7 +240,6 @@ export function createGroup(req, res, next) {
                 select:"name img status email",
                 match:{_id:{$ne:req.session._id}}
               },(err,data)=>{
-                 // console.log("hi form inside");
                   if(err) res.status(401).json(data);
                   Room.schema.emit("tellGroup",data,req.session.name);
                   res.status(201).json(data);
@@ -350,7 +259,7 @@ export function getRooms(req, res, next) {
   User.find({_id:userId}, {"rooms":1,"_id":0})
     .populate({
       path:"rooms",
-      select:"messages members name kind img admin",
+      select:"messages members name kind img admin lastMessageDate lastMessageDate_ms",
       match:{kind:kind},
       populate:{
         path:"members",
@@ -361,6 +270,8 @@ export function getRooms(req, res, next) {
     })
     .exec(function (err, res1) {
       if(err) res.status(401).json(res1);
+      if(kind=='par'&&res1[0].rooms)
+      Room.schema.emit('joinRooms',{rooms:res1[0].rooms,userId});
       res.json(res1);
     })
 }
@@ -378,17 +289,10 @@ export function storeMessage(req, res, next) {
   if(req.body.scribble)
     message.scribble=req.body.scribble;
   //console.log("storeMessage "+message, userId)
-  Room.findOneAsync({_id:roomId})
-    .then( room =>{
-      room.messages.push(message);
-      return room.saveAsync()
-        .then(() => {
+  Room.findOneAndUpdateAsync({_id:roomId},{lastMessageDate:Date.now(),$push:{messages:message}},{upsert: true})
+    .then( () =>{
           res.status(204).end();
-        })
-        .catch(validationError(res));
-    })
-    .catch(showErrorMessage(res,"Room does not exist"))
-  //console.log(userId,req.body)
+    });
 }
 /**
  * StoreMessage
@@ -438,9 +342,10 @@ export function exitGroup(req, res, next) {
   //var user = new Room;
   var userId = req.session._id;
   var roomId= String(req.body.roomId);
+  var newAdmin= String(req.body.newAdmin);
   var groupName= String(req.body.groupName);
   //console.log(roomId,userId,user);
-  Room.updateAsync({_id:roomId},{$pull:{members:userId}})
+  Room.updateAsync({_id:roomId},{$pull:{members:userId},admin:newAdmin})
     .then((data)=>{
       Room.schema.emit("groupExitContact",{name:req.session.name,groupName:groupName,userId,roomId});
       res.status(204).end();
@@ -513,10 +418,15 @@ export function acceptFriend(req, res, next) {
                   from:{_id:contactRoom._id,
                     members:[req.session.user],
                     messages:[],
-                    kind:'par'
+                    kind:'par',
+                    lastMessageDate_ms:contactRoom.lastMessageDate_ms
                   }
                 });
-              res.status(201).json({_id:contactRoom._id,members:[friend],messages:[],kind:'par'});
+              res.status(201).json({_id:contactRoom._id,
+                members:[friend],messages:[],
+                kind:'par',
+                lastMessageDate_ms:contactRoom.lastMessageDate_ms
+              });
 
           }).catch(handleError(res));
       }).catch(handleError(res));
@@ -528,7 +438,7 @@ export function acceptFriend(req, res, next) {
 export function rejectFriend(req, res, next) {
   var friendId= String(req.body.friendId);
   var userId =req.session._id;
-  var promises=[]
+  var promises=[];
   promises.push(User.findByIdAndUpdate(friendId,{$pull:{pending:userId}}));
   promises.push( User.findByIdAndUpdate(userId,{$pull:{request:friendId},$push:{spam:friendId}}));
   Promise.all(promises)

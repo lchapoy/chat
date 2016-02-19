@@ -13,6 +13,7 @@ var modelEvents = {
   'deleteFriend':deleteFriend,
   'tellFriendRemoved':tellFriendRemoved,
   'tellFriendAccepted':tellFriendAccepted,
+  'joinRooms':joinRooms,
   //'tellFriendRejected':tellFriendRejected,
   'tellFriendExit':tellFriendExit,
   'tellGroupDeleted':tellGroupDeleted,
@@ -30,6 +31,8 @@ function onConnect(socket) {
     socket.log(JSON.stringify(data, null, 2));
   });
   var id=socket.decoded_token;
+  socket.join(id._id);
+  socket.log(id._id)
   // Insert sockets below
   require('../api/room/room.socket').register(socket,id);
   require('../api/thing/thing.socket').register(socket);
@@ -98,7 +101,7 @@ function tellGroupDeleted(socket,event) {
 
     //Message to friend
     var message=doc.groupName+" was deleted by "+doc.name;
-    socket.to(doc.roomId).emit(event,null,message);
+    socket.to(doc.roomId).emit(event,doc.roomId,message);
     //socket.join(doc.from._id);
     //Socket's Leave Room
     leaveRoom(socket,doc.roomId,doc.roomId);
@@ -109,11 +112,11 @@ function tellGroupAddedFriend(socket,event) {
   return function (doc,info) {
     //Message to the group members
     message=" Some people were added to "+doc.groupName+" conversation";
-    socket.to(doc.roomId).emit(event,null,message);
+    socket.to(doc.roomId).emit(event,doc.roomId,message);
     //Message to friend
     var message=info+" added you to "+doc.groupName+" conversation";
     Array.forEach(doc.membersId,(friendId)=>{
-      socket.to(friendId).emit(event,null,message);
+      socket.to(friendId).emit(event,doc.roomId,message);
       joinRoom(socket,friendId,doc.roomId);
     });
 
@@ -156,8 +159,8 @@ function newGroup(socket,event) {
       joinRoom(socket,members[i]._id,group._id);
       if(!group.admin.equals(members[i]._id))
       socket.to(members[i]._id).emit(event, group, message);
-  }
-    //socket.join(doc.from._id);
+    }
+    joinRoom(socket,group.admin,group._id);
   }
 }
 
@@ -172,6 +175,22 @@ function deleteFriend(socket,event) {
   }
 }
 
+//Tell a group was deleted
+function joinRooms(socket,event) {
+  return function (doc) {
+    var roomSockets= socket.nsps['/'].adapter.rooms[doc.userId];
+    var _socket=null;
+    if(roomSockets) {
+      for (var socketId in roomSockets.sockets) {
+        _socket = socket.sockets.connected[socketId];
+
+      }
+      for(var i=0;i<doc.rooms.length;i++) {
+        _socket.join(doc.rooms[i]._id);
+      }
+    }
+  }
+}
 
 export default function(socketio) {
   // socket.io (v1.x.x) is powered by debug.

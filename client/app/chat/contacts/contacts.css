@@ -19,7 +19,7 @@ md-divider {
 }
 
 .md-alert{
-  color:darkorange;
+  color:goldenrod;
 }
 
 .md-primary{
@@ -30,4 +30,8 @@ md-divider {
 }
 .user-offline{
   opacity:.5;
+}
+
+.overflow{
+  overflow-y: auto;
 }

@@ -13,7 +13,8 @@ angular.module('chatYeoApp')
           },
           'contacts@chat': {
             templateUrl: 'app/chat/contacts/contacts.html',
-            controller:'ContactsCtrl'
+            controller:'ContactsCtrl',
+            controllerAs:'CCtrl'
           },
           'messages@chat': {
             templateUrl: 'app/chat/messages/messages.html',
@@ -22,7 +23,8 @@ angular.module('chatYeoApp')
           },
           'information@chat': {
             templateUrl: 'app/chat/information/information.html',
-            controller:'InformationCtrl'
+            controller:'InformationCtrl',
+            controllerAs:'ICtrl'
           },
           'addContact@chat': {
             templateUrl: 'app/chat/addUser/addUser.html',
@@ -32,7 +34,7 @@ angular.module('chatYeoApp')
           'addGroup@chat': {
             templateUrl: 'app/chat/addGroup/addGroup.html',
             controller:'AddGroupCtrl',
-            controllerAs:'group'
+            controllerAs:'GCtrl'
           }
         }
 

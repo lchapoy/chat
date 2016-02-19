@@ -20,7 +20,6 @@ router.post('/exitGroup', controller.exitGroup);
 router.post('/acceptFriend', controller.acceptFriend);
 router.post('/rejectFriend', controller.rejectFriend);
 router.put('/:id/storeMessage', controller.storeMessage);
-//router.patch('/:id', controller.update);
 router.delete('/:id', controller.destroy);
 
 module.exports = router;

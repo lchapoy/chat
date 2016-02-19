@@ -1,49 +1,32 @@
 'use strict';
 
-angular.module('chatYeoApp')
-  .controller('AddUsersToGroupCtrl', function ($scope, $mdDialog, Chat,group) {
-    $scope.closeDialog = function () {
-      $mdDialog.hide();
-    };
-    $scope.addDialog = function () {
-      $mdDialog.hide();
-    };
+class AddUsersToGroupCtrl{
+  filterSelected=true;
+
+  constructor($scope, $mdDialog, Chat,group){
+    //Class Global variable
+    this.rooms=Chat.getRooms();
+    this.contacts=[];
+    this.allContacts=[];
+    this.$mdDialog=$mdDialog;
+    this.Chat=Chat;
+    //Constructor private variable
     var ids={};
+    //Get the friends that are already in the group
     angular.forEach(group.members,(contact)=>{
       ids[contact._id]=true;
     });
-    $scope.rooms=Chat.getRooms();
-    $scope.filterSelected=true;
-    $scope.querySearch=querySearch;
-    $scope.contacts=[];
-    $scope.allContacts=[];
-
-    angular.forEach($scope.rooms,function(contact){
+    //Get the rest of the friends
+    angular.forEach(this.rooms,(contact)=>{
       var dummy=contact.members[0];
       dummy._lowername=dummy.name.toLowerCase();
       if(!ids[dummy._id])
-        $scope.allContacts.push(dummy);
-
+        this.allContacts.push(dummy);
     });
-
-    /**
-     * Search for contacts.
-     */
-    function querySearch (query) {
-      var results = query ?
-        $scope.allContacts.filter(createFilterFor(query)) : [];
-      return results;
-    }
-    function createFilterFor(query) {
-      var lowercaseQuery = angular.lowercase(query);
-      return function filterFn(contact) {
-        return (contact._lowername.indexOf(lowercaseQuery) != -1)||(contact.email.indexOf(lowercaseQuery) != -1);
-      };
-    }
-    $scope.addFriendToGroup=()=>{
+    //Add Friend to group function
+    this.addFriendToGroup=()=>{
       var membersId=[];
-      var message='';
-      angular.forEach($scope.contacts,(user)=>{
+      angular.forEach(this.contacts,(user)=>{
         membersId.push(user._id);
       });
       if(membersId.length>0) {
@@ -51,4 +34,28 @@ angular.module('chatYeoApp')
         $mdDialog.hide();
       }
     };
-  });
+
+  }
+  //************************************************************
+  //Prototype functions
+  createFilterFor=(query)=> {
+    var lowercaseQuery = angular.lowercase(query);
+    return function filterFn(contact) {
+      return (contact._lowername.indexOf(lowercaseQuery) != -1)||(contact.email.indexOf(lowercaseQuery) != -1);
+    };
+  };
+
+  querySearch=(query)=>{
+    var results = query ?
+      this.allContacts.filter(this.createFilterFor(query)) : [];
+    return results;
+  };
+
+  closeDialog = function () {
+    this.$mdDialog.hide();
+  };
+
+}
+
+angular.module('chatYeoApp')
+  .controller('AddUsersToGroupCtrl',AddUsersToGroupCtrl);

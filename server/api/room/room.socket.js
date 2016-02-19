@@ -13,7 +13,7 @@ var Room = require('./room.model');
   'deleteFriend':deleteFriend
 };*/
 var socketEvents = {
-  'joinRooms':joinRooms,
+/*  'joinRooms':joinRooms,*/
   'addRoom':joinOneRoom,
   'delete':eventToRoom,
   'removeRoom':removeRoomListener,
@@ -21,13 +21,6 @@ var socketEvents = {
 };
 
 export function register(socket,id) {
-  // Bind model events to socket events
-  /*for (let e in modelEvents) {
-    let callback = modelEvents[e];
-    let listener = createListener('room:' + e, socket,callback);
-    RoomEvents.on(e+':'+id._id, listener);
-    socket.on('disconnect', removeListener(e+':'+id._id, listener));
-  }*/
   //Listen to user socketEvent
   for (let e in socketEvents) {
     let callback = socketEvents[e];
@@ -65,13 +58,13 @@ function forceDisconnect(socket,id){
   }
 }
 
-function joinRooms(socket,event,id){
+/*function joinRooms(socket,event,id){
   return function(){
     User.findOne({_id:id._id},{'rooms':1,'_id':0})
       .populate({path:'rooms',model:Room})
       .exec((err,data)=>{
         //sometimes error data equals to null
-       // console.log(data);
+        if(data)
         for(var i=0;i<data.rooms.length;i++){
           socket.join(data.rooms[i]._id);
           if(data.rooms[i].kind=="par")
@@ -84,7 +77,7 @@ function joinRooms(socket,event,id){
         socket.join(id._id);
       });
   };
-}
+}*/
 function joinOneRoom(socket){
   return function(roomId){
     socket.join(roomId)

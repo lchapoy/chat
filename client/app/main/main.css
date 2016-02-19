@@ -198,3 +198,10 @@ to prevent collapsing during animation*/
 ::-webkit-scrollbar-thumb:window-inactive {
   background: orangered;
 }
+
+.reset{
+  padding:0px;
+  margin:0px;
+
+}
+

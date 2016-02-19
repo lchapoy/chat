@@ -11,7 +11,7 @@ function AuthService($location, $http, $cookies, $q, appConfig, Util, User) {
     currentUser = User.get();
     currentUser.$promise.then(() => {
       // Account created, redirect to home
-      console.log(currentUser.name)
+
     });
   }
 
@@ -130,7 +130,7 @@ function AuthService($location, $http, $cookies, $q, appConfig, Util, User) {
         return currentUser.hasOwnProperty('role');
 
       }
-      console.log(currentUser)
+
       return Auth.getCurrentUser(null)
         .then(user => {
           var is = user.hasOwnProperty('role');

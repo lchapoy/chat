@@ -1,9 +1,9 @@
 <md-subheader class="user-subheader">
   <h4 class="title-bar">
-    <ng-md-icon class="floater-left" icon="person" hide-gt-xs ng-click="toggleContacts()">
+    <ng-md-icon class="floater-left" icon="person" hide-gt-xs ng-click="MessCtrl.toggleContacts()">
     </ng-md-icon>
     Messages
-    <ng-md-icon  icon="info" class="floater-right" hide-gt-sm ng-click="toggleInfo()">
+    <ng-md-icon  icon="info" class="floater-right" hide-gt-sm ng-click="MessCtrl.toggleInfo()">
     </ng-md-icon>
   </h4>
   <div ng-if="MessCtrl.selection!=null">
@@ -19,11 +19,9 @@
     </div>
   </div>
 </md-subheader>
-<md-content flex class="messages" ng-if="MessCtrl.selection!=null">
-    <repeat-messages messages="MessCtrl.messages" user-id="MessCtrl.currentUser._id" group="MessCtrl.selection.kind"></repeat-messages>
+<repeat-messages  ng-if="MessCtrl.selection!=null" messages="MessCtrl.messages" user-id="MessCtrl.currentUser._id" group="MessCtrl.selection.kind"></repeat-messages>
 
-</md-content>
-<md-content class="welcome-message" ng-if="MessCtrl.selection==null">
+<md-content flex class="welcome-message" ng-if="MessCtrl.selection==null">
   <p>The Cha-Chat</p>
 </md-content>
 
@@ -53,10 +51,9 @@
         </ng-md-icon>
       </md-tab-label>
       <md-tab-body>
-        <div>
+        <div >
           <canvas-drawing send-canvas="MessCtrl.sendCanvas"></canvas-drawing>
-
-         </div>
+        </div>
       </md-tab-body>
     </md-tab>
   </md-tabs>

@@ -8,16 +8,13 @@ class AddUserCtrl {
   answer = {};
   //end-non-standard
 
-  constructor($scope,Comm,Chat) {
+  constructor(Comm,Chat) {
     this.Comm=Comm;
-    this.scope = $scope;
     this.Chat = Chat;
     this.requests=Chat.getRequests();
     this.pendings=Chat.getPendings();
 
   }
-
-  message = 'Hello';
 
   newContact = function (email) {
     this.Comm.createRoom({email:email}).then((user)=> {
@@ -26,23 +23,20 @@ class AddUserCtrl {
       this.Chat.newRequest(user);
     }).catch((err)=> {
       this.errors.other = err.data.message;
-      //console.log(err)
     });
   };
   acceptFriend = function (friendId) {
     this.Comm.acceptFriend({friendId}).then((room)=> {
       this.Chat.newFriend(room);
     }).catch((err)=> {
-      //this.errors.other = err.data.message;
-      //console.log(err)
+      this.errors.other = err.data.message;
     });
   };
   rejectFriend = function (friendId) {
-    this.Comm.rejectFriend({friendId}).then((room)=> {
+    this.Comm.rejectFriend({friendId}).then(()=> {
       this.Chat.rejectRequest(friendId);
     }).catch((err)=> {
-      //this.errors.other = err.data.message;
-      //console.log(err)
+      this.errors.other = err.data.message;
     });
   }
 
