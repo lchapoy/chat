@@ -12,14 +12,8 @@
 import _ from 'lodash';
 import Room from './room.model';
 import User from '../user/user.model';
-/*
-function handleError(res, statusCode) {
-  statusCode = statusCode || 500;
-  return function(err) {
-    res.status(statusCode).send(err);
-  };
-}
-*/
+
+
 function responseWithResult(res, statusCode) {
   statusCode = statusCode || 200;
   return function(entity) {
@@ -87,7 +81,7 @@ export function destroy(req, res) {
  * Change a users password
  */
 
-export function changePassword(req, res, next) {
+export function changePassword(req, res) {
   var userId = req.user._id;
   var oldPass = String(req.body.oldPassword);
   var newPass = String(req.body.newPassword);
@@ -109,6 +103,7 @@ export function changePassword(req, res, next) {
 /**
  *  Verify if User is already Registered
  * @param email
+ * @param userId
  * @param cb
  * @param catchFn
  * @returns {*}
@@ -153,7 +148,7 @@ function removeContRoom(roomId,membersId) {
 /**
  * Add Friend
  */
-export function createRoom(req, res, next) {
+export function friendRequest(req, res) {
 
   var userId = req.session._id;
   var email = String(req.body.email);
@@ -209,18 +204,10 @@ export function createRoom(req, res, next) {
 
     });
 }
-function getMembersId(admin,members){
-  var arrId=[];
-  arrId.push(admin);
-  arrForEach(members,(user)=>{
-    arrId.push(user._id)
-  });
-  return arrId;
-}
 /**
  * Add Group
  */
-export function createGroup(req, res, next) {
+export function createGroup(req, res) {
   var group = new Room;
   group.admin = req.session._id;
   group.name = String(req.body.groupName);
@@ -253,7 +240,7 @@ export function createGroup(req, res, next) {
 /**
  * Get All Friend Info
  */
-export function getRooms(req, res, next) {
+export function getRooms(req, res) {
   var userId =  req.params.id;
   var kind= req.query.kind;
   User.find({_id:userId}, {"rooms":1,"_id":0})
@@ -275,10 +262,11 @@ export function getRooms(req, res, next) {
       res.json(res1);
     })
 }
+
 /**
  * StoreMessage
  */
-export function storeMessage(req, res, next) {
+export function storeMessage(req, res) {
   var userId = req.params.id;
   var roomId= String(req.body.roomId);
   var message={
@@ -294,10 +282,11 @@ export function storeMessage(req, res, next) {
           res.status(204).end();
     });
 }
+
 /**
- * StoreMessage
+ * getMessage
  */
-export function getMessage(req, res, next) {
+export function getMessage(req, res) {
   var roomId = req.params.id;
   Room.findOneAsync({_id:roomId})
     .then( room =>{
@@ -307,17 +296,18 @@ export function getMessage(req, res, next) {
 
 
 }
+
 /**
  *  delete Friend From Group
  */
-export function deleteFriendFromGroup(req, res, next) {
+export function deleteFriendFromGroup(req, res) {
   //var user = new Room;
   var roomId= String(req.body.roomId);
   var friendId= String(req.body.friendId);
   var groupName= String(req.body.groupName);
 
   Room.updateAsync({_id:roomId},{$pull:{members:friendId}})
-  .then((data)=>{
+  .then(()=>{
       User.findByIdAsync(friendId,{name:1})
       .then((doc)=>{
          // Room.schema.emit("leaveRoom",{id:friendId,roomId});
@@ -335,18 +325,19 @@ export function deleteFriendFromGroup(req, res, next) {
   User.updateAsync({_id:friendId},{$pull:{rooms:roomId}});
 
 }
+//************************************************
+//Group Behavior
 /**
  *  exit Group
  */
-export function exitGroup(req, res, next) {
+export function exitGroup(req, res) {
   //var user = new Room;
   var userId = req.session._id;
   var roomId= String(req.body.roomId);
   var newAdmin= String(req.body.newAdmin);
   var groupName= String(req.body.groupName);
-  //console.log(roomId,userId,user);
   Room.updateAsync({_id:roomId},{$pull:{members:userId},admin:newAdmin})
-    .then((data)=>{
+    .then(()=>{
       Room.schema.emit("groupExitContact",{name:req.session.name,groupName:groupName,userId,roomId});
       res.status(204).end();
     }) .catch(handleError(res));
@@ -356,7 +347,7 @@ export function exitGroup(req, res, next) {
 /**
  *  delete Group
  */
-export function deleteGroup(req, res, next) {
+export function deleteGroup(req, res) {
 
   var roomId= String(req.body.roomId);
   Room.findByIdAndRemoveAsync(roomId,{'members':1,'name':1,'_id':0})
@@ -373,35 +364,32 @@ export function deleteGroup(req, res, next) {
 /**
  *  add Friend To Group
  */
-export function addFriendToGroup(req, res, next) {
+export function addFriendToGroup(req, res) {
   var roomId= req.body.roomId;
-  //var friendName= String(req.body.friendName);
-  //var friendId= String(req.body.friendId);
   var membersId= req.body.membersId;
   var groupName= String(req.body.groupName);
-  var userId=req.session._id;
-
   Room.updateAsync({_id:roomId},{$addToSet:{members:{$each:membersId}}})
-    .then((data)=>{
+    .then(()=>{
       addContRoom(roomId,membersId)
-        .then((doc)=>{
+        .then(()=>{
           Room.schema.emit("groupAddedContact",{
             roomId,
             membersId,
             groupName
           },req.session.name);
-
         })
         .catch(handleError(res));
       res.status(204).end();
     });
 
 }
+//**********************************
+//friend request behavior
 
 /**
- *  delete Group
+ *  Accept friend from a request
  */
-export function acceptFriend(req, res, next) {
+export function acceptFriend(req, res) {
   var friendId= String(req.body.friendId);
   var userId =req.session._id;
   User.findByIdAsync(friendId,{"name":1,"img":1,"status":1,"email":1})
@@ -411,7 +399,7 @@ export function acceptFriend(req, res, next) {
         kind:'par'
       }).then(contactRoom=>{
         addParRoom(friendId,userId,contactRoom._id)
-          .then((response)=>{
+          .then(()=>{
               Room.schema.emit("acceptFriend",
                 { toId:friendId,
                   fromId:userId,
@@ -435,22 +423,34 @@ export function acceptFriend(req, res, next) {
 
 }
 
-export function rejectFriend(req, res, next) {
+/**
+ * Reject friend:
+ *  rejecting a friend will add the user into the spam array that won't allow that
+ *  user to ask the current user being a friend again
+ * @param req
+ * @param res
+ */
+export function rejectFriend(req, res) {
   var friendId= String(req.body.friendId);
   var userId =req.session._id;
   var promises=[];
   promises.push(User.findByIdAndUpdate(friendId,{$pull:{pending:userId}}));
   promises.push( User.findByIdAndUpdate(userId,{$pull:{request:friendId},$push:{spam:friendId}}));
   Promise.all(promises)
-    .then((response)=>{
+    .then(()=>{
       res.status(201).json({});
     }).catch(handleError(res));
 }
 
-export function getRequestPendings(req, res, next) {
+/**
+ * GetRequestPendings:
+ *  Will get all the pending request that a certain user have
+ * @param req
+ * @param res
+ */
+export function getRequestPendings(req, res) {
   var userId =  req.params.id;
   var promises=[];
-  console.log("doce")
   promises.push(User.findOne({_id:userId}, {"request":1,"_id":0})
     .populate({
       path:"request",

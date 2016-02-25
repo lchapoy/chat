@@ -7,11 +7,10 @@ import * as auth from '../../auth/auth.service';
 var router = new Router();
 
 router.get('/', controller.index);
-//router.get('/:id', controller.show);
 router.get('/:id/getRooms', controller.getRooms);
 router.get('/:id/getRequestPendings', controller.getRequestPendings);
 router.get('/:id/getMessage', controller.getMessage);
-router.post('/', controller.createRoom);
+router.post('/', controller.friendRequest);
 router.post('/createGroup', controller.createGroup);
 router.post('/deleteFriendFromGroup', controller.deleteFriendFromGroup);
 router.post('/addFriendToGroup', controller.addFriendToGroup);

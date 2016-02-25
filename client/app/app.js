@@ -21,5 +21,7 @@ angular.module('chatYeoApp', [
     $locationProvider.html5Mode(true);
     $mdThemingProvider.theme('default')
       .primaryPalette('deep-orange')
-      .accentPalette('orange');
+      .accentPalette('blue').foregroundPalette[3] = "gainsboro";
+
+
   });

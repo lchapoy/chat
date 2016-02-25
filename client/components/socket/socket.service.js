@@ -2,7 +2,7 @@
 'use strict';
 
 angular.module('chatYeoApp')
-  .factory('socket', function(socketFactory,Auth,$mdToast) {
+  .factory('socket', function(socketFactory,Auth,$mdToast,$state) {
     // socket.io now auto-configures its connection when we ommit a connection url
     var user=Auth.getCurrentUser();
     var socketInstance=true;
@@ -17,7 +17,6 @@ angular.module('chatYeoApp')
       );
     }
     var createSocket=()=>{
-      console.log(socketInstance);
       if(socketInstance) {
         ioSocket = io('', {
           // Send auth token on connection, you will need to DI the Auth service above
@@ -28,6 +27,12 @@ angular.module('chatYeoApp')
         socket = socketFactory({ioSocket});
         socketInstance=false;
       }
+      socket.on('forceDisconnect', function () {
+        socket.disconnect();
+        socketInstance=true;
+        $state.go('logout')
+      });
+
       return socket;
     };
     socket=createSocket();
@@ -67,6 +72,7 @@ angular.module('chatYeoApp')
 
             cb(event, item, array);
           });
+
 
           /**
            * Syncs removed items on 'model:remove'

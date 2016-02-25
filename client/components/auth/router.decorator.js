@@ -3,9 +3,9 @@
 (function() {
 
 angular.module('chatYeoApp.auth')
-  .run(function($rootScope, $state, Auth) {    
+  .run(function($rootScope, $state, Auth) {
     // Redirect to login if route requires auth and the user is not logged in, or doesn't have required role
-    $rootScope.$on('$stateChangeStart', function(event, next) {    
+    $rootScope.$on('$stateChangeStart', function(event, next) {
       if(!next.authenticate) {
         return;
       }
@@ -17,6 +17,7 @@ angular.module('chatYeoApp.auth')
           }
 
           event.preventDefault();
+          console.log('here')
           return Auth.isLoggedIn(_.noop).then(is => {
             $state.go(is ? 'main' : 'login');
           });
@@ -27,11 +28,12 @@ angular.module('chatYeoApp.auth')
             return;
           }
 
+          console.log('here 2')
           event.preventDefault();
           $state.go('main');
         });
       }
-    });    
+    });
   });
 
 })();

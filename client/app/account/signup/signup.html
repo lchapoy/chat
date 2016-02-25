@@ -8,16 +8,11 @@
     <div flex="60" >
       <div class="form-module">
         <div class="toggle">
-          <a class="btn btn-default btn-lg" ui-sref="main">
+          <a class="btn btn-default btn-lg btn-toggler " ui-sref="main">
             <ng-md-icon icon="clear"></ng-md-icon>
           </a>
-          <a class="btn btn-default btn-lg btn-login" ui-sref="login">
-            <ng-md-icon icon="facebook"></ng-md-icon>
-          </a>
-          <a class="btn btn-default btn-lg btn-login" ui-sref="login">
-            <ng-md-icon icon="twitter"></ng-md-icon>
-          </a>
-          <a class="btn btn-default btn-lg btn-login" ui-sref="login">
+          <oauth-buttons classes="btn-block"></oauth-buttons>
+          <a class="btn btn-default btn-lg btn-login btn-toggler " ui-sref="login">
             <ng-md-icon icon="perm_identity"></ng-md-icon>
           </a>
 
@@ -105,11 +100,7 @@
           </div>
 
           <hr/>
-          <div class="row">
-            <div class="col-sm-4 col-md-3">
-              <oauth-buttons classes="btn-block"></oauth-buttons>
-            </div>
-          </div>
+
         </form>
   </div>
   </div>

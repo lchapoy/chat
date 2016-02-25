@@ -35,7 +35,6 @@ export function isAuthenticated() {
             return res.status(401).end();
           }
           user.status='Online';
-         // console.log('hi');
           user.saveAsync()
             .then((user) => {
             });
@@ -89,5 +88,5 @@ export function setTokenCookie(req, res) {
   var token = signToken(req.user._id, req.user.role);
   //console.log("token1 "+token)
   res.cookie('token', token);
-  res.redirect('/');
+  res.redirect('/chat');
 }

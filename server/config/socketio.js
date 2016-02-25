@@ -31,8 +31,10 @@ function onConnect(socket) {
     socket.log(JSON.stringify(data, null, 2));
   });
   var id=socket.decoded_token;
+
+  //Join own room
   socket.join(id._id);
-  socket.log(id._id)
+
   // Insert sockets below
   require('../api/room/room.socket').register(socket,id);
   require('../api/thing/thing.socket').register(socket);
@@ -186,6 +188,12 @@ function joinRooms(socket,event) {
 
       }
       for(var i=0;i<doc.rooms.length;i++) {
+        _socket.to(doc.rooms[i]._id)
+          .emit(
+          "room:changeStatus",
+          doc.rooms[i]._id,
+          " "+_socket.request.session.name+" is Online"
+          );
         _socket.join(doc.rooms[i]._id);
       }
     }
@@ -228,6 +236,19 @@ export default function(socketio) {
       console.log(`SocketIO ${socket.nsp.name} [${socket.address}]`, ...data);
     };
 
+    //********************************************************
+    //Verify already connected
+    var id=socket.decoded_token;
+    var roomSockets= socketio.nsps['/'].adapter.rooms[id._id];
+    var _socket=null;
+    if(roomSockets)
+      for (var socketId in roomSockets.sockets) {
+        _socket = socketio.sockets.connected[socketId];
+      }
+    if(_socket){
+      socket.to(id._id).emit("forceDisconnect");
+      _socket.disconnect();
+    }
 
     // Call onDisconnect.
     socket.on('disconnect', () => {

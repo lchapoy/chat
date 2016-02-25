@@ -270,6 +270,7 @@
           });
       });
 
+
       //Receive notification when a friend go online
       socket.listener('room:changeStatus', (roomId)=> {
         angular.forEach(rooms, (val)=> {

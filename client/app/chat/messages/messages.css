@@ -52,12 +52,17 @@
   font-family: 'Croissant One', sans-serif;
 }
 
+.welcome-message div{
+  display:table;
+  height:82vh;
+  width:100%;
+}
 .welcome-message p{
   padding:.1em;
   text-align:center;
-  position:relative;
-  top:23vh;
-
+  display: table-cell;
+  vertical-align:middle;
+  horiz-align:center;
 }
 
 .icon-bar{

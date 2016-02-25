@@ -6,8 +6,9 @@ class SettingsController {
   submitted = false;
   //end-non-standard
 
-  constructor(Auth) {
+  constructor(Auth,$state) {
     this.Auth = Auth;
+    this.$state=$state;
   }
 
   changePassword(form) {
@@ -25,6 +26,11 @@ class SettingsController {
         });
     }
   }
+
+  cancel() {
+    this.$state.go('chat');
+  }
+
 }
 
 angular.module('chatYeoApp')

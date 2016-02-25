@@ -1,42 +1,60 @@
 'use strict';
 
 class InformationCtrl {
-  constructor(Chat,EventNotify,$scope,$mdDialog,sideNavToggler){
-    this.user=Chat.getUser();
-    this.roomId="NoID";
-    this.selection=null;
-    this.Chat=Chat;
-    this.toggleInfo=sideNavToggler.triggerToggle('information');
+  constructor(Chat,EventNotify,$scope,$mdDialog,sideNavToggler) {
+    this.user = Chat.getUser();
+    this.roomId = "NoID";
+    this.selection = null;
+    this.Chat = Chat;
+    this.toggleInfo = sideNavToggler.triggerToggle('information');
     //***********************************************************
     //Function that will be trigger whenever the selection change
-    var selectionChange=()=>{
-      var userSelection=Chat.getSelection();
-      if(userSelection) {
+    var selectionChange = ()=> {
+      var userSelection = Chat.getSelection();
+      if (userSelection) {
         this.roomId = userSelection._id;
         if (userSelection.kind == "par") {
           this.selection = userSelection.members[0];
         } else
           this.selection = userSelection;
-      }else{
-        this.selection =null;
+      } else {
+        this.selection = null;
       }
     };
     //Event listener
-    EventNotify.subscribe($scope,selectionChange);
+    EventNotify.subscribe($scope, selectionChange);
     //***********************************************************
     //Add User Dialog Box
-    this.showDialog=function ($event) {
+    this.showDialog = function ($event) {
       $mdDialog.show({
         parent: angular.element(document.body),
         targetEvent: $event,
         templateUrl: 'components/addUsersToGroup/addUsersToGroup.html',
-        locals:{
-          group:this.selection
+        locals: {
+          group: this.selection
         },
         controller: 'AddUsersToGroupCtrl',
         controllerAs: 'u2gCtrl'
       });
     }
+
+    //Confirm dialog box
+    this.showConfirm = function (title, cb,param1,param2) {
+      // Appending dialog to document.body to cover sidenav in docs app
+      console.log(title,cb)
+      var confirm = $mdDialog.confirm()
+        .title(title)
+        .textContent('Are you sure?')
+        .ariaLabel('alert')
+        .targetEvent()
+        .ok('Ok')
+        .cancel('Cancel');
+      $mdDialog.show(confirm).then( () =>{
+        cb(param1,param2);
+      }, function () {
+
+      });
+    };
   }
   //***********************************************************
   //Prototype Function
@@ -66,54 +84,3 @@ class InformationCtrl {
 
 angular.module('chatYeoApp')
   .controller('InformationCtrl', InformationCtrl);
-
-  /*function ($scope,Chat,$mdDialog,EventNotify) {
-
-    $scope.user=Chat.getUser();
-    $scope.roomId="NoID";
-    $scope.selection=null;
-
-    function selectionChange(){
-      var userSelection=Chat.getSelection();
-      if(userSelection) {
-        $scope.roomId = userSelection._id;
-        if (userSelection.kind == "par") {
-          $scope.selection = userSelection.members[0];
-        } else
-          $scope.selection = userSelection;
-      }else{
-        $scope.selection =null;
-      }
-
-    }
-
-    EventNotify.subscribe($scope,selectionChange);
-
-
-    $scope.deleteFriendFromGroup=(friendId,groupName)=>{
-      Chat.deleteFriendFromGroup({roomId:$scope.roomId,friendId,groupName});
-
-    };
-
-    $scope.deleteGroup=()=>{
-      Chat.deleteGroup({roomId:$scope.roomId});
-      $scope.toggleInfo();
-    };
-    $scope.exitGroup=(groupName,newAdmin)=>{
-      if($scope.selection.admin!=$scope.user._id)
-        Chat.exitGroup({roomId:$scope.roomId,groupName,newAdmin: $scope.selection.admin});
-      else{
-        console.log($scope.selection.members[0]._id);
-        Chat.exitGroup({roomId:$scope.roomId,groupName,newAdmin: $scope.selection.members[0]._id});
-      }
-      $scope.toggleInfo();
-    };
-    $scope.deleteFriend=()=>{
-      Chat.deleteFriend({id:$scope.roomId,friendId:$scope.selection._id});
-      $scope.toggleInfo();
-    };
-
-
-
-  });
-*/

@@ -1,11 +1,13 @@
 .btn-facebook {
   color: #fff;
   background-color: #3B5998;
+  padding:.3em;
   border-color: #133783;
 }
 .btn-twitter {
   color: #fff;
   background-color: #2daddc;
+  padding:.3em;
   border-color: #0271bf;
 }
 .btn-github {
