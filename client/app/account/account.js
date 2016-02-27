@@ -10,14 +10,29 @@ angular.module('chatYeoApp')
         controllerAs: 'vm'
       })
       .state('logout', {
-        url: '/logout?referrer',
+        url: '/logout?referrer?force',
         referrer: 'main',
         template: '',
-        controller: function($state, Auth,socket,$timeout) {
+        controller: function($state, Auth,socket,$timeout,$mdDialog) {
 
           var referrer = $state.params.referrer ||
                           $state.current.referrer ||
                           'main';
+          var force = $state.params.force;
+          //Confirm dialog box
+          if(force){
+              var confirm = $mdDialog.confirm()
+                .title('Multiple Account Login')
+                .textContent('Your account is being used on another machine')
+                .ariaLabel('alert')
+                .targetEvent()
+                .ok('Ok');
+              $mdDialog.show(confirm).then( () =>{
+
+              }, function () {
+
+              });
+            }
           socket.disconnect();
           //var referrer= $state.params.cookie;
           //if($cookies.get('token')){

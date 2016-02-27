@@ -30,7 +30,7 @@ angular.module('chatYeoApp')
       socket.on('forceDisconnect', function () {
         socket.disconnect();
         socketInstance=true;
-        $state.go('logout')
+        $state.go('logout',{force:true})
       });
 
       return socket;
