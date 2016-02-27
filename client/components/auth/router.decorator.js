@@ -17,7 +17,6 @@ angular.module('chatYeoApp.auth')
           }
 
           event.preventDefault();
-          console.log('here')
           return Auth.isLoggedIn(_.noop).then(is => {
             $state.go(is ? 'main' : 'login');
           });
@@ -28,7 +27,6 @@ angular.module('chatYeoApp.auth')
             return;
           }
 
-          console.log('here 2')
           event.preventDefault();
           $state.go('main');
         });

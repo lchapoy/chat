@@ -19,7 +19,7 @@
     </div>
   </div>
 </md-subheader>
-<repeat-messages  ng-if="MessCtrl.selection!=null" messages="MessCtrl.messages" user-id="MessCtrl.currentUser._id" group="MessCtrl.selection.kind"></repeat-messages>
+<repeat-messages  ng-if="MessCtrl.selection!=null" messages="MessCtrl.messages" user-id="MessCtrl.currentUser._id" group="MessCtrl.selection.kind" scroll-fn="MessCtrl.Messages.getNextPackage(MessCtrl.roomId)"></repeat-messages>
 
 <md-content flex class="welcome-message" ng-if="MessCtrl.selection==null">
   <div>

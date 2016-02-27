@@ -7,6 +7,5 @@ angular.module('chatYeoApp')
     controller: 'NavbarController',
     controllerAs: 'nav',
     link: (scope,el,att,ctr)=>{
-      console.log(scope.nav.isLoggedIn())
     }
   }));

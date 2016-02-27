@@ -7,7 +7,10 @@
 import Thing from '../api/thing/thing.model';
 import User from '../api/user/user.model';
 import Room from '../api/room/room.model';
+import {Message} from '../api/room/room.model';
+
 Room.find({}).removeAsync();
+Message.find({}).removeAsync();
 Thing.find({}).removeAsync()
   .then(() => {
     Thing.create({

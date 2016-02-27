@@ -5,7 +5,7 @@
 'use strict';
 
 import {EventEmitter} from 'events';
-var Room = require('./room.model');
+import Room from './room.model';
 var RoomEvents = new EventEmitter();
 
 // Set max event listeners (0 == unlimited)

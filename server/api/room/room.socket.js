@@ -5,8 +5,8 @@
 'use strict';
 
 var RoomEvents = require('./room.events');
-var User = require('../user/user.model');
-var Room = require('./room.model');
+import User from '../user/user.model';
+import Room from './room.model';
 
 var socketEvents = {
   'delete':eventToRoom,

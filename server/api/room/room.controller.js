@@ -11,7 +11,9 @@
 
 import _ from 'lodash';
 import Room from './room.model';
+import {Message} from './room.model';
 import User from '../user/user.model';
+var mongoose=require('mongoose');
 
 
 function responseWithResult(res, statusCode) {
@@ -246,7 +248,7 @@ export function getRooms(req, res) {
   User.find({_id:userId}, {"rooms":1,"_id":0})
     .populate({
       path:"rooms",
-      select:"messages members name kind img admin lastMessageDate lastMessageDate_ms",
+      select:"members name kind img admin lastMessageDate lastMessageDate_ms",
       match:{kind:kind},
       populate:{
         path:"members",
@@ -269,17 +271,26 @@ export function getRooms(req, res) {
 export function storeMessage(req, res) {
   var userId = req.params.id;
   var roomId= String(req.body.roomId);
-  var message={
+  var message= new Message({
+    name:req.body.name,
+    text:req.body.text,
+    origin:userId,
+    roomId
+  });
+  /*var message={
     name:req.body.name,
     text:req.body.text,
     origin:userId
-  };
+  };*/
   if(req.body.scribble)
     message.scribble=req.body.scribble;
   //console.log("storeMessage "+message, userId)
-  Room.findOneAndUpdateAsync({_id:roomId},{lastMessageDate:Date.now(),$push:{messages:message}},{upsert: true})
+  Room.findOneAndUpdateAsync({_id:roomId},{lastMessageDate:Date.now()},{upsert: true})
     .then( () =>{
-          res.status(204).end();
+          message.saveAsync().spread(()=>{
+            res.status(204).end();
+          });
+
     });
 }
 
@@ -288,12 +299,33 @@ export function storeMessage(req, res) {
  */
 export function getMessage(req, res) {
   var roomId = req.params.id;
-  Room.findOneAsync({_id:roomId})
-    .then( room =>{
-      return res.json(room.messages);
-    })
-    .catch(showErrorMessage(res,"Room does not exist"))
-
+  var page= Number(req.query.page);
+  var messageXpage=Number(req.query.messageXpage);
+  var firstMessage=(page)*(messageXpage);
+  console.log(roomId);
+ /* Room.aggregate([
+    {"$match":{_id:mongoose.Types.ObjectId(roomId)}},
+    {"$project":{"messages":1}},
+    {"$unwind":"$messages"},
+    {"$sort":{"messages.date":-1}},
+    {"$skip":firstMessage},
+    {"$limit":messageXpage},
+    {"$group":
+      {	"_id":"$_id",
+        "messages":{"$push":"$messages"}
+      }
+    }
+  ],(err,message) =>{
+    console.log(message[0],err,"hi");
+    if(message[0])
+      return res.json(message[0].messages);
+    else
+      return res.json(message[0]);
+  })*/
+  Message.find({roomId:roomId}).sort({"date":-1}).skip(firstMessage).limit(messageXpage)
+  .exec((err,message)=>{
+    return res.json(message);
+    });
 
 }
 

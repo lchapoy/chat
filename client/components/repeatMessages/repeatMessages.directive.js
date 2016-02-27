@@ -9,14 +9,12 @@ angular.module('chatYeoApp')
         messages:'=messages',
         userId:'=userId',
         group:'=group',
+        scrollFn:'&'
       },
       replace:true,
       link: function (scope, element, attrs) {
-        console.log(scope.messages);
-        console.log(scope.group);
-
         var messageContainer=element[0];
-
+        var mlen=scope.messages.length;
         scope.fromOrTo=function(origin){
           if(origin==scope.userId){
            return 'me';
@@ -26,10 +24,20 @@ angular.module('chatYeoApp')
           }
         };
         scope.$watch('messages.length',()=>{
-           console.log(messageContainer.scrollHeight);
-          $timeout(()=>{
-            messageContainer.scrollTop=messageContainer.scrollHeight;
-          },1)
+          var rest=messageContainer.scrollHeight-messageContainer.scrollTop-363;
+          if((rest)<100) {
+
+            $timeout(()=> {
+              messageContainer.scrollTop = messageContainer.scrollHeight;
+              console.log(messageContainer.scrollHeight, messageContainer.scrollTop);
+            }, 1);
+          } else if((scope.messages.length-mlen>=5)){
+            $timeout(()=>{
+              messageContainer.scrollTop=messageContainer.scrollHeight-rest+580;
+              console.log(messageContainer.scrollHeight,messageContainer.scrollTop);
+            },1)
+          }
+          mlen=scope.messages.length;
         })
 
       }

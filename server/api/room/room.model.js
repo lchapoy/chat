@@ -10,6 +10,7 @@ var MessageSchema = new mongoose.Schema({
   name:String,
   text:String,
   scribble:{type:Boolean,default:false},
+  roomId:mongoose.Schema.Types.ObjectId,
   origin:mongoose.Schema.Types.ObjectId
 });
 
@@ -34,4 +35,6 @@ RoomSchema.virtual('lastMessageDate_ms').get(function() {
   return this.lastMessageDate.getTime();
 });
 
+
 export default mongoose.model('Room', RoomSchema);
+export var Message=mongoose.model('Message',  MessageSchema);

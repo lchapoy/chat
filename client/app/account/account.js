@@ -13,16 +13,21 @@ angular.module('chatYeoApp')
         url: '/logout?referrer',
         referrer: 'main',
         template: '',
-        controller: function($state, Auth,socket) {
+        controller: function($state, Auth,socket,$timeout) {
 
           var referrer = $state.params.referrer ||
                           $state.current.referrer ||
                           'main';
-          console.log(referrer,' luis1');
           socket.disconnect();
-          Auth.logout();
+          //var referrer= $state.params.cookie;
+          //if($cookies.get('token')){
+            Auth.logout();
+          //}
           //$state.go(referrer);
-          $state.go('main');
+          $timeout(()=>{
+            $state.go(referrer);
+          },1);
+
         }
       })
       .state('signup', {
