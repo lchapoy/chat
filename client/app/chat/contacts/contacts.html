@@ -1,13 +1,15 @@
 
-<h4 class="title-bar">Friend List
-  <ng-md-icon icon="person_add" aria-label="Add User"  class="floater-right" ng-click="CCtrl.openAddFriends()"></ng-md-icon>
-
-  <ng-md-icon icon="flag" aria-label="Add User"  class="floater-right" ng-class="{'md-primary':CCtrl.requests.length==0,'md-alert':CCtrl.requests.length>0}">
+<md-toolbar md-whiteframe="2" class="md-accent" layout="row" layout-align="center center" >
+  <span layout-margin="3px"></span>
+  <span flex>Friend List</span>
+  <ng-md-icon icon="flag" aria-label="Add User"   ng-class="{'md-primary':CCtrl.requests.length==0,'md-alert':CCtrl.requests.length>0}">
     <md-tooltip>
       {{CCtrl.requests.length}} New Requests
     </md-tooltip>
   </ng-md-icon>
-</h4>
+  <ng-md-icon icon="person_add" aria-label="Add User"  class="floater-right" ng-click="CCtrl.openAddFriends()"></ng-md-icon>
+  <span layout-margin="3px"></span>
+</md-toolbar>
 
 <md-list flex style="height:1px">
   <md-list-item ng-repeat="room in CCtrl.rooms | orderBy:'lastMessageDate_ms':true"
@@ -19,10 +21,15 @@
   </md-list-item>
 </md-list>
 
-<h4 class="title-bar">Group List
+<md-toolbar md-whiteframe="2" class="md-accent" layout="row" layout-align="center center" >
+  <span layout-margin="3px"></span>
+  <span flex>Group List</span>
+<!--<h4 class="title-bar">Group List-->
   <ng-md-icon icon="group_add" aria-label="Add User"  class="floater-right" ng-click="CCtrl.openAddGroups()">
   </ng-md-icon>
-</h4>
+  <span layout-margin="3px"></span>
+</md-toolbar>
+<!--</h4>-->
 
   <md-list flex style="height:1px">
     <md-list-item ng-repeat="group in CCtrl.groups | orderBy:'lastMessageDate_ms':true" ng-click="CCtrl.selectUser('group',group)">

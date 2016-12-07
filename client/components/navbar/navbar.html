@@ -53,7 +53,7 @@
 </div>
 -->
 
-<div ng-controller="NavbarController as ctrl">
+
   <!--<md-toolbar>
     <div layout="row" flex="" layout-align="left" layout-wrap>
       The Chat
@@ -66,23 +66,19 @@
     </div>
   </md-toolbar>
 </div>-->
-  <md-toolbar class="navbar">
-    <div layout="row">
-      <div flex="100">
-          <h2>The Cha-Chat</h2>
+  <md-toolbar  >
+    <div layout="row" layout-align="center center">
+      <div>
+        The Cha-Chat
       </div>
-      <div flex="100">
-        <h2>{{ctrl.currentUser.name}}</h2>
+      <div layout="row" flex layout-align="center">
+        {{nav.currentUser.name}}
       </div>
-      <div flex="100" class="f-left">
+      <div  >
         <md-button aria-label="settings" class="md-icon-button" ng-show="nav.isLoggedIn()" ui-sref-active="active" ui-sref="settings"><ng-md-icon icon="settings"></ng-md-icon>
         </md-button>
         <md-button aria-label="logout" class="md-icon-button" ng-show="nav.isLoggedIn()" ui-sref-active="active" ui-sref="logout"><ng-md-icon icon="logout"></ng-md-icon>
-        <!--<md-button>Test</md-button>-->
-        <!--<md-button hide-sm>Test</md-button>-->
       </div>
     </div>
-
-
   </md-toolbar>
-</div>
+

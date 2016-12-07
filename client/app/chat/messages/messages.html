@@ -1,11 +1,13 @@
 <md-subheader class="user-subheader">
-  <h4 class="title-bar">
+  <md-toolbar layout="row" layout-align="center center" class="md-accent">
+    <span layout-margin="3px"></span>
     <ng-md-icon class="floater-left" icon="person" hide-gt-xs ng-click="MessCtrl.toggleContacts()">
     </ng-md-icon>
-    Messages
+    <span flex >Messages</span>
     <ng-md-icon  icon="info" class="floater-right" hide-gt-sm ng-click="MessCtrl.toggleInfo()">
     </ng-md-icon>
-  </h4>
+    <span layout-margin="3px"></span>
+  </md-toolbar>
   <div ng-if="MessCtrl.selection!=null">
     <div class="title-user">
       <image  ng-src="{{MessCtrl.selection.img }}"  class="user-photo-message"></image>

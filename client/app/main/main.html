@@ -1,7 +1,15 @@
 <div >
-  <h1 id="main-title"><span>The Cha-Chat</span>
+  <h1 id="main-title" ><span>The Cha-Chat</span>
     <br>
-    <a ui-sref="login"><ng-md-icon icon="perm_identity"></ng-md-icon></a>
-    <a ui-sref="signup"><ng-md-icon icon="person_add"></ng-md-icon></a>
+    <md-button ui-sref="login">
+      <md-icon class="md-primary" aria-label="login">person</md-icon>
+      <md-tooltip>Log In</md-tooltip>
+    </md-button>
+    <md-button ui-sref="signup">
+      <md-icon class="md-primary" aria-label="login">person_add</md-icon>
+      <md-tooltip>Sign up</md-tooltip>
+    </md-button>
+    <!--<a ui-sref="login"><ng-md-icon icon="perm_identity"></ng-md-icon></a>-->
+    <!--<a ui-sref="signup"><ng-md-icon icon="person_add"></ng-md-icon></a>-->
   </h1>
 </div>

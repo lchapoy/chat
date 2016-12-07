@@ -1,32 +1,14 @@
-<div layout="row" >
-  <div flex="30" hide-sm hide-xs>
-  </div>
-</div>
-<div layout="row" >
-  <div flex hide-sm hide-xs>
-  </div>
-  <div flex="60" >
-    <div class="form-module">
-      <div class="toggle">
-        <a class="btn btn-default btn-lg btn-toggler" ui-sref="main">
-          <ng-md-icon icon="clear"></ng-md-icon>
-        </a>
-        <oauth-buttons classes="btn-block"></oauth-buttons>
-        <a class="btn btn-default btn-lg btn-toggler " ui-sref="signup">
-          <ng-md-icon icon="person_add"></ng-md-icon>
-        </a>
+<div layout="row" flex layout-align="center">
+  <div flex-gt-xs="50" flex-gt-md="30" flex="70" layout="column" layout-align="center">
+    <md-content    md-whiteframe="10">
+      <md-toolbar layout="row" layout-padding layout-align="center center">
+        <span class="md-toolbar-item md-headline">Login</span>
+      </md-toolbar>
+      <form name="form" layout="column" layout-padding="3px"  ng-submit="vm.login(form)">
 
-        <div class="tooltip" >Sign up</div>
-      </div>
-
-      <form name="form" ng-submit="vm.login(form)">
-
-        <h2>Login</h2>
-
-        <md-input-container class="md-block" flex-gt-sm="">
-          <label>Email</label>
-          <input type="email" name="email" class="form-control" ng-model="vm.user.email"
-                 required >
+        <md-input-container layout="row" class="md-icon-float">
+          <md-icon class="md-dark" aria-label="username">person</md-icon>
+          <input flex="90" type="email" name="email" ng-model="vm.user.email" placeholder="Email" required>
           <div ng-messages="form.email.$error">
             <div ng-message="required">
               Please enter a valid e-mail.
@@ -35,39 +17,84 @@
               {{vm.errors.password}}
             </div>
           </div>
-
         </md-input-container>
-
-        <md-input-container class="md-block" flex-gt-sm="">
-          <label>Password</label>
-          <input type="password" name="password" class="form-control" ng-model="vm.user.password"
-                 required/>
+        <md-input-container  layout="row" class="md-icon-float">
+          <md-icon class="md-dark" arial-label="password">lock</md-icon>
+          <input flex="90" type="password" name="password" ng-model="vm.user.password" placeholder="Password" required>
           <div ng-messages="form.password.$error">
             <div ng-message="required">
               Password is required
             </div>
-
           </div>
         </md-input-container>
-
         <p class="help-block">{{ vm.errors.other }}</p>
 
-        <div>
-          <button class="btn btn-inverse btn-lg btn-register" type="submit">
-            Login
-          </button>
-
+        <div class="md-actions" layout="row" layout-align="center" >
+          <md-button aria-label="Cancel"  ui-sref="main">Cancel</md-button>
+          <md-button class="md-primary" aria-label="Login" type="submit">Login</md-button>
         </div>
-
-        <hr/>
       </form>
-    </div>
-  </div>
-  <div flex hide-sm hide-xs>
+    </md-content>
 
+    <!--<div class="form-module">-->
+      <!--<div class="toggle">-->
+        <!--<a class="btn btn-default btn-lg btn-toggler" ui-sref="main">-->
+          <!--<ng-md-icon icon="clear"></ng-md-icon>-->
+        <!--</a>-->
+        <!--<oauth-buttons classes="btn-block"></oauth-buttons>-->
+        <!--<a class="btn btn-default btn-lg btn-toggler " ui-sref="signup">-->
+          <!--<ng-md-icon icon="person_add"></ng-md-icon>-->
+        <!--</a>-->
+
+        <!--<div class="tooltip" >Sign up</div>-->
+      <!--</div>-->
+
+      <!--<form name="form" ng-submit="vm.login(form)">-->
+
+        <!--<h2>Login</h2>-->
+
+        <!--<md-input-container class="md-block" flex-gt-sm="">-->
+          <!--<label>Email</label>-->
+          <!--<input type="email" name="email" class="form-control" ng-model="vm.user.email"-->
+                 <!--required >-->
+          <!--<div ng-messages="form.email.$error">-->
+            <!--<div ng-message="required">-->
+              <!--Please enter a valid e-mail.-->
+            <!--</div>-->
+            <!--<div ng-message="mongoose">-->
+              <!--{{vm.errors.password}}-->
+            <!--</div>-->
+          <!--</div>-->
+
+        <!--</md-input-container>-->
+
+        <!--<md-input-container class="md-block" flex-gt-sm="">-->
+          <!--<label>Password</label>-->
+          <!--<input type="password" name="password" class="form-control" ng-model="vm.user.password"-->
+                 <!--required/>-->
+          <!--<div ng-messages="form.password.$error">-->
+            <!--<div ng-message="required">-->
+              <!--Password is required-->
+            <!--</div>-->
+
+          <!--</div>-->
+        <!--</md-input-container>-->
+
+        <!--<p class="help-block">{{ vm.errors.other }}</p>-->
+
+        <!--<div>-->
+          <!--<button class="btn btn-inverse btn-lg btn-register" type="submit">-->
+            <!--Login-->
+          <!--</button>-->
+
+        <!--</div>-->
+
+        <!--<hr/>-->
+      <!--</form>-->
+    <!--</div>-->
   </div>
+</md-content>
+
 </div>
-
-
 
 
