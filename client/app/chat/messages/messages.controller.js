@@ -3,7 +3,7 @@
 
 class MessagesCtrl {
 
-  constructor(Comm,Chat,Messages,socket,EventNotify,$scope,sideNavToggler) {
+  constructor(Comm,Chat,Messages,socket,EventNotify,$scope,sideNavToggler,Auth) {
     //**************************************************************
     //Context Global variables
     this.Comm=Comm;
@@ -19,6 +19,9 @@ class MessagesCtrl {
     this.toggleInfo=sideNavToggler.triggerToggle('information');
     this.roomId=null;
     this.kind=null;
+    this.isLoggedIn = Auth.isLoggedIn;
+    this.isAdmin = Auth.isAdmin;
+    this.currentUser = Auth.getCurrentUser();
 
     //**************************************************************
     //New Message listener

@@ -2,20 +2,21 @@
   <md-input-container  >
     <label for="groupName">Group Name</label>
     <input  id="groupName" type="text" class="search-input" ng-model="GCtrl.groupName">
+    <md-button  class="md-primary" ng-click="GCtrl.showDialog()" ng-if="ICtrl.selection.admin==ICtrl.user._id">
+      Add Friends
+    </md-button>
     <md-button type="submit">Create</md-button>
     <p class="help-block">{{ ac.errors.other }}</p>
   </md-input-container>
 </form>
-
-  <h4 class="title-bar" >Going to add</h4>
-<md-content flex>
+<div flex>
   <md-list>
-    <md-list-item ng-repeat="person in GCtrl.rooms" ng-if="person.members[0].add">
-      <img alt="{{ person.members[0].name }}" ng-src="{{ person.members[0].img }}" class="md-avatar" />
-      <p>{{person.members[0].name}}</p>
+    <md-list-item ng-repeat="person in GCtrl.added" >
+      <img alt="{{ person.name }}" ng-src="{{ person.img }}" class="md-avatar" />
+      <p>{{person.name}}</p>
       <ng-md-icon icon="info_outline" aria-label="info"  ng-class="">
         <md-tooltip>
-          {{person.members[0].email}}
+          {{person.email}}
         </md-tooltip>
       </ng-md-icon>
       <label>
@@ -24,32 +25,32 @@
       </label>
     </md-list-item>
   </md-list>
-</md-content>
+</div>
 
-  <h4 class="title-bar" >Not being added</h4>
-<md-content flex>
-  <md-list>
-    <md-list-item ng-repeat="person in GCtrl.rooms| filter:searchText" ng-if="!person.members[0].add">
+  <!--<h4 class="title-bar" >Not being added</h4>-->
+<!--<md-content flex>-->
+  <!--<md-list>-->
+    <!--<md-list-item ng-repeat="person in GCtrl.rooms| filter:searchText" ng-if="!person.members[0].add">-->
 
-      <img alt="{{ person.members[0].name }}" ng-src="{{ person.members[0].img }}" class="md-avatar" />
-      <p>{{person.members[0].name}}</p>
-      <ng-md-icon icon="info_outline" aria-label="info"  ng-class="">
-        <md-tooltip>
-          {{person.members[0].email}}
-        </md-tooltip>
-      </ng-md-icon>
-      <label>
-        <ng-md-icon icon="done"class="answer-block" aria-label="Going to Skip"  ng-class=""></ng-md-icon>
-        <input type="checkbox" ng-model="person.members[0].add" ng-show="false" ng-change="GCtrl.addMemberId(person.members[0]._id)">
-      </label>
-      <br>
-    </md-list-item>
-  </md-list>
-</md-content>
-<md-divider></md-divider>
-<md-input-container  >
-  <label for="searchInput">Search</label>
-  <input  id="searchInput" type="search"  ng-model="searchText">
-</md-input-container  >
+      <!--<img alt="{{ person.members[0].name }}" ng-src="{{ person.members[0].img }}" class="md-avatar" />-->
+      <!--<p>{{person.members[0].name}}</p>-->
+      <!--<ng-md-icon icon="info_outline" aria-label="info"  ng-class="">-->
+        <!--<md-tooltip>-->
+          <!--{{person.members[0].email}}-->
+        <!--</md-tooltip>-->
+      <!--</ng-md-icon>-->
+      <!--<label>-->
+        <!--<ng-md-icon icon="done"class="answer-block" aria-label="Going to Skip"  ng-class=""></ng-md-icon>-->
+        <!--<input type="checkbox" ng-model="person.members[0].add" ng-show="false" ng-change="GCtrl.addMemberId(person.members[0]._id)">-->
+      <!--</label>-->
+      <!--<br>-->
+    <!--</md-list-item>-->
+  <!--</md-list>-->
+<!--</md-content>-->
+<!--<md-divider></md-divider>-->
+<!--<md-input-container  >-->
+  <!--<label for="searchInput">Search</label>-->
+  <!--<input  id="searchInput" type="search"  ng-model="searchText">-->
+<!--</md-input-container  >-->
 
 

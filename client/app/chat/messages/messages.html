@@ -1,10 +1,14 @@
 <md-subheader class="user-subheader">
-  <md-toolbar class="md-accent" layout="row" layout-align="center center" md-whiteframe="12">
+  <md-toolbar  layout="row" layout-align="center center" md-whiteframe="12">
     <span layout-margin="3px"></span>
     <ng-md-icon class="floater-left" icon="person" hide-gt-xs ng-click="MessCtrl.toggleContacts()">
     </ng-md-icon>
     <span layout-margin="3px"></span>
     <span flex >Dashboard</span>
+    <md-button aria-label="settings" class="md-icon-button" ng-show="MessCtrl.isLoggedIn()" ui-sref-active="active" ui-sref="settings"><ng-md-icon icon="settings"></ng-md-icon>
+    </md-button>
+    <md-button aria-label="logout" class="md-icon-button" ng-show="MessCtrl.isLoggedIn()" ui-sref-active="active" ui-sref="logout"><ng-md-icon icon="logout"></ng-md-icon>
+    </md-button>
     <ng-md-icon  icon="info" class="floater-right" hide-gt-sm ng-click="MessCtrl.toggleInfo()">
     </ng-md-icon>
     <span layout-margin="3px"></span>

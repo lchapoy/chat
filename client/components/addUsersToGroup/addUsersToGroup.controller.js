@@ -13,9 +13,10 @@ class AddUsersToGroupCtrl{
     //Constructor private variable
     var ids={};
     //Get the friends that are already in the group
-    angular.forEach(group.members,(contact)=>{
-      ids[contact._id]=true;
-    });
+    if(group)
+      angular.forEach(group.members,(contact)=>{
+        ids[contact._id]=true;
+      });
     //Get the rest of the friends
     angular.forEach(this.rooms,(contact)=>{
       var dummy=contact.members[0];
@@ -29,9 +30,14 @@ class AddUsersToGroupCtrl{
       angular.forEach(this.contacts,(user)=>{
         membersId.push(user._id);
       });
-      if(membersId.length>0) {
-        Chat.addFriendToGroup({roomId: group._id, membersId, groupName: group.name});
-        $mdDialog.hide();
+      if(group) {
+        if (membersId.length > 0) {
+          Chat.addFriendToGroup({roomId: group._id, membersId, groupName: group.name});
+          $mdDialog.hide();
+        }
+      }
+      else{
+        $mdDialog.hide(this.contacts);
       }
     };
 
@@ -52,7 +58,7 @@ class AddUsersToGroupCtrl{
   };
 
   closeDialog = function () {
-    this.$mdDialog.hide();
+    this.$mdDialog.cancel();
   };
 
 }

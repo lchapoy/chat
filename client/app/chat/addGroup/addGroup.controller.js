@@ -14,6 +14,7 @@ class AddGroupCtrl {
     this.scope = $scope;
     this.Chat=Chat;
     this.rooms=Chat.getRooms();
+    this.added=[];
     this.groupName='';
     this.toggleAddGroup=sideNavToggler.triggerToggle('addGroup');
     this.$mdDialog=$mdDialog;
@@ -41,7 +42,7 @@ class AddGroupCtrl {
     this.arrId.splice(index,1);
   };
   showDialog = function ($event) {
-    $mdDialog.show({
+    this.$mdDialog.show({
       parent: angular.element(document.body),
       targetEvent: $event,
       templateUrl: 'components/addUsersToGroup/addUsersToGroup.html',
@@ -50,6 +51,9 @@ class AddGroupCtrl {
       },
       controller: 'AddUsersToGroupCtrl',
       controllerAs: 'u2gCtrl'
+    }).then((memIds)=>{
+      this.added = memIds;
+      console.log(this.added)
     });
   };
   /*myFilter = function (item) {
