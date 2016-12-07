@@ -60,13 +60,19 @@ to prevent collapsing during animation*/
   top: -0;
   right: -0;
   background: darkorange;
-  width: 120px;
+  width: 150px;
   height: 30px;
   margin: -5px 0 0;
   color: #ffffff;
   font-size: 12px;
   line-height: 30px;
   text-align: center;
+}
+.form-module .toggle a {
+  text-decoration: none;
+}
+.form-module .toggle * {
+  margin-right:3px;
 }
 .form-module .toggle .tooltip {
   position: absolute;
