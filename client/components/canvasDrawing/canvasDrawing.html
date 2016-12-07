@@ -1,24 +1,6 @@
 <canvas class="floater-left" width="800" height="200" id="canvas"></canvas>
 <color-picker color="color" options="options" on-color-changed="colorChanged(newColor, oldColor)"></color-picker>
 
-<!--<md-menu md-position-mode="target-right target" md-offset="-40 -5"  >
-  <md-button aria-label="Open demo menu" class="md-icon-button" ng-click="$mdOpenMenu($event)">
-    <ng-md-icon class="floater-right" icon="color_lens">
-    </ng-md-icon>
-  </md-button>
-  <md-menu-content width="1.5" >
-    <md-menu-item ng-repeat="item in ['red', 'blue','white' ,'green','darkorange','brown']">
-
-        <div style="background-color:{{item}}; box-shadow: inset 0 0 40px hsla(0,0%,0%,.4);" ng-click="">
-          <p flex >.</p>
-        </div>
-      <div style="background-color:{{item}}; box-shadow: inset 0 0 40px hsla(0,0%,0%,.4);" ng-click="">
-        <p flex >.</p>
-      </div>
-
-    </md-menu-item>
-  </md-menu-content>
-</md-menu> -->
 <md-menu>
   <md-button class="md-icon-button" aria-label="Open demo menu" ng-click="$mdOpenMenu($event)">
     <ng-md-icon class="floater-right" icon="brush" >
@@ -41,6 +23,6 @@
 
 <md-button class="md-icon-button" ng-click="send()">
   <ng-md-icon class="floater-right" icon="send" >
-  <md-tooltip md-direction="left" ">SEND</md-tooltip>
+  <md-tooltip md-direction="left" >SEND</md-tooltip>
   </ng-md-icon>
 </md-button>

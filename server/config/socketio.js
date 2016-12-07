@@ -30,6 +30,7 @@ function onConnect(socket) {
   socket.on('info', data => {
     socket.log(JSON.stringify(data, null, 2));
   });
+
   var id=socket.decoded_token;
 
   //Join own room
@@ -66,7 +67,6 @@ function leaveRoom (socket,userId,roomId){
  */
 function joinRoom(socket,userId,roomId){
   var roomSockets= socket.nsps['/'].adapter.rooms[userId];
-
   if(roomSockets)
     for (var socketId in roomSockets.sockets) {
       var _socket = socket.sockets.connected[socketId];
@@ -187,13 +187,20 @@ function joinRooms(socket,event) {
         _socket = socket.sockets.connected[socketId];
 
       }
+      console.log(doc.rooms.length);
       for(var i=0;i<doc.rooms.length;i++) {
+        console.log("room:changeStatus",
+          doc.rooms[i]._id,
+          " "+_socket.request.session.name+" is Online");
+        if(doc.rooms[i].kind=="par")
         _socket.to(doc.rooms[i]._id)
           .emit(
           "room:changeStatus",
           doc.rooms[i]._id,
           " "+_socket.request.session.name+" is Online"
           );
+
+        //joinRoom(_socket,doc.userId,doc.rooms[i]._id);
         _socket.join(doc.rooms[i]._id);
       }
     }

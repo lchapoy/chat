@@ -257,10 +257,14 @@ export function getRooms(req, res) {
         match:{_id:{$ne:userId}}
 }
     })
-    .exec(function (err, res1) {
+    .exec(function (err, res1) {;
       if(err) res.status(401).json(res1);
-      if(kind=='par'&&res1[0].rooms)
-      Room.schema.emit('joinRooms',{rooms:res1[0].rooms,userId});
+    //  if(kind=='par'&&res1[0].rooms){
+        console.log("Emiting",res1[0].rooms);
+        Room.schema.emit('joinRooms',{rooms:res1[0].rooms,userId});
+     // }
+
+
       res.json(res1);
     })
 }
