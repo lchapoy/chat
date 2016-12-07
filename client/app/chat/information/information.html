@@ -1,4 +1,4 @@
-<h4 class="title-bar md-accent" ng-hide="ICtrl.selection.name">User Information</h4>
+<md-toolbar class="md-accent" layout="row" layout-align="center center" ng-hide="ICtrl.selection.name">User Information</md-toolbar>
 <md-content  class="reset  information" ng-if="ICtrl.selection" >
   <h4 class="title-bar" ng-show="ICtrl.selection.name">{{ICtrl.selection.name}}</h4>
   <image  ng-src="{{ICtrl.selection.img }}"  class="user-photo"></image>
@@ -38,5 +38,5 @@
     Exit
   </button>
 </md-content>
-<md-content  flex class="welcome-message" ng-if="!ICtrl.selection">
-</md-content>
+<!--<md-content  flex class="welcome-message" ng-if="!ICtrl.selection">-->
+<!--</md-content>-->

@@ -36,147 +36,147 @@ h1 span {
 to prevent collapsing during animation*/
 
 
-.ui-view-container {
-  position: relative;
-}
+/*.ui-view-container {*/
+  /*position: relative;*/
+/*}*/
 
-/* Form Module */
-.form-module {
+/*!* Form Module *!*/
+/*.form-module {*/
 
-  position: absolute;
-  top:10%;
-  background: lightslategray;
-  max-width: 600px;
-  width: 70%;
-  border-top: 5px solid darkorange;
-  border-radius: 1px;
-  box-shadow: 10px 10px 3px rgba(0, 0, 0, 0.1);
-  margin: 0 auto;
-  padding: 15px;
-}
-.form-module .toggle {
-  cursor: pointer;
-  position: absolute;
-  top: -0;
-  right: -0;
-  background: darkorange;
-  width: 150px;
-  height: 30px;
-  margin: -5px 0 0;
-  color: #ffffff;
-  font-size: 12px;
-  line-height: 30px;
-  text-align: center;
-}
-.form-module .toggle a {
-  text-decoration: none;
-}
-.form-module .toggle * {
-  margin-right:3px;
-}
-.form-module .toggle .tooltip {
-  position: absolute;
-  top: 5px;
-  right: -65px;
-  display: block;
-  background: rgba(0, 0, 0, 0.6);
-  width: auto;
-  padding: 5px;
-  font-size: 10px;
-  line-height: 1;
-  text-transform: uppercase;
-}
-.form-module .toggle .tooltip:before {
-  content: '';
-  position: absolute;
-  top: 5px;
-  left: -5px;
-  display: block;
-  border-top: 5px solid transparent;
-  border-bottom: 5px solid transparent;
-  border-right: 5px solid rgba(0, 0, 0, 0.6);
-}
-.form-module .form {
-  display: none;
-  padding: 40px;
-}
-.form-module .form:nth-child(1) {
-  display: block;
-}
-.form-module h2 {
-  margin: 0 0 20px;
-  color: darkorange;
-  font-size: 18px;
-  font-weight: 400;
-  line-height: 1;
-}
+  /*position: absolute;*/
+  /*top:10%;*/
+  /*background: lightslategray;*/
+  /*max-width: 600px;*/
+  /*width: 70%;*/
+  /*border-top: 5px solid darkorange;*/
+  /*border-radius: 1px;*/
+  /*box-shadow: 10px 10px 3px rgba(0, 0, 0, 0.1);*/
+  /*margin: 0 auto;*/
+  /*padding: 15px;*/
+/*}*/
+/*.form-module .toggle {*/
+  /*cursor: pointer;*/
+  /*position: absolute;*/
+  /*top: -0;*/
+  /*right: -0;*/
+  /*background: darkorange;*/
+  /*width: 150px;*/
+  /*height: 30px;*/
+  /*margin: -5px 0 0;*/
+  /*color: #ffffff;*/
+  /*font-size: 12px;*/
+  /*line-height: 30px;*/
+  /*text-align: center;*/
+/*}*/
+/*.form-module .toggle a {*/
+  /*text-decoration: none;*/
+/*}*/
+/*.form-module .toggle * {*/
+  /*margin-right:3px;*/
+/*}*/
+/*.form-module .toggle .tooltip {*/
+  /*position: absolute;*/
+  /*top: 5px;*/
+  /*right: -65px;*/
+  /*display: block;*/
+  /*background: rgba(0, 0, 0, 0.6);*/
+  /*width: auto;*/
+  /*padding: 5px;*/
+  /*font-size: 10px;*/
+  /*line-height: 1;*/
+  /*text-transform: uppercase;*/
+/*}*/
+/*.form-module .toggle .tooltip:before {*/
+  /*content: '';*/
+  /*position: absolute;*/
+  /*top: 5px;*/
+  /*left: -5px;*/
+  /*display: block;*/
+  /*border-top: 5px solid transparent;*/
+  /*border-bottom: 5px solid transparent;*/
+  /*border-right: 5px solid rgba(0, 0, 0, 0.6);*/
+/*}*/
+/*.form-module .form {*/
+  /*display: none;*/
+  /*padding: 40px;*/
+/*}*/
+/*.form-module .form:nth-child(1) {*/
+  /*display: block;*/
+/*}*/
+/*.form-module h2 {*/
+  /*margin: 0 0 20px;*/
+  /*color: darkorange;*/
+  /*font-size: 18px;*/
+  /*font-weight: 400;*/
+  /*line-height: 1;*/
+/*}*/
 
-.form-module input:focus {
-  border: 1px solid #33b5e5;
-  color: darkorange;
-}
+/*.form-module input:focus {*/
+  /*border: 1px solid #33b5e5;*/
+  /*color: darkorange;*/
+/*}*/
 
-.form-module button {
-  cursor: pointer;
-  background: darkorange;
-  width: 100%;
-  border: 0;
-  padding: 10px 15px;
-  color: #ffffff;
-  -webkit-transition: 0.3s ease;
-  transition: 0.3s ease;
-}
-.form-module button:hover {
-  background: orangered;
-}
+/*.form-module button {*/
+  /*cursor: pointer;*/
+  /*background: darkorange;*/
+  /*width: 100%;*/
+  /*border: 0;*/
+  /*padding: 10px 15px;*/
+  /*color: #ffffff;*/
+  /*-webkit-transition: 0.3s ease;*/
+  /*transition: 0.3s ease;*/
+/*}*/
+/*.form-module button:hover {*/
+  /*background: orangered;*/
+/*}*/
 
-.help-block{
-  padding:0px;
-  text-align: center;
-  color:orangered;
-}
-.answer-block{
-  padding:0px;
-  margin:0px;
-  text-align: center;
-  color:green;
-}
+/*.help-block{*/
+  /*padding:0px;*/
+  /*text-align: center;*/
+  /*color:orangered;*/
+/*}*/
+/*.answer-block{*/
+  /*padding:0px;*/
+  /*margin:0px;*/
+  /*text-align: center;*/
+  /*color:green;*/
+/*}*/
 
-/* Let's get this party started */
-::-webkit-scrollbar {
-  width: 10px;
-}
+/*!* Let's get this party started *!*/
+/*::-webkit-scrollbar {*/
+  /*width: 10px;*/
+/*}*/
 
-/* Track */
-::-webkit-scrollbar-track {
-  box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+/*!* Track *!*/
+/*::-webkit-scrollbar-track {*/
+  /*box-shadow: inset 0 0 6px rgba(0,0,0,0.3);*/
 
-}
+/*}*/
 
-/* Handle */
-::-webkit-scrollbar-thumb {
-  -webkit-border-radius: 10px;
-  border-radius: 10px;
-  background: darkorange;
-  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
-}
-::-webkit-scrollbar-thumb:window-inactive {
-  background: orangered;
-}
+/*!* Handle *!*/
+/*::-webkit-scrollbar-thumb {*/
+  /*-webkit-border-radius: 10px;*/
+  /*border-radius: 10px;*/
+  /*background: darkorange;*/
+  /*-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);*/
+/*}*/
+/*::-webkit-scrollbar-thumb:window-inactive {*/
+  /*background: orangered;*/
+/*}*/
 
-.reset{
-  padding:0px;
-  margin:0px;
+/*.reset{*/
+  /*padding:0px;*/
+  /*margin:0px;*/
 
-}
+/*}*/
 
-.btn-toggler{
- color:white;
-}
+/*.btn-toggler{*/
+ /*color:white;*/
+/*}*/
 
-.btn-toggler:active{
-  color:white;
-}
-.btn-toggler:hover{
-  color:darkslategray;
-}
+/*.btn-toggler:active{*/
+  /*color:white;*/
+/*}*/
+/*.btn-toggler:hover{*/
+  /*color:darkslategray;*/
+/*}*/

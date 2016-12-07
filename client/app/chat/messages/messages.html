@@ -1,9 +1,10 @@
 <md-subheader class="user-subheader">
-  <md-toolbar layout="row" layout-align="center center" class="md-accent">
+  <md-toolbar class="md-accent" layout="row" layout-align="center center" md-whiteframe="12">
     <span layout-margin="3px"></span>
     <ng-md-icon class="floater-left" icon="person" hide-gt-xs ng-click="MessCtrl.toggleContacts()">
     </ng-md-icon>
-    <span flex >Messages</span>
+    <span layout-margin="3px"></span>
+    <span flex >Dashboard</span>
     <ng-md-icon  icon="info" class="floater-right" hide-gt-sm ng-click="MessCtrl.toggleInfo()">
     </ng-md-icon>
     <span layout-margin="3px"></span>
@@ -23,10 +24,8 @@
 </md-subheader>
 <repeat-messages  ng-if="MessCtrl.selection!=null" messages="MessCtrl.messages" user-id="MessCtrl.currentUser._id" group="MessCtrl.selection.kind" scroll-fn="MessCtrl.Messages.getNextPackage(MessCtrl.roomId)"></repeat-messages>
 
-<md-content flex class="welcome-message" ng-if="MessCtrl.selection==null">
-  <div>
-    <p>The Cha-Chat</p>
-  </div>
+<md-content flex ng-if="MessCtrl.selection==null">
+  <dashboard></dashboard>
 </md-content>
 
 <div ng-if="MessCtrl.selection!=null">

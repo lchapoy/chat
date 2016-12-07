@@ -36,7 +36,7 @@ class InformationCtrl {
         controller: 'AddUsersToGroupCtrl',
         controllerAs: 'u2gCtrl'
       });
-    }
+    };
 
     //Confirm dialog box
     this.showConfirm = function (title, cb,param1,param2) {
