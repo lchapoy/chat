@@ -1,4 +1,4 @@
-<form ng-submit="GCtrl.newGroup(groupName)" layout="column" flex>
+<form ng-submit="GCtrl.newGroup(groupName)" layout="column">
   <md-input-container  >
     <label for="groupName">Group Name</label>
     <input  id="groupName" type="text" class="search-input" ng-model="GCtrl.groupName">
@@ -13,21 +13,38 @@
 
 </form>
 <div flex>
-  <md-list>
-    <md-list-item ng-repeat="person in GCtrl.added" >
-      <img alt="{{ person.name }}" ng-src="{{ person.img }}" class="md-avatar" />
-      <p>{{person.name}}</p>
-      <ng-md-icon icon="info_outline" aria-label="info"  ng-class="">
-        <md-tooltip>
-          {{person.email}}
-        </md-tooltip>
-      </ng-md-icon>
-      <label>
-        <ng-md-icon icon="close" class="help-block" aria-label="Going to Add"  ng-class=""></ng-md-icon>
-        <input type="checkbox" ng-model="person.members[0].add" ng-show="false" ng-change="GCtrl.removeMemberId(person._id)">
-      </label>
-    </md-list-item>
-  </md-list>
+  <!--<md-list>-->
+    <!--<md-list-item ng-repeat="person in GCtrl.added" >-->
+      <!--<img alt="{{ person.name }}" ng-src="{{ person.img }}" class="md-avatar" />-->
+      <!--<p>{{person.name}}</p>-->
+      <!--<ng-md-icon icon="info_outline" aria-label="info"  ng-class="">-->
+        <!--<md-tooltip>-->
+          <!--{{person.email}}-->
+        <!--</md-tooltip>-->
+      <!--</ng-md-icon>-->
+      <!--<label>-->
+        <!--<ng-md-icon icon="close" class="help-block" aria-label="Going to Add"  ng-class=""></ng-md-icon>-->
+        <!--<input type="checkbox" ng-model="person.members[0].add" ng-show="false" ng-change="GCtrl.removeMemberId(person._id)">-->
+      <!--</label>-->
+    <!--</md-list-item>-->
+  <!--</md-list>-->
+  <md-card ng-repeat="member in GCtrl.added">
+    <md-card-header>
+      <md-card-avatar>
+        <img class="md-user-avatar" alt="{{ member.name }}" ng-src="{{member.img}}">
+      </md-card-avatar>
+      <md-card-header-text>
+        <span class="md-title">{{member.name}}</span>
+        <span class="md-subhead">{{member.email}}</span>
+        <span class="md-subhead">{{member.status}}</span>
+      </md-card-header-text>
+    </md-card-header>
+    <md-card-actions layout="row" layout-align="end center">
+      <md-button  ng-click="GCtrl.removeMemberId(member._id)">
+        Delete
+      </md-button>
+    </md-card-actions>
+  </md-card>
 </div>
 
   <!--<h4 class="title-bar" >Not being added</h4>-->

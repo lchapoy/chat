@@ -9,7 +9,8 @@
     <md-icon aria-label="Add User"  hide-gt-xs ng-click="MessCtrl.toggleContacts()">contacts</md-icon>
     <span layout-margin="3px"></span>
     <span flex >Dashboard</span>
-    <md-icon ng-class="{'md-primary':MessCtrl.requests.length==0,'alert':MessCtrl.requests.length>0}">flag <md-tooltip>
+    <md-icon ng-class="{'md-primary':MessCtrl.requests.length==0,'alert':MessCtrl.requests.length>0}"
+      ng-click="MessCtrl.selectionNull()">flag <md-tooltip>
       {{MessCtrl.requests.length}} New Requests
     </md-tooltip></md-icon>
     <md-button aria-label="settings" class="md-icon-button" ng-show="MessCtrl.isLoggedIn()" ui-sref-active="active" ui-sref="settings"><ng-md-icon icon="settings"></ng-md-icon>
@@ -21,22 +22,24 @@
     <span layout-margin="3px"></span>
   </md-toolbar>
   <div ng-if="MessCtrl.selection!=null">
-    <md-toolbar layout="row" layout-align="center center" class="md-accent">
-      <span layout-margin="3px"></span>
-      <image  ng-src="{{MessCtrl.selection.img }}"  class="user-photo-message"></image>
-      <div flex layout="row" layout-align="end">
-        <div >
-          <h4 flex-shrink >{{MessCtrl.selection.name}} </h4>
-          <!--<h6  flex-shrink>{{MessCtrl.membersNames}} </h6>-->
-        </div>
+    <md-toolbar layout="column" flex class="md-accent">
+      <div flex layout="row" layout-align="center center" >
+        <span layout-margin="3px"></span>
+        <image  ng-src="{{MessCtrl.selection.img }}"  class="user-photo-message"></image>
+        <h4  flex layout="row" layout-align="end">{{MessCtrl.selection.name}} </h4>
+        <span layout-margin="3px"></span>
       </div>
-      <span layout-margin="3px"></span>
+      <div flex layout="row" layout-align="top end" style="height:40px">
+        <span flex style="min-width:80px"></span>
+        <h6  >{{MessCtrl.membersNames}} </h6>
+        <span layout-margin="2px"></span>
+      </div>
 
     </md-toolbar>
   </div>
 <repeat-messages  ng-if="MessCtrl.selection!=null" messages="MessCtrl.messages" user-id="MessCtrl.currentUser._id" group="MessCtrl.selection.kind" scroll-fn="MessCtrl.Messages.getNextPackage(MessCtrl.roomId)"></repeat-messages>
 
-<md-content flex ng-if="MessCtrl.selection==null">
+<md-content flex layout="column" ng-if="MessCtrl.selection==null">
   <dashboard></dashboard>
 </md-content>
 

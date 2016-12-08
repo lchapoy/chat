@@ -1,79 +1,85 @@
-<div layout="column">
-  <md-card >
-    <md-toolbar layout="row"  layout-align="center center">
-      <h3>Welcome to the cha-chat ...</h3>
-    </md-toolbar>
-    <md-content class="md-padding" flex  layout-gt-md="row" layout="column">
-      <div flex >
-        <md-card >
-          <md-toolbar layout="row" class="md-accent" layout-align="center center">
-            <span layout-margin="3px"></span>
+<div flex layout="column">
+  <md-card flex layout="column">
+    <md-content flex >
+      <md-toolbar layout="row"  layout-align="center center">
+        <h3>Welcome to the cha-chat ...</h3>
+      </md-toolbar>
+      <md-content class="md-padding" flex  layout-gt-md="row" layout="column">
+        <div flex >
+          <md-card>
+            <md-toolbar layout="row" class="md-accent" layout-align="center center">
+              <span layout-margin="3px"></span>
+              <md-icon aria-label="request" class="md-primary">watch_later</md-icon>
+              <p flex layout="row" layout-align="center">
+                Request from Friend
+              </p>
+            </md-toolbar>
+            <md-card-content layout="row" flex>
+              <md-content    flex  layout="column"  ui-view="request">
+              </md-content>
+            </md-card-content>
+          </md-card>
+          <md-card >
+            <md-toolbar layout="row" class="md-accent" layout-align="center center">
+              <span layout-margin="3px"></span>
 
-            <md-icon aria-label="person_add">person_add</md-icon>
-            <p flex layout="row" layout-align="center">
-              Add a new Friend
-            </p>
-          </md-toolbar>
-          <md-card-content layout="row" flex>
-            <md-content    flex  layout="column"  ui-view="addContact">
-            </md-content>
-          </md-card-content>
-        </md-card>
-        <md-card flex layout="column">
-          <md-toolbar layout="row" class="md-accent" layout-align="center center">
-            <span layout-margin="3px"></span>
-            <md-icon aria-label="group_add">group_add</md-icon>
-            <p flex layout="row" layout-align="center">
-              Create a group
-            </p>
-          </md-toolbar>
-          <md-card-content layout="row" flex>
-            <md-content    flex  layout="column"  ui-view="addGroup">
-            </md-content>
-          </md-card-content>
-        </md-card>
-      </div>
-      <div flex layout="column">
-        <md-card hide show-xs>
-          <md-toolbar layout="row" class="md-accent" layout-align="center center" >
-            <span layout-margin="3px"></span>
-            <md-icon aria-label="open conversation">contacts</md-icon>
-            <p flex layout="row" layout-align="center">
-              Open a new conversation
-            </p>
-          </md-toolbar>
-          <md-card-actions layout="row" layout-align="end center">
-            <md-button ng-click="openContact()">Open Contacts</md-button>
-          </md-card-actions>
-        </md-card>
-        <md-card>
-          <md-toolbar layout="row" class="md-accent" layout-align="center center">
-            <span layout-margin="3px"></span>
-            <md-icon aria-label="request" class="md-primary">watch_later</md-icon>
-            <p flex layout="row" layout-align="center">
-              Request from Friend
-            </p>
-          </md-toolbar>
-          <md-card-content layout="row" flex>
-            <md-content    flex  layout="column"  ui-view="request">
-            </md-content>
-          </md-card-content>
-        </md-card>
-        <md-card>
-          <md-toolbar layout="row" class="md-accent" layout-align="center center">
-            <span layout-margin="3px"></span>
-            <md-icon aria-label="pending" class="md-primary">schedule</md-icon>
-            <p flex layout="row" layout-align="center">
-              Request to Friend
-            </p>
-          </md-toolbar>
-          <md-card-content layout="row" flex>
-            <md-content    flex  layout="column"  ui-view="pending">
-            </md-content>
-          </md-card-content>
-        </md-card>
-      </div>
+              <md-icon aria-label="person_add">person_add</md-icon>
+              <p flex layout="row" layout-align="center">
+                Add a new Friend
+              </p>
+            </md-toolbar>
+            <md-card-content layout="row" flex>
+              <md-content    flex  layout="column"  ui-view="addContact">
+              </md-content>
+            </md-card-content>
+          </md-card>
+
+        </div>
+        <div flex layout="column">
+          <md-card  layout="column">
+            <md-toolbar layout="row" class="md-accent" layout-align="center center">
+              <span layout-margin="3px"></span>
+              <md-icon aria-label="group_add">group_add</md-icon>
+              <p flex layout="row" layout-align="center">
+                Create a group
+              </p>
+            </md-toolbar>
+            <md-card-content layout="row" flex>
+              <md-content    flex  layout="column"  ui-view="addGroup">
+              </md-content>
+            </md-card-content>
+          </md-card>
+          <md-card hide show-xs>
+            <md-toolbar layout="row" class="md-accent" layout-align="center center" >
+              <span layout-margin="3px"></span>
+              <md-icon aria-label="open conversation">contacts</md-icon>
+              <p flex layout="row" layout-align="center">
+                Open a new conversation
+              </p>
+            </md-toolbar>
+            <md-card-actions layout="row" layout-align="end center">
+              <md-button ng-click="openContact()">Open Contacts</md-button>
+            </md-card-actions>
+          </md-card>
+
+          <md-card>
+            <md-toolbar layout="row" class="md-accent" layout-align="center center">
+              <span layout-margin="3px"></span>
+              <md-icon aria-label="pending" class="md-primary">schedule</md-icon>
+              <p flex layout="row" layout-align="center">
+                Request to Friend
+              </p>
+            </md-toolbar>
+            <md-card-content layout="row" flex>
+              <md-content    flex  layout="column"  ui-view="pending">
+              </md-content>
+            </md-card-content>
+          </md-card>
+        </div>
+      </md-content>
+
     </md-content>
+
 
 
   </md-card>
