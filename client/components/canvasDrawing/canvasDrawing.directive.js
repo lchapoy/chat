@@ -96,7 +96,7 @@ angular.module('chatYeoApp')
           drawing = false;
         });
 
-        canvas.bind('touchstart', function(event){
+        canvas[0].addEventListener('touchstart', function(event){
 
           centerX = event.offsetX;
           centerY = event.offsetY;
@@ -108,7 +108,7 @@ angular.module('chatYeoApp')
           drawing = true;
         });
 
-        canvas.bind('touchmove', function(event){
+        canvas[0].addEventListener('touchmove', function(event){
           if(drawing){
             // get current mouse position
             var currentX = event.offsetX;
@@ -119,7 +119,7 @@ angular.module('chatYeoApp')
 
         });
 
-        canvas.bind('touchend', function(event){
+        canvas[0].addEventListener('touchend', function(event){
           // stop drawing
           drawing = false;
         });
