@@ -35,6 +35,16 @@ angular.module('chatYeoApp')
             templateUrl: 'app/chat/addGroup/addGroup.html',
             controller:'AddGroupCtrl',
             controllerAs:'GCtrl'
+          },
+          'pending@chat': {
+            templateUrl: 'app/chat/pendings/pendings.html',
+            controller:'PendingCtrl',
+            controllerAs:'vm'
+          },
+          'request@chat': {
+            templateUrl: 'app/chat/request/request.html',
+            controller:'RequestCtrl',
+            controllerAs:'vm'
           }
         }
 

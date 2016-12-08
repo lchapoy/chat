@@ -9,9 +9,10 @@ angular.module('chatYeoApp')
       },
       templateUrl: 'components/canvasDrawing/canvasDrawing.html',
       link: function (scope, element, attrs) {
-        var canvas= angular.element(element.children()[0]);
+        console.log(element.children().children()[0])
+        var canvas= angular.element(element.children().children()[0]);
         var ctx = canvas[0].getContext('2d');
-        var container = canvas.parent().parent();
+        var container = canvas.parent().parent().parent();
         var drawWidth ={
           '20':2,
           '40':5,
@@ -91,6 +92,34 @@ angular.module('chatYeoApp')
         });
 
         canvas.bind('mouseup', function(event){
+          // stop drawing
+          drawing = false;
+        });
+
+        canvas.bind('touchstart', function(event){
+
+          centerX = event.offsetX;
+          centerY = event.offsetY;
+
+          // begins new line
+          ctx.beginPath();
+          ctx.moveTo(centerX,centerY);
+
+          drawing = true;
+        });
+
+        canvas.bind('touchmove', function(event){
+          if(drawing){
+            // get current mouse position
+            var currentX = event.offsetX;
+            var currentY = event.offsetY;
+
+            draw(centerX, centerY, currentX, currentY);
+          }
+
+        });
+
+        canvas.bind('touchend', function(event){
           // stop drawing
           drawing = false;
         });

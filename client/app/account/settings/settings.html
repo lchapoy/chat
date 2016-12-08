@@ -1,56 +1,135 @@
 <navbar></navbar>
-<div layout="row" >
-  <div flex="20" hide-sm hide-xs>
+<div layout="row" flex layout-align="center">
+  <div flex-gt-xs="50" flex-gt-md="30" flex="70" layout="column" layout-align="center">
+    <md-content    md-whiteframe="10">
+      <md-toolbar layout="row" layout-padding layout-align="center center">
+        <span class="md-toolbar-item md-headline">Login</span>
+      </md-toolbar>
+      <form name="form" layout="column" layout-padding="3px"  ng-submit="vm.login(form)">
+
+        <md-input-container layout="row" class="md-icon-float">
+          <md-icon class="md-dark" aria-label="username">lock</md-icon>
+          <input type="password" name="password" class="form-control" ng-model="vm.user.oldPassword"
+                 placeholder="Current Password"
+                 mongoose-error/>
+          <p class="help-block" ng-show="form.password.$error.mongoose">
+            {{ vm.errors.other }}
+          </p>
+        </md-input-container>
+
+        <md-input-container layout="row" class="md-icon-float">
+          <md-icon class="md-dark" aria-label="username">vpn_key</md-icon>
+          <input type="password" name="newPassword" class="form-control" ng-model="vm.user.newPassword"
+                 ng-minlength="8"
+                 placeholder="New Password"
+                 required/>
+          <p class="help-block"
+             ng-show="(form.newPassword.$error.minlength || form.newPassword.$error.required) && (form.newPassword.$dirty || vm.submitted)">
+            Password must be at least 8 characters.
+          </p>
+        </md-input-container>
+
+        <md-input-container layout="row">
+          <md-icon class="md-dark" aria-label="username">vpn_key</md-icon>
+          <input type="password" name="confirmPassword" class="form-control" ng-model="vm.user.confirmPassword"
+                 match="vm.user.newPassword"
+                 placeholder="Confirm New Password"
+                 ng-minlength="8"
+                 required=""/>
+          <p class="help-block"
+             ng-show="form.confirmPassword.$error.match && vm.submitted">
+            Passwords must match.
+          </p>
+        </md-input-container>
+        <p class="help-block"> {{ vm.message }} </p>
+
+        <div class="md-actions" layout="row" layout-align="center" >
+          <md-button aria-label="Cancel" ng-click="vm.cancel()">Cancel</md-button>
+          <md-button class="md-primary" aria-label="Login" type="submit">Login</md-button>
+        </div>
+        <!--<button class="btn btn-lg btn-primary btn-green" type="submit">Save changes</button>-->
+        <!--<button class="btn btn-lg btn-primary " ng-click="vm.cancel()">Cancel changes</button>-->
+
+        <!--<md-input-container layout="row" class="md-icon-float">-->
+          <!--<md-icon class="md-dark" aria-label="username">person</md-icon>-->
+          <!--<input flex="90" type="email" name="email" ng-model="vm.user.email" placeholder="Email" required>-->
+          <!--<div ng-messages="form.email.$error">-->
+            <!--<div ng-message="required">-->
+              <!--Please enter a valid e-mail.-->
+            <!--</div>-->
+            <!--<div ng-message="mongoose">-->
+              <!--{{vm.errors.password}}-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</md-input-container>-->
+        <!--<md-input-container  layout="row" class="md-icon-float">-->
+          <!--<md-icon class="md-dark" arial-label="password">lock</md-icon>-->
+          <!--<input flex="90" type="password" name="password" ng-model="vm.user.password" placeholder="Password" required>-->
+          <!--<div ng-messages="form.password.$error">-->
+            <!--<div ng-message="required">-->
+              <!--Password is required-->
+            <!--</div>-->
+          <!--</div>-->
+        <!--</md-input-container>-->
+        <!--<p class="help-block">{{ vm.errors.other }}</p>-->
+
+        <!--<div class="md-actions" layout="row" layout-align="center" >-->
+          <!--<md-button aria-label="Cancel"  ui-sref="main">Cancel</md-button>-->
+          <!--<md-button class="md-primary" aria-label="Login" type="submit">Login</md-button>-->
+        <!--</div>-->
+      </form>
+    </md-content>
   </div>
+  </md-content>
+
 </div>
-<div layout="row" >
-  <div flex hide-sm hide-xs>
+
+
+
+<!--<div class="form-module">-->
+        <!--<form  name="form" ng-submit="vm.changePassword(form)" novalidate>-->
+          <!--<md-input-container class="md-block" flex-gt-sm="">-->
+            <!--<label>Current Password</label>-->
+            <!--<input type="password" name="password" class="form-control" ng-model="vm.user.oldPassword"-->
+                   <!--mongoose-error/>-->
+            <!--<p class="help-block" ng-show="form.password.$error.mongoose">-->
+                <!--{{ vm.errors.other }}-->
+            <!--</p>-->
+          <!--</md-input-container>-->
+
+          <!--<md-input-container class="md-block" flex-gt-sm="">-->
+            <!--<label>New Password</label>-->
+
+            <!--<input type="password" name="newPassword" class="form-control" ng-model="vm.user.newPassword"-->
+                   <!--ng-minlength="3"-->
+                   <!--required/>-->
+            <!--<p class="help-block"-->
+               <!--ng-show="(form.newPassword.$error.minlength || form.newPassword.$error.required) && (form.newPassword.$dirty || vm.submitted)">-->
+              <!--Password must be at least 3 characters.-->
+            <!--</p>-->
+          <!--</md-input-container>-->
+
+          <!--<md-input-container class="md-block" flex-gt-sm="">-->
+            <!--<label>Confirm New Password</label>-->
+
+            <!--<input type="password" name="confirmPassword" class="form-control" ng-model="vm.user.confirmPassword"-->
+                   <!--match="vm.user.newPassword"-->
+                   <!--ng-minlength="3"-->
+                   <!--required=""/>-->
+            <!--<p class="help-block"-->
+               <!--ng-show="form.confirmPassword.$error.match && vm.submitted">-->
+              <!--Passwords must match.-->
+            <!--</p>-->
+
+          <!--</md-input-container>-->
+
+          <!--<p class="help-block"> {{ vm.message }} </p>-->
+
+          <!--<button class="btn btn-lg btn-primary btn-green" type="submit">Save changes</button>-->
+          <!--<button class="btn btn-lg btn-primary " ng-click="vm.cancel()">Cancel changes</button>-->
+
+        <!--</form>-->
+
   </div>
-    <div flex="80" >
-  <div class="form-module">
-        <form  name="form" ng-submit="vm.changePassword(form)" novalidate>
-          <md-input-container class="md-block" flex-gt-sm="">
-            <label>Current Password</label>
-
-            <input type="password" name="password" class="form-control" ng-model="vm.user.oldPassword"
-                   mongoose-error/>
-            <p class="help-block" ng-show="form.password.$error.mongoose">
-                {{ vm.errors.other }}
-            </p>
-          </md-input-container>
-
-          <md-input-container class="md-block" flex-gt-sm="">
-            <label>New Password</label>
-
-            <input type="password" name="newPassword" class="form-control" ng-model="vm.user.newPassword"
-                   ng-minlength="3"
-                   required/>
-            <p class="help-block"
-               ng-show="(form.newPassword.$error.minlength || form.newPassword.$error.required) && (form.newPassword.$dirty || vm.submitted)">
-              Password must be at least 3 characters.
-            </p>
-          </md-input-container>
-
-          <md-input-container class="md-block" flex-gt-sm="">
-            <label>Confirm New Password</label>
-
-            <input type="password" name="confirmPassword" class="form-control" ng-model="vm.user.confirmPassword"
-                   match="vm.user.newPassword"
-                   ng-minlength="3"
-                   required=""/>
-            <p class="help-block"
-               ng-show="form.confirmPassword.$error.match && vm.submitted">
-              Passwords must match.
-            </p>
-
-          </md-input-container>
-
-          <p class="help-block"> {{ vm.message }} </p>
-
-          <button class="btn btn-lg btn-primary btn-green" type="submit">Save changes</button>
-        </form>
-      <button class="btn btn-lg btn-primary " ng-click="vm.cancel()">Cancel changes</button>
-
-  </div>
-    </div>
-  </div>
+    <!--</div>-->
+  <!--</div>-->

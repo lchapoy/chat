@@ -1,37 +1,37 @@
-md-list-item > p{
-  -webkit-user-select: none;
-  /* Chrome all / Safari all */
-  -moz-user-select: none;
-  /* Firefox all */
-  -ms-user-select: none;
-  /* IE 10+ */
-  user-select: none;
-  /* Likely future */
-}
-md-divider {
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
+/*md-list-item > p{*/
+  /*-webkit-user-select: none;*/
+  /*!* Chrome all / Safari all *!*/
+  /*-moz-user-select: none;*/
+  /*!* Firefox all *!*/
+  /*-ms-user-select: none;*/
+  /*!* IE 10+ *!*/
+  /*user-select: none;*/
+  /*!* Likely future *!*/
+/*}*/
+/*md-divider {*/
+  /*margin-top: 10px;*/
+  /*margin-bottom: 10px;*/
+/*}*/
 
 
-.contacts-frame{
-  max-width:40%;
-}
+/*.contacts-frame{*/
+  /*max-width:40%;*/
+/*}*/
 
-.md-alert{
-  color:goldenrod;
-}
+/*.md-alert{*/
+  /*color:goldenrod;*/
+/*}*/
 
-.md-primary{
-  color:lightslategray;
-}
-.user-online{
-  opacity:1;
-}
-.user-offline{
-  opacity:.5;
-}
+/*.md-primary{*/
+  /*color:lightslategray;*/
+/*}*/
+/*.user-online{*/
+  /*opacity:1;*/
+/*}*/
+/*.user-offline{*/
+  /*opacity:.5;*/
+/*}*/
 
-.overflow{
-  overflow-y: auto;
-}
+/*.overflow{*/
+  /*overflow-y: auto;*/
+/*}*/

@@ -1,28 +1,33 @@
-<canvas class="floater-left" width="800" height="200" id="canvas"></canvas>
-<color-picker color="color" options="options" on-color-changed="colorChanged(newColor, oldColor)"></color-picker>
-
-<md-menu>
-  <md-button class="md-icon-button" aria-label="Open demo menu" ng-click="$mdOpenMenu($event)">
-    <ng-md-icon class="floater-right" icon="brush" >
-    </ng-md-icon>
-  </md-button>
-  <md-menu-content width="1.5" >
-    <md-menu-item ng-repeat="item in ['20','40','60']">
-      <md-button ng-click="changeWidth(item)">
-        <p style="font-size:{{item}}px;letter-spacing: -5px;">---</p>
+<div layout="row">
+  <canvas flex="90"  width="800" height="200" id="canvas"></canvas>
+  <div layout="column">
+    <color-picker color="color" options="options" on-color-changed="colorChanged(newColor, oldColor)"></color-picker>
+    <md-menu>
+      <md-button class="md-icon-button" aria-label="Open demo menu" ng-click="$mdOpenMenu($event)">
+        <ng-md-icon class="floater-right" icon="brush" >
+        </ng-md-icon>
       </md-button>
-    </md-menu-item>
-  </md-menu-content>
-</md-menu>
+      <md-menu-content width="1.5" >
+        <md-menu-item ng-repeat="item in ['20','40','60']">
+          <md-button ng-click="changeWidth(item)">
+            <p style="font-size:{{item}}px;letter-spacing: -5px;">---</p>
+          </md-button>
+        </md-menu-item>
+      </md-menu-content>
+    </md-menu>
 
-<md-button class="md-icon-button" ng-click="clear()">
-  <ng-md-icon class="floater-right" icon="delete">
-    <md-tooltip md-direction="left">CLEAR</md-tooltip>
-  </ng-md-icon>
-</md-button>
+    <md-button class="md-icon-button" ng-click="clear()">
+      <ng-md-icon class="floater-right" icon="delete">
+        <md-tooltip md-direction="left">CLEAR</md-tooltip>
+      </ng-md-icon>
+    </md-button>
 
-<md-button class="md-icon-button" ng-click="send()">
-  <ng-md-icon class="floater-right" icon="send" >
-  <md-tooltip md-direction="left" >SEND</md-tooltip>
-  </ng-md-icon>
-</md-button>
+    <md-button class="md-icon-button" ng-click="send()">
+      <ng-md-icon class="floater-right" icon="send" >
+        <md-tooltip md-direction="left" >SEND</md-tooltip>
+      </ng-md-icon>
+    </md-button>
+  </div>
+
+</div>
+

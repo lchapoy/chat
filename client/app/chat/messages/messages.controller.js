@@ -14,6 +14,7 @@ class MessagesCtrl {
     this.messages=[];
     this.sendText="";
     this.currentUser=Chat.getUser();
+    this.requests=Chat.getRequests();
     this.membersNames='';
     this.toggleContacts=sideNavToggler.triggerToggle('contacts');
     this.toggleInfo=sideNavToggler.triggerToggle('information');
@@ -76,6 +77,9 @@ class MessagesCtrl {
       this.Comm.storeMessage({id:this.currentUser._id},{name:this.currentUser.name,text:this.sendText,roomId:this.roomId});
       this.sendText='';
     }
+  };
+  selectionNull = ()=>{
+    this.selection=null;
   };
 
 }

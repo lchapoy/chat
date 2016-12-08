@@ -19,9 +19,10 @@ angular.module('chatYeoApp', [
     $urlRouterProvider
       .otherwise('/');
     $locationProvider.html5Mode(true);
-    // $mdThemingProvider.theme('default')
-    //   .primaryPalette('deep-orange')
-    //   .accentPalette('blue').foregroundPalette[3] = "gainsboro";
+    $mdThemingProvider.theme('default')
+      .primaryPalette('orange')
+      .warnPalette('indigo')
+      .accentPalette('blue').foregroundPalette[3] = "gainsboro";
 
 
   });

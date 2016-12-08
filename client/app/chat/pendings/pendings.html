@@ -1,0 +1,14 @@
+
+<md-content ng-if="vm.pendings.length">
+  <md-list>
+    <md-list-item ng-repeat="person in vm.pendings">
+      <img alt="{{person.name }}" ng-src="{{ person.img }}" class="md-avatar" />
+      <p>{{person.name}}</p>
+      <ng-md-icon icon="query_builder" aria-label="Accept Friend"  ng-class=""></ng-md-icon>
+    </md-list-item>
+  </md-list>
+</md-content>
+<md-content ng-if="!vm.pendings.length">
+  There are no pending friend's requests
+</md-content>
+

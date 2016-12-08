@@ -1,99 +1,99 @@
-.user-photo {
-  border:5px solid darkorange;
-  border-radius:100%;
-  overflow:hidden;
-  width:150px;
-  height:150px;
-  position:relative;
-  display:block;
-  margin:10px auto;
-}
+/*.user-photo {*/
+  /*border:5px solid darkorange;*/
+  /*border-radius:100%;*/
+  /*overflow:hidden;*/
+  /*width:150px;*/
+  /*height:150px;*/
+  /*position:relative;*/
+  /*display:block;*/
+  /*margin:10px auto;*/
+/*}*/
 
-.outer-info{
-  background: lightslategray;
-  width: 80%;
-  border-top: 5px solid darkorange;
-  border-radius: 1px;
-  box-shadow: 10px 10px 3px rgba(0, 0, 0, 0.1);
-  margin: 20px auto;
-  padding: 10px;
-}
+/*.outer-info{*/
+  /*background: lightslategray;*/
+  /*width: 80%;*/
+  /*border-top: 5px solid darkorange;*/
+  /*border-radius: 1px;*/
+  /*box-shadow: 10px 10px 3px rgba(0, 0, 0, 0.1);*/
+  /*margin: 20px auto;*/
+  /*padding: 10px;*/
+/*}*/
 
-.outer-info >p {
-  color:darkorange;
-  text-shadow: 1px 1px #222222;
-  font-family: 'Croissant One', sans-serif;
-}
-.outer-info >p >span{
-  color:darkslategrey;
-  text-shadow: 0 1px #222222;
-}
+/*.outer-info >p {*/
+  /*color:darkorange;*/
+  /*text-shadow: 1px 1px #222222;*/
+  /*font-family: 'Croissant One', sans-serif;*/
+/*}*/
+/*.outer-info >p >span{*/
+  /*color:darkslategrey;*/
+  /*text-shadow: 0 1px #222222;*/
+/*}*/
 
-.inner-info{
-  margin-top:5%;
-  margin-left:5%;
-  width:100%;
-  min-height:310px;
-  background-color: darkslategrey;
-}
+/*.inner-info{*/
+  /*margin-top:5%;*/
+  /*margin-left:5%;*/
+  /*width:100%;*/
+  /*min-height:310px;*/
+  /*background-color: darkslategrey;*/
+/*}*/
 
-.information{
-}
+/*.information{*/
+/*}*/
 
-.information button ,.information input {
-  cursor: pointer;
-  background: darkorange;
-  width: 90%;
-  border: 0;
-  padding: 10px 15px;
-  margin-left:.6em;
-  margin-bottom:.2em;
-  margin-top:.6em;
-  color: white; !important
-  -webkit-transition: 0.3s ease;
-  transition: 0.3s ease;
-  text-align: center;
-}
-.information button:hover{
-  background: orangered;
-}
+/*.information button ,.information input {*/
+  /*cursor: pointer;*/
+  /*background: darkorange;*/
+  /*width: 90%;*/
+  /*border: 0;*/
+  /*padding: 10px 15px;*/
+  /*margin-left:.6em;*/
+  /*margin-bottom:.2em;*/
+  /*margin-top:.6em;*/
+  /*color: white; !important*/
+  /*-webkit-transition: 0.3s ease;*/
+  /*transition: 0.3s ease;*/
+  /*text-align: center;*/
+/*}*/
+/*.information button:hover{*/
+  /*background: orangered;*/
+/*}*/
 
-.btn-green{
-  background-color: mediumseagreen !important;
-}
-.btn-green:hover{
-  background-color: forestgreen !important;
-}
-.btn-red{
-  background-color: indianred !important;
-}
-.btn-red:hover{
-  background-color: darkred !important;
-}
+/*.btn-green{*/
+  /*background-color: mediumseagreen !important;*/
+/*}*/
+/*.btn-green:hover{*/
+  /*background-color: forestgreen !important;*/
+/*}*/
+/*.btn-red{*/
+  /*background-color: indianred !important;*/
+/*}*/
+/*.btn-red:hover{*/
+  /*background-color: darkred !important;*/
+/*}*/
 
-.group-members p{
-  font-size:.7em;
-}
+/*.group-members p{*/
+  /*font-size:.7em;*/
+/*}*/
 
-.group-members {
-  display:block;
-  margin-left:3vh;
+/*.group-members {*/
+  /*display:block;*/
+  /*margin-left:3vh;*/
 
-}
+/*}*/
 
-.float-right{
-  float:right;
-}
+/*.float-right{*/
+  /*float:right;*/
+/*}*/
 
 
-md-dialog-content {
-  width: 360px;
-}
-md-dialog-content.autocomplete input {
-  width: 300px;
-}
+/*md-dialog-content {*/
+  /*width: 360px;*/
+/*}*/
+/*md-dialog-content.autocomplete input {*/
+  /*width: 300px;*/
+/*}*/
 
-.md-chips {
-  padding: 5px 0 8px;
-}
+/*.md-chips {*/
+  /*padding: 5px 0 8px;*/
+/*}*/
 

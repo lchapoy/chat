@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('chatYeoApp')
-  .directive('dashboard', function ($timeout) {
+  .directive('dashboard', function (sideNavToggler) {
     return {
       templateUrl: 'components/dashboard/dashboard.html',
       restrict: 'EA',
@@ -10,7 +10,7 @@ angular.module('chatYeoApp')
       },
       replace:true,
       link: function (scope, element, attrs) {
-
+        scope.openContact = sideNavToggler.triggerToggle('contacts');
       }
     };
   });

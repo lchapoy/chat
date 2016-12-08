@@ -1,42 +1,74 @@
-<md-toolbar  layout="row" layout-align="center center" ng-hide="ICtrl.selection.name">User Information</md-toolbar>
-<md-content  class="reset  information" ng-if="ICtrl.selection" >
-  <h4 class="title-bar" ng-show="ICtrl.selection.name">{{ICtrl.selection.name}}</h4>
-  <image  ng-src="{{ICtrl.selection.img }}"  class="user-photo"></image>
-  <div class="outer-info" ng-if="!ICtrl.selection.members">
-    <p>Name: <span>{{ICtrl.selection.name}}</span> </p>
-    <p>e-mail: <span>{{ICtrl.selection.email}}</span> </p>
-    <p>status: <span>{{ICtrl.selection.status}}</span> </p>
-      <button class="btn btn-inverse btn-lg btn-register" ng-click="ICtrl.showConfirm('Delete Friend',ICtrl.deleteFriend)">
-        Erase Friend
-      </button>
-  </div>
-</md-content>
-<md-content flex  ng-if="ICtrl.selection.kind=='group'">
-    <md-list class="group-members">
-      <md-list-item ng-repeat="member in ICtrl.selection.members"  >
-        <img alt="{{ member.name }}" ng-src="{{ member.img }}" class="md-avatar" />
-        <p>{{member.name}}
-          <br>
-          {{member.email}}
-        </p>
+<md-toolbar  layout="row" layout-align="center center" >{{ICtrl.selection.name||'User Information'}}</md-toolbar>
+<!--<md-content  class="reset  information" ng-if="ICtrl.selection" >-->
+  <!--<image  ng-src="{{ICtrl.selection.img }}" width="100%" height="150px" class="user-photo"></image>-->
 
+  <!--<div class="outer-info" ng-if="!ICtrl.selection.members">-->
+    <!--<p>Name: <span>{{ICtrl.selection.name}}</span> </p>-->
+    <!--<p>e-mail: <span>{{ICtrl.selection.email}}</span> </p>-->
+    <!--<p>status: <span>{{ICtrl.selection.status}}</span> </p>-->
+      <!--<button class="btn btn-inverse btn-lg btn-register" ng-click="ICtrl.showConfirm('Delete Friend',ICtrl.deleteFriend)">-->
+        <!--Erase Friend-->
+      <!--</button>-->
+  <!--</div>-->
+<md-toolbar ng-if="ICtrl.selection" class="md-accent" layout="row" layout-align="center center">
+  Room
+</md-toolbar>
+  <md-card ng-if="ICtrl.selection">
+    <!--<img  ng-src="/assets/images/config.jpg"  class="md-card-image" alt="Washed Out">-->
+    <md-card-header>
+      <md-card-avatar>
+        <img class="md-user-avatar" ng-src="{{ICtrl.selection.img}}">
+      </md-card-avatar>
+      <md-card-header-text>
+        <span class="md-title">{{ICtrl.selection.name}}</span>
+        <span class="md-subhead">{{ICtrl.selection.email}}</span>
+        <span class="md-subhead">{{ICtrl.selection.status}}</span>
+      </md-card-header-text>
+    </md-card-header>
+    <md-card-actions layout="row" layout-align="end center">
+      <md-button ng-if="ICtrl.selection.kind!='group'"  ng-click="ICtrl.showConfirm('Delete Friend',ICtrl.deleteFriend)">
+        Erase Friend
+      </md-button>
+    </md-card-actions>
+  </md-card>
+<!--</md-content>-->
+<md-toolbar class="md-accent" layout="row" layout-align="center center">
+  Team Members
+</md-toolbar>
+<md-content ng-if="ICtrl.selection.kind=='group'">
+
+  <md-content  layout="column">
+    <md-card ng-repeat="member in ICtrl.selection.members">
+      <md-card-header>
+        <md-card-avatar>
+          <img class="md-user-avatar" ng-src="{{member.img}}">
+        </md-card-avatar>
+        <md-card-header-text>
+          <span class="md-title">{{member.name}}</span>
+          <span class="md-subhead">{{member.email}}</span>
+          <span class="md-subhead">{{member.status}}</span>
+        </md-card-header-text>
         <ng-md-icon ng-if="ICtrl.selection.admin==member._id" class="float-right" icon="person" ></ng-md-icon>
-        <md-button class="md-icon-button">
-          <ng-md-icon ng-if="ICtrl.selection.admin==ICtrl.user._id" ng-click="ICtrl.showConfirm('Kick From group',ICtrl.deleteFriendFromGroup,member._id,ICtrl.selection.name)" class="float-right" icon="cancel" ></ng-md-icon>
+      </md-card-header>
+      <md-card-actions layout="row" layout-align="end center">
+        <md-button  ng-if="ICtrl.selection.admin==ICtrl.user._id" ng-click="ICtrl.showConfirm('Kick From group',ICtrl.deleteFriendFromGroup,member._id,ICtrl.selection.name)">
+          Erase Friend
         </md-button>
-      </md-list-item>
-    </md-list>
+      </md-card-actions>
+    </md-card>
+  </md-content>
 </md-content>
-<md-content  flex class="information" ng-if="ICtrl.selection.kind=='group'">
-  <button  class="btn-green" ng-click="ICtrl.showDialog()" ng-if="ICtrl.selection.admin==ICtrl.user._id">
+<md-content  style="min-height: 150px" class="information" ng-if="ICtrl.selection.kind=='group'" layout="column">
+  <md-button  class="md-primary" ng-click="ICtrl.showDialog()" ng-if="ICtrl.selection.admin==ICtrl.user._id">
     Add Friend
-  </button>
-  <button  ng-click="ICtrl.showConfirm('Delete Group',ICtrl.deleteGroup)" ng-if="ICtrl.selection.admin==ICtrl.user._id">
+  </md-button>
+  <md-button  class="md-accent" ng-click="ICtrl.showConfirm('Delete Group',ICtrl.deleteGroup)" ng-if="ICtrl.selection.admin==ICtrl.user._id">
     Delete Group
-  </button>
-  <button class="btn-red" ng-click="ICtrl.showConfirm('Exit Group',ICtrl.exitGroup,ICtrl.selection.name)">
+  </md-button>
+  <md-button class="md-warn" ng-click="ICtrl.showConfirm('Exit Group',ICtrl.exitGroup,ICtrl.selection.name)">
     Exit
-  </button>
+  </md-button>
+
 </md-content>
 <!--<md-content  flex class="welcome-message" ng-if="!ICtrl.selection">-->
 <!--</md-content>-->

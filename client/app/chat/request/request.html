@@ -1,0 +1,15 @@
+
+<md-content ng-if="vm.requests.length">
+  <md-list>
+    <md-list-item ng-repeat="person in vm.requests">
+      <img alt="{{person.name }}" ng-src="{{ person.img }}" class="md-avatar" />
+      <p>{{person.name}}</p>
+      <md-icon ng-click="vm.acceptFriend(person._id)" aria-label="Accept Friend">done</md-icon>
+      <md-icon  ng-click="vm.rejectFriend(person._id)" aria-label="Reject Friend">cancel</md-icon>
+     </md-list-item>
+  </md-list>
+</md-content>
+<md-content ng-if="!vm.requests.length">
+  All your request are already accepted
+</md-content>
+

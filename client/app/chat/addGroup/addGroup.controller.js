@@ -17,20 +17,21 @@ class AddGroupCtrl {
     this.added=[];
     this.groupName='';
     this.toggleAddGroup=sideNavToggler.triggerToggle('addGroup');
+    this.closeAddGroup=sideNavToggler.triggerClose('addGroup');
     this.$mdDialog=$mdDialog;
   }
   newGroup = function () {
-    if(this.arrId.length==0){
+    if(this.added.length==0){
       this.errors.other="You should add a friend";
     }else if(this.groupName==''||this.groupName==undefined){
       this.errors.other="You should add a name";
     }else{
       this.errors.other='';
-      this.Comm.createGroup({groupName:this.groupName,membersId:this.arrId,img:"/assets/images/group_no_image.png"})
+      this.Comm.createGroup({groupName:this.groupName,membersId:this.added,img:"/assets/images/group_no_image.png"})
         .then((group)=> {
           this.Chat.newGroup(group);
           this.groupName='';
-          this.toggleAddGroup();
+          this.closeAddGroup();
         })
     }
   };
@@ -39,7 +40,7 @@ class AddGroupCtrl {
   };
   removeMemberId =function(id){
     var index=this.arrId.indexOf(id);
-    this.arrId.splice(index,1);
+    this.added.splice(index,1);
   };
   showDialog = function ($event) {
     this.$mdDialog.show({

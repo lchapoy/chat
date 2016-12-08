@@ -1,13 +1,16 @@
-<form ng-submit="GCtrl.newGroup(groupName)">
+<form ng-submit="GCtrl.newGroup(groupName)" layout="column" flex>
   <md-input-container  >
     <label for="groupName">Group Name</label>
     <input  id="groupName" type="text" class="search-input" ng-model="GCtrl.groupName">
-    <md-button  class="md-primary" ng-click="GCtrl.showDialog()" ng-if="ICtrl.selection.admin==ICtrl.user._id">
-      Add Friends
-    </md-button>
-    <md-button type="submit">Create</md-button>
     <p class="help-block">{{ ac.errors.other }}</p>
   </md-input-container>
+    <div layout="row" layout-align="end">
+      <md-button  class="md-primary" ng-click="GCtrl.showDialog()" ng-if="GCtrl.selection.admin==ICtrl.user._id">
+        Add Friends
+      </md-button>
+      <md-button type="submit">Create</md-button>
+    </div>
+
 </form>
 <div flex>
   <md-list>
@@ -21,7 +24,7 @@
       </ng-md-icon>
       <label>
         <ng-md-icon icon="close" class="help-block" aria-label="Going to Add"  ng-class=""></ng-md-icon>
-        <input type="checkbox" ng-model="person.members[0].add" ng-show="false" ng-change="GCtrl.removeMemberId(person.members[0]._id)">
+        <input type="checkbox" ng-model="person.members[0].add" ng-show="false" ng-change="GCtrl.removeMemberId(person._id)">
       </label>
     </md-list-item>
   </md-list>

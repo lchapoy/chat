@@ -5,7 +5,6 @@ class ContactsCtrl {
   constructor(Chat,sideNavToggler){
     this.rooms=Chat.getRooms();
     this.groups=Chat.getGroups();
-    this.requests=Chat.getRequests();
     this.toggleContacts=sideNavToggler.triggerToggle('contacts');
     this.toggleAddContact=sideNavToggler.triggerToggle('addContact');
     this.toggleAddGroup=sideNavToggler.triggerToggle('addGroup');

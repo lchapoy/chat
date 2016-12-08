@@ -1,4 +1,4 @@
-<md-content flex class="chat-message" scroll-top="scrollFn()">
+<md-content flex class="chat-message messages" scroll-top="scrollFn()">
     <div ng-repeat="item in messages" ng-class="fromOrTo(item.origin)">
         <p ng-if="group=='group'">{{item.name}}:</p>
         <span ng-if="!item.scribble">{{item.text}}</span>
