@@ -5,8 +5,11 @@
 <!--<ng-md-icon icon="person_add" aria-label="Add User"  class="floater-right" ng-click="CCtrl.openAddFriends()"></ng-md-icon>-->
   <!--<span layout-margin="3px"></span>-->
 </md-toolbar>
-<md-content flex>
-  <md-list flex style="height:1px">
+<md-content flex layout="column">
+  <div flex layout="column" layout-align="center center" ng-if="!CCtrl.rooms.length">
+    You don't have any friends yet
+  </div>
+  <md-list flex style="height:1px" ng-if="CCtrl.rooms.length">
     <md-list-item ng-repeat="room in CCtrl.rooms | orderBy:'lastMessageDate_ms':true"
                   ng-click="CCtrl.selectUser('par',room)"
                   ng-class="{'user-offline':room.members[0].status=='Offline','user-online':room.members[0].status=='Online'}">
@@ -31,9 +34,12 @@
   <span layout-margin="3px"></span>
 </md-toolbar>
 <!--</h4>-->
-<md-content flex>
-  <md-list flex style="height:1px">
-    <md-list-item ng-repeat="group in CCtrl.groups | orderBy:'lastMessageDate_ms':true" ng-click="CCtrl.selectUser('group',group)">
+<md-content flex layout="column">
+  <div flex layout="column" layout-align="center center" ng-if="!CCtrl.groups.length">
+    You don't have any Groups yet
+  </div>
+  <md-list flex style="height:1px"  ng-if="CCtrl.groups.length">
+    <md-list-item ng-repeat="group in CCtrl.groups | orderBy:'lastMessageDate_ms':true" ng-click="CCtrl.selectUser('group',group)" >
       <img alt="{{group.name }}" ng-src="{{ group.img }}" class="md-avatar" />
       <p>{{group.name}}</p>
       <!--<ng-md-icon icon="messenger"  aria-label="Open Chat"  ng-class="{'md-primary':!group.newMessage,'md-alert':group.newMessage}"></ng-md-icon>-->

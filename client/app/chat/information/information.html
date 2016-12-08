@@ -10,6 +10,24 @@
         <!--Erase Friend-->
       <!--</button>-->
   <!--</div>-->
+<md-card ng-if="!ICtrl.selection">
+  <img  ng-src="{{ICtrl.user.img}}"  class="md-card-image" alt="Washed Out">
+  <md-card-header>
+    <md-card-avatar>
+      <img class="md-user-avatar" ng-src="{{ICtrl.user.img}}">
+    </md-card-avatar>
+    <md-card-header-text>
+      <span class="md-title">{{ICtrl.user.name}}</span>
+      <span class="md-subhead">{{ICtrl.user.email}}</span>
+      <span class="md-subhead">{{ICtrl.user.status}}</span>
+    </md-card-header-text>
+  </md-card-header>
+  <md-card-actions layout="row" layout-align="end center">
+    <md-button ng-if="ICtrl.selection.kind!='group'"  >
+      <md-icon ui-sref="settings">settings</md-icon>
+    </md-button>
+  </md-card-actions>
+</md-card>
 <md-toolbar ng-if="ICtrl.selection" class="md-accent" layout="row" layout-align="center center">
   Room
 </md-toolbar>
@@ -32,7 +50,7 @@
     </md-card-actions>
   </md-card>
 <!--</md-content>-->
-<md-toolbar class="md-accent" layout="row" layout-align="center center">
+<md-toolbar class="md-accent" layout="row" layout-align="center center" ng-if="ICtrl.selection.kind=='group'">
   Team Members
 </md-toolbar>
 <md-content ng-if="ICtrl.selection.kind=='group'">
@@ -70,5 +88,7 @@
   </md-button>
 
 </md-content>
+
+
 <!--<md-content  flex class="welcome-message" ng-if="!ICtrl.selection">-->
 <!--</md-content>-->
