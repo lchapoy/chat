@@ -6,12 +6,10 @@ function AuthService($location, $http, $cookies, $q, appConfig, Util, User) {
   var safeCb = Util.safeCb;
   var currentUser = {};
   var userRoles = appConfig.userRoles || [];
-  console.log($cookies.get('token'))
   if ($cookies.get('token') && $location.path() !== '/logout') {
     currentUser = User.get();
     currentUser.$promise.then(() => {
       // Account created, redirect to home
-      console.log($cookies.get('token'))
     });
   }
 

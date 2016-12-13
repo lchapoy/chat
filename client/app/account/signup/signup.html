@@ -4,9 +4,9 @@
       <md-toolbar layout="row" layout-padding layout-align="center center">
         <span class="md-toolbar-item md-headline">Sign up</span>
       </md-toolbar>
-      <form name="form"  layout-padding="3px"  ng-submit="vm.register(form)" layout="column">
+      <form name="form"  layout-padding="3px"  ng-submit="vm.register(form)" layout="column" novalidate>
 
-        <md-input-container layout="row">
+        <md-input-container layout="column">
           <!--<label>Name</label>-->
           <md-icon class="md-dark" aria-label="name">person</md-icon>
           <input flex="90" type="text" name="name" class="form-control" ng-model="vm.user.name"
@@ -15,7 +15,7 @@
             <div ng-message="required">Name is required.</div>
           </div>
         </md-input-container>
-        <md-input-container layout="row">
+        <md-input-container layout="column">
           <label>Email</label>
           <md-icon class="md-dark" aria-label="mail">mail</md-icon>
           <input flex="90" type="email" name="email"  ng-model="vm.user.email"
@@ -30,7 +30,7 @@
             </div>
           </div>
         </md-input-container>
-        <md-input-container layout="row">
+        <md-input-container layout="column">
           <label>Password</label>
           <md-icon class="md-dark" aria-label="password">vpn_key</md-icon>
           <input type="password" name="password" class="form-control" ng-model="vm.user.password"
@@ -49,7 +49,7 @@
             </div>
           </div>
         </md-input-container>
-        <md-input-container layout="row">
+        <md-input-container layout="column">
           <label>Confirm Password</label>
           <md-icon class="md-dark" aria-label="password">vpn_key</md-icon>
           <input type="password" name="confirmPassword" class="form-control" ng-model="vm.user.confirmPassword"
@@ -67,6 +67,8 @@
             </div>
           </div>
         </md-input-container>
+
+        <p class="help-block">{{ vm.errors.email }}</p>
         <div class="md-actions" layout="row" layout-align="center">
           <md-button aria-label="Cancel"  ui-sref="main">Cancel</md-button>
           <md-button class="md-primary" aria-label="sign up" type="submit">Sign up</md-button>

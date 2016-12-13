@@ -6,7 +6,7 @@
       </md-toolbar>
       <form name="form" layout="column" layout-padding="3px"  ng-submit="vm.login(form)">
 
-        <md-input-container layout="row" class="md-icon-float">
+        <md-input-container layout="column" class="md-icon-float">
           <md-icon class="md-dark" aria-label="username">person</md-icon>
           <input flex="90" type="email" name="email" ng-model="vm.user.email" placeholder="Email" required>
           <div ng-messages="form.email.$error">
@@ -18,7 +18,7 @@
             </div>
           </div>
         </md-input-container>
-        <md-input-container  layout="row" class="md-icon-float">
+        <md-input-container  layout="column" class="md-icon-float">
           <md-icon class="md-dark" arial-label="password">lock</md-icon>
           <input flex="90" type="password" name="password" ng-model="vm.user.password" placeholder="Password" required>
           <div ng-messages="form.password.$error">

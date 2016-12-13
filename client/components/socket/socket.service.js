@@ -1,6 +1,5 @@
 /* global io */
 'use strict';
-console.log(io);
 angular.module('chatYeoApp')
   .factory('socket', function(socketFactory,Auth,$mdToast,$state) {
     // socket.io now auto-configures its connection when we ommit a connection url
@@ -18,7 +17,6 @@ angular.module('chatYeoApp')
     }
     var createSocket=()=>{
       if(socketInstance) {
-        console.log("hi");
         ioSocket = io('', {
           // Send auth token on connection, you will need to DI the Auth service above
           'query': 'token=' + Auth.getToken(),

@@ -16,8 +16,8 @@ class AddGroupCtrl {
     this.rooms=Chat.getRooms();
     this.added=[];
     this.groupName='';
-    this.toggleAddGroup=sideNavToggler.triggerToggle('addGroup');
-    this.closeAddGroup=sideNavToggler.triggerClose('addGroup');
+    // this.toggleAddGroup=sideNavToggler.triggerToggle('addGroup');
+    // this.closeAddGroup=sideNavToggler.triggerClose('addGroup');
     this.$mdDialog=$mdDialog;
   }
   newGroup = function () {
@@ -31,7 +31,7 @@ class AddGroupCtrl {
         .then((group)=> {
           this.Chat.newGroup(group);
           this.groupName='';
-          this.closeAddGroup();
+          // this.closeAddGroup();
         })
     }
   };
@@ -54,7 +54,7 @@ class AddGroupCtrl {
       controllerAs: 'u2gCtrl'
     }).then((memIds)=>{
       this.added = memIds;
-      console.log(this.added)
+      // console.log(this.added)
     });
   };
   /*myFilter = function (item) {

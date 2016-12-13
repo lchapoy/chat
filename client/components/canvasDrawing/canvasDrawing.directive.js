@@ -9,7 +9,6 @@ angular.module('chatYeoApp')
       },
       templateUrl: 'components/canvasDrawing/canvasDrawing.html',
       link: function (scope, element, attrs) {
-        console.log(element.children().children()[0])
         var canvas= angular.element(element.children().children()[0]);
         var ctx = canvas[0].getContext('2d');
         var container = canvas.parent().parent().parent();
@@ -37,16 +36,13 @@ angular.module('chatYeoApp')
 
          scope.colorChanged = function(newColor, oldColor) {
           scope.color=newColor;
-          console.log('from ', oldColor, ' to ', newColor);
         };
         scope.changeWidth = function(item) {
           drawLine=drawWidth[item];
         };
 
         function respondCanvas(){
-          console.log( container[0].width);
-          console.log( container[0].offsetWidth);
-          console.log( container[0].clientWidth);
+
           canvas.attr('width', container[0].clientWidth-50 ); //max width
 
         }
@@ -98,23 +94,33 @@ angular.module('chatYeoApp')
 
         canvas[0].addEventListener('touchstart', function(event){
 
-          centerX = event.offsetX;
-          centerY = event.offsetY;
+            event = event.changedTouches[0];
+
+          var move = getMousePos(canvas[0],event);
+
+           centerX = move.x;
+           centerY = move.y;
 
           // begins new line
           ctx.beginPath();
-          ctx.moveTo(centerX,centerY);
+          ctx.moveTo(move.x,move.y);
 
           drawing = true;
         });
 
         canvas[0].addEventListener('touchmove', function(event){
+
+          event = event.changedTouches[0];
+
+
+
           if(drawing){
             // get current mouse position
-            var currentX = event.offsetX;
-            var currentY = event.offsetY;
+            var move = getMousePos(canvas[0],event);
+            // var currentX = event.clientX;
+            // var currentY = event.clientY;
 
-            draw(centerX, centerY, currentX, currentY);
+            draw(centerX, centerY, move.x, move.y);
           }
 
         });
@@ -140,6 +146,13 @@ angular.module('chatYeoApp')
           ctx.strokeStyle = scope.color;
           // draw it
           ctx.stroke();
+        }
+        function getMousePos(canvasDom, mouseEvent) {
+          var rect = canvasDom.getBoundingClientRect();
+          return {
+            x: mouseEvent.clientX - rect.left,
+            y: mouseEvent.clientY - rect.top
+          };
         }
       }
 

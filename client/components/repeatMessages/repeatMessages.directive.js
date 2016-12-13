@@ -29,12 +29,10 @@ angular.module('chatYeoApp')
 
             $timeout(()=> {
               messageContainer.scrollTop = messageContainer.scrollHeight;
-              console.log(messageContainer.scrollHeight, messageContainer.scrollTop);
             }, 1);
           } else if((scope.messages.length-mlen>=5)){
             $timeout(()=>{
               messageContainer.scrollTop=messageContainer.scrollHeight-rest+580;
-              console.log(messageContainer.scrollHeight,messageContainer.scrollTop);
             },1)
           }
           mlen=scope.messages.length;
